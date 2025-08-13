@@ -1,0 +1,127 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+h1, p{
+    color: #ffff;
+}
+.div{
+    text-align: center;
+}
+#jugar{
+    cursor: pointer;
+    margin: 100px;
+}
+#jugar:hover{
+    content: url(Button_Pressed_Sprite.png);
+}
+#japónataque{
+    width: 400px;
+    height: 400px;
+}
+#japónataque:hover{
+    content: url(fight.gif);
+}
+#japóncaza{
+    width: 400px;
+    height: 400px;
+}
+#japóncaza:hover{
+    content: url(fight.gif);
+}
+#japónbom{
+    width: 400px;
+    height: 400px;
+}
+#japónbom:hover{
+    content: url(fight.gif);
+}
+
+#estadosunidosataque{
+    width: 400px;
+    height: 400px;
+}
+#estadosunidosataque:hover{
+    content: url(fight.gif);
+}
+#estadosunidoscaza{
+    width: 400px;
+    height: 400px;
+}
+#estadosunidoscaza:hover{
+    content: url(fight.gif);
+}
+#estadosunidosbom{
+    width: 400px;
+    height: 400px;
+}
+#estadosunidosbom:hover{
+    content: url(fight.gif);
+}
+
+#alemaniaataque{
+    width: 400px;
+    height: 400px;
+}
+#alemaniaataque:hover{
+    content: url(fight.gif);
+}
+#alemaniacaza{
+    width: 400px;
+    height: 400px;
+}
+#alemaniacaza:hover{
+    content: url(fight.gif);
+}
+#alemaniabom{
+    width: 400px;
+    height: 400px;
+}
+#alemaniabom:hover{
+    content: url(fight.gif);
+}
+
+#alemaniab{
+    width: 400px;
+    height: 400px;
+}
+#alemaniab:hover{
+    content: url(ready.gif);
+}
+#japónb{
+    width: 400px;
+    height: 400px;
+}
+#japónb:hover{
+    content: url(ready.gif);
+}
+#EEUUb{
+    width: 400px;
+    height: 400px;
+}
+#EEUUb:hover{
+    content: url(ready.gif);
+}
+#EEUU{
+    width: 400px;
+    height: 400px;
+    top: 274px;
+    left: 83px;
+    opacity: 1;
+}
+#alemania{
+    width: 400;
+    height: 400;
+    top: 274px;
+    left: 483px;
+    opacity: 1;    
+}
+#japón{
+    width: 400;
+    height: 400;
+    top: 274px;
+    left: 883px;
+    opacity: 1;
+}
