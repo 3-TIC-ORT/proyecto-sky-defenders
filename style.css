@@ -11,8 +11,7 @@ h1, p{
     text-align: center;
 }
 #jugar{
-    cursor: pointer;
-    margin: 100px;
+    margin-top: 200px;
 }
 #jugar:hover{
     content: url(Button_Pressed_Sprite.png);
@@ -105,23 +104,22 @@ h1, p{
     content: url(ready.gif);
 }
 #EEUU{
-    width: 400px;
-    height: 400px;
     top: 274px;
     left: 83px;
     opacity: 1;
 }
 #alemania{
-    width: 400;
-    height: 400;
     top: 274px;
     left: 483px;
     opacity: 1;    
 }
 #japón{
-    width: 400;
-    height: 400;
     top: 274px;
     left: 883px;
     opacity: 1;
+}
+#EEUU, #alemania, #japón {
+    width: 400;
+    height: 400;
+    margin-top: 100px;
 }
