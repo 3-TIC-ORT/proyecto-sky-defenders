@@ -13,7 +13,7 @@ h1, p{
 #jugar{
     margin-top: 200px;
 }
-#jugar:hover{
+#jugar:active{
     content: url(Button_Pressed_Sprite.png);
 }
 #japónataque{
