@@ -10,7 +10,7 @@ export class Start extends Phaser.Scene {
   
         this.load.image('background', 'fondossimple.png');
   
-        this.load.spritesheet('ship', 'animavionde' + pais + tipo +'.png', { frameWidth: 176, frameHeight: 96 });
+        this.load.spritesheet('ship', 'animavionde' + this.pais + this.tipo +'.png', { frameWidth: 176, frameHeight: 96 });
     }
   
     create() {
