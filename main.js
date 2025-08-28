@@ -33,7 +33,7 @@ class Start extends Phaser.Scene {
     
     this.anims.create({
       key: 'attack',
-      frames: this.anims.generateFrameNumbers('avion', { start: 6, end: 12 }),
+      frames: this.anims.generateFrameNumbers('avion', { start: 9, end: 15 }),
       frameRate: 10,
       repeat: -1
     });
