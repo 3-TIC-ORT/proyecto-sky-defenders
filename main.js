@@ -17,7 +17,7 @@ class Start extends Phaser.Scene {
 
   create() {
 
-    this.player = this.physics.add.sprite(400, 500, 'avion');
+    this.player = this.physics.add.sprite(683, 700, 'avion');
     this.player.setCollideWorldBounds(true);
 
     this.anims.create({
