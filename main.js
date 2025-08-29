@@ -8,9 +8,6 @@ class Start extends Phaser.Scene {
     const params = new URLSearchParams(window.location.search);
     this.pais = params.get("pais"); this.tipo = params.get("tipo");
     
-    this.load.image('background', 'fondosimple.png');
-
-    this.load.image('background', 'fondosimple.png');
     this.load.spritesheet('avion', 'animavionde' + this.pais + this.tipo + '.png',
     {
       frameWidth: 32,
@@ -19,7 +16,6 @@ class Start extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 300, 'background');
 
     this.player = this.physics.add.sprite(400, 500, 'avion');
     this.player.setCollideWorldBounds(true);
@@ -61,6 +57,7 @@ const config = {
   type: Phaser.AUTO,
   width: 1366,
   height: 678,
+  transparent: true,
   physics: {
     default: 'arcade',
     arcade: { gravity: { y: 0 }, debug: false }
