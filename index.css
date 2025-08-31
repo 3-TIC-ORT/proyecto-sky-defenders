@@ -5,4 +5,5 @@ body{
     background-image: url(fondosimple.png);
     background-repeat: no-repeat;
     background-size: cover;
+    overflow: hidden;
 }
