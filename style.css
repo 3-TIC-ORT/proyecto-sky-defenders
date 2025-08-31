@@ -14,28 +14,28 @@ h1, p{
     margin-top: 200px;
 }
 #jugar:active{
-    content: url(Button_Pressed_Sprite.png);
+    content: url(../imgs/Button_Pressed_Sprite.png);
 }
 #japónataque{
     width: 400px;
     height: 400px;
 }
 #japónataque:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 #japóncaza{
     width: 400px;
     height: 400px;
 }
 #japóncaza:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 #japónbom{
     width: 400px;
     height: 400px;
 }
 #japónbom:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 
 #estadosunidosataque{
@@ -43,21 +43,21 @@ h1, p{
     height: 400px;
 }
 #estadosunidosataque:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 #estadosunidoscaza{
     width: 400px;
     height: 400px;
 }
 #estadosunidoscaza:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 #estadosunidosbom{
     width: 400px;
     height: 400px;
 }
 #estadosunidosbom:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 
 #alemaniaataque{
@@ -65,21 +65,21 @@ h1, p{
     height: 400px;
 }
 #alemaniaataque:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 #alemaniacaza{
     width: 400px;
     height: 400px;
 }
 #alemaniacaza:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 #alemaniabom{
     width: 400px;
     height: 400px;
 }
 #alemaniabom:hover{
-    content: url(fight.gif);
+    content: url(../imgs/fight.gif);
 }
 
 #alemaniab{
@@ -87,21 +87,21 @@ h1, p{
     height: 400px;
 }
 #alemaniab:hover{
-    content: url(ready.gif);
+    content: url(../imgs/ready.gif);
 }
 #japónb{
     width: 400px;
     height: 400px;
 }
 #japónb:hover{
-    content: url(ready.gif);
+    content: url(../imgs/ready.gif);
 }
 #EEUUb{
     width: 400px;
     height: 400px;
 }
 #EEUUb:hover{
-    content: url(ready.gif);
+    content: url(../imgs/ready.gif);
 }
 #EEUU{
     top: 274px;

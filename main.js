@@ -12,12 +12,12 @@ class Start extends Phaser.Scene {
     this.pais = params.get("pais");
     this.tipo = params.get("tipo");
     
-    this.load.spritesheet('avion', 'animavionde' + this.pais + this.tipo + '.png', {
+    this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
       frameWidth: 32,
       frameHeight: 32
     });
 
-    this.load.image('bala', 'bala.png');
+    this.load.image('bala', '../imgs/bala.png');
   }
 
   create() {
