@@ -3,4 +3,5 @@ body{
     background-image: url(../imgs/skydefenders.png);
     background-repeat: no-repeat;
     background-size: cover;
+    overflow: hidden;
 }
