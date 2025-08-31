@@ -4,6 +4,8 @@ body {
   align-items: center;
   overflow: hidden;
   margin: 0;
+  background: #37d5fb url(../imgs/fondosimple.png) no-repeat center fixed;
+  background-size: cover;
 }
 h1,
 p {
@@ -23,16 +25,4 @@ p {
   height: 100vh;
   align-items: center;
   gap: 15px;
-}
-#divJugar {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  height: 100vh;
-}
-#jugar {
-  width: 300px;
-}
-#jugar:active {
-  content: url(../imgs/Button_Pressed_Sprite.png);
 }

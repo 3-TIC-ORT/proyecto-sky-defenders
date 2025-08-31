@@ -1,7 +1,17 @@
-body{
-    background-color: #37d5fb;
-    background-image: url(../imgs/skydefenders.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
+body {
+  background: #37d5fb url(../imgs/skydefenders.png) no-repeat center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+#divJugar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100vh;
+}
+#jugar {
+  width: 300px;
+}
+#jugar:active {
+  content: url(../imgs/Button_Pressed_Sprite.png);
 }
