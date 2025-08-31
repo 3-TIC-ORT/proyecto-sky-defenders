@@ -1,126 +1,38 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
 }
-h1, p{
-    color: #ffff;
+h1,
+p {
+  color: #fff;
 }
-.div{
-    text-align: center;
+.item,
+.itemB {
+  width: 400px;
 }
-#jugar{
-    margin-top: 200px;
+.itemB:hover {
+  cursor: pointer;
+  content: url(../imgs/ready.gif);
 }
-#jugar:active{
-    content: url(../imgs/Button_Pressed_Sprite.png);
+.items {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100vh;
+  align-items: center;
+  gap: 15px;
 }
-#japónataque{
-    width: 400px;
-    height: 400px;
+#divJugar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100vh;
 }
-#japónataque:hover{
-    content: url(../imgs/fight.gif);
+#jugar {
+  width: 300px;
 }
-#japóncaza{
-    width: 400px;
-    height: 400px;
-}
-#japóncaza:hover{
-    content: url(../imgs/fight.gif);
-}
-#japónbom{
-    width: 400px;
-    height: 400px;
-}
-#japónbom:hover{
-    content: url(../imgs/fight.gif);
-}
-
-#estadosunidosataque{
-    width: 400px;
-    height: 400px;
-}
-#estadosunidosataque:hover{
-    content: url(../imgs/fight.gif);
-}
-#estadosunidoscaza{
-    width: 400px;
-    height: 400px;
-}
-#estadosunidoscaza:hover{
-    content: url(../imgs/fight.gif);
-}
-#estadosunidosbom{
-    width: 400px;
-    height: 400px;
-}
-#estadosunidosbom:hover{
-    content: url(../imgs/fight.gif);
-}
-
-#alemaniaataque{
-    width: 400px;
-    height: 400px;
-}
-#alemaniaataque:hover{
-    content: url(../imgs/fight.gif);
-}
-#alemaniacaza{
-    width: 400px;
-    height: 400px;
-}
-#alemaniacaza:hover{
-    content: url(../imgs/fight.gif);
-}
-#alemaniabom{
-    width: 400px;
-    height: 400px;
-}
-#alemaniabom:hover{
-    content: url(../imgs/fight.gif);
-}
-
-#alemaniab{
-    width: 400px;
-    height: 400px;
-}
-#alemaniab:hover{
-    content: url(../imgs/ready.gif);
-}
-#japónb{
-    width: 400px;
-    height: 400px;
-}
-#japónb:hover{
-    content: url(../imgs/ready.gif);
-}
-#EEUUb{
-    width: 400px;
-    height: 400px;
-}
-#EEUUb:hover{
-    content: url(../imgs/ready.gif);
-}
-#EEUU{
-    top: 274px;
-    left: 83px;
-    opacity: 1;
-}
-#alemania{
-    top: 274px;
-    left: 483px;
-    opacity: 1;    
-}
-#japón{
-    top: 274px;
-    left: 883px;
-    opacity: 1;
-}
-#EEUU, #alemania, #japón {
-    width: 400;
-    height: 400;
-    margin-top: 100px;
+#jugar:active {
+  content: url(../imgs/Button_Pressed_Sprite.png);
 }
