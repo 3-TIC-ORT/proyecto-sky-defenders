@@ -17,6 +17,7 @@ class Start extends Phaser.Scene {
       frameHeight: 32
     });
 
+    this.load.image('enemigo', '../imgs/enemigo.png');
     this.load.image('bala', '../imgs/bala.png');
   }
 
@@ -46,6 +47,26 @@ class Start extends Phaser.Scene {
     balas = this.physics.add.group({
       defaultKey: 'bala',
     });
+    this.enemigos = this.physics.add.group();
+    for (let row = 0; row < 3; row++) {
+      this.enemigos.createMultiple({
+        key: 'enemigo',
+        repeat: 9,
+        setXY: { x: 100, y: 100 + row * 80, stepX: 80 },
+        setScale: { x: 0.03, y: 0.03 }
+      });
+    }
+
+    this.tweens.add({
+      targets: this.enemigos.getChildren(),
+      x: '+=200',
+      ease: 'Linear',
+      duration: 2000,
+      yoyo: true,
+      repeat: -1
+    });
+    
+    this.physics.add.overlap(balas, this.enemigos, this.hitEnemigo, null, this);
   }
 
   update(time) {
@@ -71,6 +92,10 @@ class Start extends Phaser.Scene {
       }
     }
   }
+  hitEnemigo(bala, enemigo) {
+    bala.destroy();
+    enemigo.destroy();
+  }  
 }
 
 const config = {
