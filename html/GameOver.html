@@ -5,11 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
-    <link rel="stylesheet" href="../css/style.css" />
     <link rel="icon" href="../imgs/icono.ico" />
   </head>
   <body>
+    <style>
+      body {
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        margin: 0;
+        background: #37d5fb url(../imgs/fondogameover.png) no-repeat center fixed;
+        background-size: cover;
+      }
+      #BotonRetry:active{
+        cursor: pointer;
+        content: url(../imgs/BotonRetryPresionado.png);
+      }
+      #BotonExit:active{
+        cursor: pointer;
+        content: url(../imgs/BotonExitPresionado.png);
+      }
+    </style>
     <h1>Game Over</h1>
-    <a href="Save.html"><button>Next</button></a>
+    <a href="Save.html"><img id="BotonRetry" src="../imgs/BotonRetry.png" alt=""></a>
+    <a href="Save.html"><img id="BotonExit" src="../imgs/BotonExit.png" alt=""></a>    
   </body>
 </html>
