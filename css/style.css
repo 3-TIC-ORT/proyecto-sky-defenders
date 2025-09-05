@@ -11,13 +11,19 @@ h1,
 p {
   color: #fff;
 }
-.item,
 .itemB {
-  width: 400px;
+  width: 344px;
+  background: #534024;
+  border: 20px solid #3A2514;
+  border-radius: 20px;
 }
 .itemB:hover {
   cursor: pointer;
-  content: url(../imgs/ready.gif);
+  content: url(../imgs/fight.gif);
+  background: none;
+  border: none;
+  border-radius: 0;
+  width: 485px;
 }
 .items {
   display: flex;
