@@ -49,12 +49,15 @@ class BaseLevel extends Phaser.Scene {
     this.spawnEnemies();
 
     this.tweens.add({
+      onYoyo: () => {
+        this.enemigos.incY(.1);
+      },
       targets: this.enemigos.getChildren(),
       x: '+=200',
       ease: 'Linear',
       duration: 2000,
       yoyo: true,
-      repeat: -1
+      repeat: -1,
     });
 
     this.physics.add.overlap(balas, this.enemigos, this.hitEnemigo, null, this);
