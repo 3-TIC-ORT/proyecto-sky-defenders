@@ -12,10 +12,24 @@ class BaseLevel extends Phaser.Scene {
     this.pais = params.get("pais");
     this.tipo = params.get("tipo");
 
-    this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
-      frameWidth: 32,
-      frameHeight: 32
-    });
+    
+    if (this.tipo === "ataque") {
+      this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
+        frameWidth: 32,
+        frameHeight: 32
+      });  
+    } else if (this.tipo === "caza") {
+      this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
+        frameWidth: 41,
+        frameHeight: 41
+      });
+    } else {
+      this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
+        frameWidth: 43,
+        frameHeight: 43
+      });
+    }
+    
 
     this.load.image('enemigo', '../imgs/enemigo.png');
     this.load.image('bala', '../imgs/bala.png');
