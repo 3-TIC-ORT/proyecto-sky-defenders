@@ -41,14 +41,39 @@ class BaseLevel extends Phaser.Scene {
 
     this.anims.create({
       key: 'idle',
-      frames: this.anims.generateFrameNumbers('avion', { start: 0, end: 5 }),
+      frames: this.anims.generateFrameNumbers('avion', { start: 0, end:  5}),
       frameRate: 10,
       repeat: -1
     });
 
     this.anims.create({
       key: 'attack',
-      frames: this.anims.generateFrameNumbers('avion', { start: 9, end: 15 }),
+      frames: this.anims.generateFrameNumbers('avion', { start: 9, end: 14 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'right',
+      frames: this.anims.generateFrameNumbers('avion', { start: 18, end: 23 }),
+      frameRate: 10,
+      repeat: 0
+    });
+    this.anims.create({
+      key: 'left',
+      frames: this.anims.generateFrameNumbers('avion', { start: 36, end: 41 }),
+      frameRate: 10,
+      repeat: 0
+    });
+
+    this.anims.create({
+      key: 'right_m',
+      frames: this.anims.generateFrameNumbers('avion', { start: 27, end: 32 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'left_m',
+      frames: this.anims.generateFrameNumbers('avion', { start: 45, end: 50 }),
       frameRate: 10,
       repeat: -1
     });
@@ -85,13 +110,24 @@ class BaseLevel extends Phaser.Scene {
 
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-200);
-      this.player.anims.play('attack', true);
+      if (this.player.anims.currentAnim.key !== 'left' && this.player.anims.currentAnim.key !== 'left_m') {
+        this.player.anims.play('left');
+        this.player.once('animationcomplete-left', () => {
+          this.player.anims.play('left_m');
+        });
+      }
     } else if (this.cursors.right.isDown) {
       this.player.setVelocityX(200);
-      this.player.anims.play('attack', true);
+      if (this.player.anims.currentAnim.key !== 'right' && this.player.anims.currentAnim.key !== 'right_m') {
+        this.player.anims.play('right');
+        this.player.once('animationcomplete-right', () => {
+          this.player.anims.play('right_m');
+        });
+      }
     } else {
       this.player.anims.play('idle', true);
     }
+    
 
     if (botonDisparo.isDown && time > tiempoBala) {
       const bala = balas.get(this.player.x, this.player.y);
