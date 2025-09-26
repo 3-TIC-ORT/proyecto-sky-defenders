@@ -63,7 +63,7 @@ class BaseLevel extends Phaser.Scene {
       this.anims.create({
         key: 'idle',
         frames: this.anims.generateFrameNumbers('avion', { start: 0, end:  9}),
-        frameRate: 10,
+        frameRate: 18,
         repeat: -1
       });
     }
