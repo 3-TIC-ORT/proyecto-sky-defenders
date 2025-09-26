@@ -14,8 +14,6 @@ class BaseLevel extends Phaser.Scene {
     this.pais = params.get("pais");
     this.tipo = params.get("tipo");
 
-
-   
     if (this.tipo === "ataque") {
       this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
         frameWidth: 32,
@@ -32,18 +30,14 @@ class BaseLevel extends Phaser.Scene {
         frameHeight: 46
       });
     }
-   
-
 
     this.load.image('enemigo', '../imgs/enemigo.png');
     this.load.image('bala', '../imgs/bala.png');
   }
 
-
   create() {
     this.player = this.physics.add.sprite(683, 700, 'avion');
     this.player.setCollideWorldBounds(true);
-
 
     if(this.tipo === "ataque"){
       this.anims.create({
@@ -68,16 +62,12 @@ class BaseLevel extends Phaser.Scene {
       });
     }
 
-
-
-
     this.anims.create({
       key: 'attack',
       frames: this.anims.generateFrameNumbers('avion', { start: 9, end: 14 }),
       frameRate: 10,
       repeat: -1
     });
-
 
     if(this.tipo === "ataque"){  
       this.anims.create({
@@ -187,6 +177,17 @@ class BaseLevel extends Phaser.Scene {
 
     balas = this.physics.add.group({ defaultKey: 'bala' });
 
+    this.enemyBullets = this.physics.add.group({ defaultKey: 'bala' });
+
+    this.time.addEvent({
+      delay: 600,
+      callback: this.enemyShoot,
+      callbackScope: this,
+      loop: true
+    });
+    
+    this.physics.add.overlap(this.enemyBullets, this.player, this.hitPlayer, null, this);
+    
 
     this.spawnEnemies();
 
@@ -262,6 +263,25 @@ class BaseLevel extends Phaser.Scene {
     bala.destroy();
     enemigo.destroy();
   }
+  enemyShoot() {
+    const enemigosVivos = this.enemigos.getChildren().filter(e => e.active);
+    if (enemigosVivos.length === 0) return;
+
+    const enemigo = Phaser.Utils.Array.GetRandom(enemigosVivos);
+
+    const bala = this.enemyBullets.get(enemigo.x, enemigo.y);
+    if (bala) {
+      bala.setActive(true);
+      bala.setVisible(true);
+      bala.body.velocity.y = 200;
+    }
+  }
+  hitPlayer(player, bala) {
+    bala.destroy();
+    this.scene.restart()
+  }
+
+
 }
 
 
