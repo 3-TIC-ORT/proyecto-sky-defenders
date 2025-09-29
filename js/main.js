@@ -21,8 +21,8 @@ class BaseLevel extends Phaser.Scene {
       });  
     } else if (this.tipo === "caza") {
       this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
-        frameWidth: 41,
-        frameHeight: 41
+        frameWidth: 42,
+        frameHeight: 42
       });
     } else {
       this.load.spritesheet('avion', '../imgs/animavionde' + this.pais + this.tipo + '.png', {
@@ -79,7 +79,7 @@ class BaseLevel extends Phaser.Scene {
     }else if(this.tipo === "caza"){
       this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('avion', { start: 24, end: 29 }),
+        frames: this.anims.generateFrameNumbers('avion', { start: 22, end: 27 }),
         frameRate: 10,
         repeat: 0
       });
@@ -102,7 +102,7 @@ class BaseLevel extends Phaser.Scene {
     }else if(this.tipo === "caza"){
       this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('avion', { start: 36, end: 41 }),
+        frames: this.anims.generateFrameNumbers('avion', { start: 44, end: 49 }),
         frameRate: 10,
         repeat: 0
       });
@@ -132,7 +132,7 @@ class BaseLevel extends Phaser.Scene {
     }else if(this.tipo === "caza"){
       this.anims.create({
         key: 'right_m',
-        frames: this.anims.generateFrameNumbers('avion', { start: 36, end: 45 }),
+        frames: this.anims.generateFrameNumbers('avion', { start: 33, end: 38 }),
         frameRate: 10,
         repeat: -1
       });
@@ -155,7 +155,7 @@ class BaseLevel extends Phaser.Scene {
     }else if(this.tipo === "caza"){
       this.anims.create({
         key: 'left_m',
-        frames: this.anims.generateFrameNumbers('avion', { start: 45, end: 50 }),
+        frames: this.anims.generateFrameNumbers('avion', { start: 55, end: 60 }),
         frameRate: 10,
         repeat: -1
       });  
