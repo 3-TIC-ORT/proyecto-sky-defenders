@@ -323,7 +323,7 @@ class Level2 extends BaseLevel {
 const config = {
   type: Phaser.AUTO,
   width: 1366,
-  height: 678,
+  height: 768,
   transparent: true,
   physics: {
     default: 'arcade',
