@@ -37,6 +37,8 @@ class BaseLevel extends Phaser.Scene {
 
     this.load.image('enemigo', '../imgs/enemigo.png');
     this.load.image('bala', '../imgs/bala.png');
+    
+    this.load.image('balaenem', '../imgs/balaenem.png');
   }
 
   create() {
@@ -181,7 +183,7 @@ class BaseLevel extends Phaser.Scene {
 
     balas = this.physics.add.group({ defaultKey: 'bala' });
 
-    this.enemyBullets = this.physics.add.group({ defaultKey: 'bala' });
+    this.balaenem = this.physics.add.group({ defaultKey: 'balaenem' });
 
     this.time.addEvent({
       delay: 600,
@@ -190,7 +192,7 @@ class BaseLevel extends Phaser.Scene {
       loop: true
     });
     
-    this.physics.add.overlap(this.enemyBullets, this.player, this.hitPlayer, null, this);
+    this.physics.add.overlap(this.balaenem, this.player, this.hitPlayer, null, this);
     
 
     this.spawnEnemies();
@@ -273,15 +275,13 @@ class BaseLevel extends Phaser.Scene {
 
     const enemigo = Phaser.Utils.Array.GetRandom(enemigosVivos);
 
-    const bala = this.enemyBullets.get(enemigo.x, enemigo.y);
-    if (bala) {
-      bala.setActive(true);
-      bala.setVisible(true);
-      bala.body.velocity.y = 200;
-    }
+    const balaenem = this.balaenem.get(enemigo.x, enemigo.y);
+      balaenem.setActive(true);
+      balaenem.setVisible(true);
+      balaenem.body.velocity.y = 200;
   }
-  hitPlayer(player, bala) {
-    bala.destroy();
+  hitPlayer(player, balaenem) {
+    balaenem.destroy();
     this.scene.restart()
   }
 
