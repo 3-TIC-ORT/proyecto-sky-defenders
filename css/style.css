@@ -10,11 +10,32 @@ body {
 h1,
 p {
   color: #fff;
+  margin: 0;
+  padding: 0;
+}
+#puntaje {
+  top: 20px;
+  left: 20px;
+}
+#vidas {
+  top: 60px;
+  left: 20px;
+}
+#niveles {
+  top: 100px;
+  left: 20px;
+}
+.datos {
+  position: absolute;
+  font-size: 20px;
+  font-family: Arial;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px black;
 }
 .itemB {
   width: 344px;
   background: #534024;
-  border: 20px solid #3A2514;
+  border: 20px solid #3a2514;
   border-radius: 20px;
 }
 .itemB:hover {
