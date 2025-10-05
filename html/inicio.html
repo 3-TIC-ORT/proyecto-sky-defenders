@@ -15,5 +15,24 @@
         ><img src="../imgs/Button_NotPressed_Sprite.png" id="jugar"
       /></a>
     </div>
+    <style>
+      body {
+        background: #37d5fb url(../imgs/skydefenders.png) no-repeat center fixed;
+        background-size: cover;
+        overflow: hidden;
+      }
+      #divJugar {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 100vh;
+      }
+      #jugar {
+        width: 300px;
+      }
+      #jugar:active {
+        content: url(../imgs/Button_Pressed_Sprite.png);
+      }
+    </style>
   </body>
 </html>

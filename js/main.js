@@ -378,12 +378,42 @@ class Level1 extends BaseLevel {
 class Level2 extends BaseLevel {
   constructor() {
     super("Level2");
+    this.nextLevel = "Level3";
+  }
+  create() {
+    super.create();
+    niveles.innerText = "Nivel: 3";
+
+    this.time.addEvent({
+      delay: 300,
+      callback: this.enemyShoot,
+      callbackScope: this,
+      loop: true,
+    });
+  }
+
+  spawnEnemies() {
+    this.enemigos = this.physics.add.group();
+    for (let row = 0; row < 4; row++) {
+      this.enemigos.createMultiple({
+        key: "enemigo",
+        repeat: 12,
+        setXY: { x: 100, y: 100 + row * 80, stepX: 80 },
+        setScale: { x: 0.03, y: 0.03 },
+      });
+    }
+  }
+}
+
+class Level3 extends BaseLevel {
+  constructor() {
+    super("Level3");
     this.nextLevel = "YouWin";
   }
 
   create() {
     super.create();
-    niveles.innerText = "Nivel: 2";
+    niveles.innerText = "Nivel: 3";
   }
 
   spawnEnemies() {
@@ -401,7 +431,7 @@ const config = {
     default: "arcade",
     arcade: { gravity: { y: 0 }, debug: false },
   },
-  scene: [Level1, Level2],
+  scene: [Level1, Level2, Level3],
 };
 
 new Phaser.Game(config);
