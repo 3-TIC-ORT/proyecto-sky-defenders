@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
     <link rel="icon" href="../imgs/icono.ico" />
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
     <style>
@@ -14,19 +15,32 @@
         align-items: center;
         overflow: hidden;
         margin: 0;
-        background: #37d5fb url(../imgs/fondogameover.png) no-repeat center fixed;
+        background: #37d5fb url(../imgs/fondogameover.png) no-repeat center
+          fixed;
         background-size: cover;
       }
-      #BotonRetry:active{
+      #BotonRetry:active {
         cursor: pointer;
         content: url(../imgs/BotonRetryPresionado.png);
       }
-      #BotonExit:active{
+      #BotonExit:active {
         cursor: pointer;
         content: url(../imgs/BotonExitPresionado.png);
       }
     </style>
-    <a href="Save.html"><img id="BotonRetry" src="../imgs/BotonRetry.png" alt="BotónRetry"></a>
-    <a href="Save.html"><img id="BotonExit" src="../imgs/BotonExit.png" alt="BotónExit"></a>    
+    <a href="" id="botonRetry"
+      ><img src="../imgs/BotonRetry.png" alt="BotónRetry"
+    /></a>
+    <a href="Save.html"><img src="../imgs/BotonExit.png" alt="BotónExit" /></a>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      this.pais = params.get("pais");
+      this.tipo = params.get("tipo");
+
+      let botoExit = document.getElementById("botonRetry");
+
+      botoExit.href = "index.html?pais=" + this.pais + "&tipo=" + this.tipo;
+    </script>
   </body>
 </html>

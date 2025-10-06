@@ -1,11 +1,11 @@
-var tiempoBala = 0;
-var balas;
-var botonDisparo;
-var enemigosDestruidos = 0;
-var vidasrestantes = 3;
-var puntaje = document.getElementById("puntaje");
-var vidas = document.getElementById("vidas");
-var niveles = document.getElementById("niveles");
+let tiempoBala = 0;
+let balas;
+let botonDisparo;
+let enemigosDestruidos = 0;
+let vidasrestantes = 3;
+let puntaje = document.getElementById("puntaje");
+let vidas = document.getElementById("vidas");
+let niveles = document.getElementById("niveles");
 
 class BaseLevel extends Phaser.Scene {
   constructor(BaseDelJuego) {
@@ -282,7 +282,8 @@ class BaseLevel extends Phaser.Scene {
 
   update(time) {
     if (vidasrestantes <= 0) {
-      window.location.href = "GameOver.html";
+      window.location.href =
+        "GameOver.html?pais=" + this.pais + "&tipo=" + this.tipo;
     }
 
     this.player.setVelocityX(0);
