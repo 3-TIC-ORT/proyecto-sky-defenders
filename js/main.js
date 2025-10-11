@@ -19,16 +19,16 @@ class BaseLevel extends Phaser.Scene {
 
     if (this.tipo === "ataque") {
       this.load.spritesheet(
-        "avion",
-        "../imgs/animavionde" + this.pais + this.tipo + ".png",
+        "avion1",
+        "../imgs/animavionde" + this.pais + this.tipo + "1.png",
         {
           frameWidth: 19,
           frameHeight: 19,
         }
       );
       this.load.spritesheet(
-        "avion1",
-        "../imgs/animavionde" + this.pais + this.tipo + "1.png",
+        "avion2",
+        "../imgs/animavionde" + this.pais + this.tipo + "2.png",
         {
           frameWidth: 13,
           frameHeight: 19,
@@ -36,8 +36,16 @@ class BaseLevel extends Phaser.Scene {
       );
     } else if (this.tipo === "caza") {
       this.load.spritesheet(
-        "avion",
-        "../imgs/animavionde" + this.pais + this.tipo + ".png",
+        "avion1",
+        "../imgs/animavionde" + this.pais + this.tipo + "1.png",
+        {
+          frameWidth: 42,
+          frameHeight: 42,
+        }
+      );
+      this.load.spritesheet(
+        "avion2",
+        "../imgs/animavionde" + this.pais + this.tipo + "2.png",
         {
           frameWidth: 42,
           frameHeight: 42,
@@ -45,11 +53,27 @@ class BaseLevel extends Phaser.Scene {
       );
     } else {
       this.load.spritesheet(
-        "avion",
-        "../imgs/animavionde" + this.pais + this.tipo + ".png",
+        "avion1",
+        "../imgs/animavionde" + this.pais + this.tipo + "1.png",
         {
           frameWidth: 41,
-          frameHeight: 46,
+          frameHeight: 36,
+        }
+      );
+      this.load.spritesheet(
+        "avion2",
+        "../imgs/animavionde" + this.pais + this.tipo + "2.png",
+        {
+          frameWidth: 31,
+          frameHeight: 36,
+        }
+      );
+      this.load.spritesheet(
+        "avion3",
+        "../imgs/animavionde" + this.pais + this.tipo + "3.png",
+        {
+          frameWidth: 41,
+          frameHeight: 36,
         }
       );
     }
@@ -61,13 +85,13 @@ class BaseLevel extends Phaser.Scene {
   }
 
   create() {
-    this.player = this.physics.add.sprite(683, 700, "avion");
+    this.player = this.physics.add.sprite(683, 700, "avion1");
     this.player.setCollideWorldBounds(true);
 
     if (this.tipo === "ataque") {
       this.anims.create({
         key: "idle",
-        frames: this.anims.generateFrameNumbers("avion", {
+        frames: this.anims.generateFrameNumbers("avion1", {
           start: 24,
           end: 29,
         }),
@@ -77,14 +101,14 @@ class BaseLevel extends Phaser.Scene {
     } else if (this.tipo === "caza") {
       this.anims.create({
         key: "idle",
-        frames: this.anims.generateFrameNumbers("avion", { start: 0, end: 5 }),
+        frames: this.anims.generateFrameNumbers("avion1", { start: 0, end: 5 }),
         frameRate: 10,
         repeat: -1,
       });
     } else {
       this.anims.create({
         key: "idle",
-        frames: this.anims.generateFrameNumbers("avion", { start: 0, end: 9 }),
+        frames: this.anims.generateFrameNumbers("avion1", { start: 0, end: 9 }),
         frameRate: 18,
         repeat: -1,
       });
@@ -92,7 +116,7 @@ class BaseLevel extends Phaser.Scene {
 
     this.anims.create({
       key: "attack",
-      frames: this.anims.generateFrameNumbers("avion", { start: 9, end: 14 }),
+      frames: this.anims.generateFrameNumbers("avion1", { start: 9, end: 14 }),
       frameRate: 10,
       repeat: -1,
     });
@@ -100,7 +124,7 @@ class BaseLevel extends Phaser.Scene {
     if (this.tipo === "ataque") {
       this.anims.create({
         key: "right",
-        frames: this.anims.generateFrameNumbers("avion", {
+        frames: this.anims.generateFrameNumbers("avion1", {
           start: 18,
           end: 23,
         }),
@@ -110,7 +134,7 @@ class BaseLevel extends Phaser.Scene {
     } else if (this.tipo === "caza") {
       this.anims.create({
         key: "right",
-        frames: this.anims.generateFrameNumbers("avion", {
+        frames: this.anims.generateFrameNumbers("avion1", {
           start: 22,
           end: 27,
         }),
@@ -120,9 +144,9 @@ class BaseLevel extends Phaser.Scene {
     } else {
       this.anims.create({
         key: "right",
-        frames: this.anims.generateFrameNumbers("avion", {
-          start: 24,
-          end: 29,
+        frames: this.anims.generateFrameNumbers("avion1", {
+          start: 20,
+          end: 25,
         }),
         frameRate: 10,
         repeat: 0,
@@ -132,7 +156,7 @@ class BaseLevel extends Phaser.Scene {
     if (this.tipo === "ataque") {
       this.anims.create({
         key: "left",
-        frames: this.anims.generateFrameNumbers("avion", {
+        frames: this.anims.generateFrameNumbers("avion1", {
           start: 12,
           end: 17,
         }),
@@ -142,7 +166,7 @@ class BaseLevel extends Phaser.Scene {
     } else if (this.tipo === "caza") {
       this.anims.create({
         key: "left",
-        frames: this.anims.generateFrameNumbers("avion", {
+        frames: this.anims.generateFrameNumbers("avion1", {
           start: 44,
           end: 49,
         }),
@@ -152,9 +176,9 @@ class BaseLevel extends Phaser.Scene {
     } else {
       this.anims.create({
         key: "left",
-        frames: this.anims.generateFrameNumbers("avion", {
-          start: 48,
-          end: 53,
+        frames: this.anims.generateFrameNumbers("avion1", {
+          start: 10,
+          end: 15,
         }),
         frameRate: 10,
         repeat: 0,
@@ -162,7 +186,7 @@ class BaseLevel extends Phaser.Scene {
     }
     this.anims.create({
       key: "left",
-      frames: this.anims.generateFrameNumbers("avion", { start: 36, end: 41 }),
+      frames: this.anims.generateFrameNumbers("avion1", { start: 36, end: 41 }),
       frameRate: 10,
       repeat: 0,
     });
@@ -170,14 +194,14 @@ class BaseLevel extends Phaser.Scene {
     if (this.tipo === "ataque") {
       this.anims.create({
         key: "right_m",
-        frames: this.anims.generateFrameNumbers("avion1", { start: 0, end: 5 }),
+        frames: this.anims.generateFrameNumbers("avion2", { start: 0, end: 5 }),
         frameRate: 10,
         repeat: -1,
       });
     } else if (this.tipo === "caza") {
       this.anims.create({
         key: "right_m",
-        frames: this.anims.generateFrameNumbers("avion1", {
+        frames: this.anims.generateFrameNumbers("avion2", {
           start: 33,
           end: 38,
         }),
@@ -187,9 +211,9 @@ class BaseLevel extends Phaser.Scene {
     } else {
       this.anims.create({
         key: "right_m",
-        frames: this.anims.generateFrameNumbers("avion1", {
-          start: 36,
-          end: 45,
+        frames: this.anims.generateFrameNumbers("avion2", {
+          start: 10,
+          end: 19,
         }),
         frameRate: 10,
         repeat: -1,
@@ -199,7 +223,7 @@ class BaseLevel extends Phaser.Scene {
     if (this.tipo === "ataque") {
       this.anims.create({
         key: "left_m",
-        frames: this.anims.generateFrameNumbers("avion1", {
+        frames: this.anims.generateFrameNumbers("avion2", {
           start: 6,
           end: 11,
         }),
@@ -209,7 +233,7 @@ class BaseLevel extends Phaser.Scene {
     } else if (this.tipo === "caza") {
       this.anims.create({
         key: "left_m",
-        frames: this.anims.generateFrameNumbers("avion1", {
+        frames: this.anims.generateFrameNumbers("avion2", {
           start: 55,
           end: 60,
         }),
@@ -219,9 +243,9 @@ class BaseLevel extends Phaser.Scene {
     } else {
       this.anims.create({
         key: "left_m",
-        frames: this.anims.generateFrameNumbers("avion1", {
-          start: 60,
-          end: 69,
+        frames: this.anims.generateFrameNumbers("avion2", {
+          start: 0,
+          end: 9,
         }),
         frameRate: 10,
         repeat: -1,
@@ -229,7 +253,7 @@ class BaseLevel extends Phaser.Scene {
     }
     this.anims.create({
       key: "daño",
-      frames: this.anims.generateFrameNumbers("avion", { start: 0, end: 1 }),
+      frames: this.anims.generateFrameNumbers("avion1", { start: 0, end: 1 }),
       frameRate: 10,
       repeat: 0,
     });
