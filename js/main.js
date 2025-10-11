@@ -39,16 +39,24 @@ class BaseLevel extends Phaser.Scene {
         "avion1",
         "../imgs/animavionde" + this.pais + this.tipo + "1.png",
         {
-          frameWidth: 42,
-          frameHeight: 42,
+          frameWidth: 33,
+          frameHeight: 26,
         }
       );
       this.load.spritesheet(
         "avion2",
         "../imgs/animavionde" + this.pais + this.tipo + "2.png",
         {
-          frameWidth: 42,
-          frameHeight: 42,
+          frameWidth: 23,
+          frameHeight: 26,
+        }
+      );
+      this.load.spritesheet(
+        "avion3",
+        "../imgs/animavionde" + this.pais + this.tipo + "3.png",
+        {
+          frameWidth: 25,
+          frameHeight: 26,
         }
       );
     } else {
@@ -101,8 +109,8 @@ class BaseLevel extends Phaser.Scene {
     } else if (this.tipo === "caza") {
       this.anims.create({
         key: "idle",
-        frames: this.anims.generateFrameNumbers("avion1", { start: 0, end: 5 }),
-        frameRate: 10,
+        frames: this.anims.generateFrameNumbers("avion1", { start: 0, end: 7 }),
+        frameRate: 14,
         repeat: -1,
       });
     } else {
@@ -135,8 +143,8 @@ class BaseLevel extends Phaser.Scene {
       this.anims.create({
         key: "right",
         frames: this.anims.generateFrameNumbers("avion1", {
-          start: 22,
-          end: 27,
+          start: 8,
+          end: 13,
         }),
         frameRate: 10,
         repeat: 0,
@@ -167,8 +175,8 @@ class BaseLevel extends Phaser.Scene {
       this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("avion1", {
-          start: 44,
-          end: 49,
+          start: 16,
+          end: 21,
         }),
         frameRate: 10,
         repeat: 0,
@@ -202,8 +210,8 @@ class BaseLevel extends Phaser.Scene {
       this.anims.create({
         key: "right_m",
         frames: this.anims.generateFrameNumbers("avion2", {
-          start: 33,
-          end: 38,
+          start: 0,
+          end: 7,
         }),
         frameRate: 10,
         repeat: -1,
@@ -233,9 +241,9 @@ class BaseLevel extends Phaser.Scene {
     } else if (this.tipo === "caza") {
       this.anims.create({
         key: "left_m",
-        frames: this.anims.generateFrameNumbers("avion2", {
-          start: 55,
-          end: 60,
+        frames: this.anims.generateFrameNumbers("avion3", {
+          start: 0,
+          end: 7,
         }),
         frameRate: 10,
         repeat: -1,
