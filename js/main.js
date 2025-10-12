@@ -347,7 +347,7 @@ class BaseLevel extends Phaser.Scene {
     }
 
     if (botonDisparo.isDown && time > tiempoBala) {
-      const bala = balas.get(this.player.x, this.player.y);
+      const bala = balas.get(this.player.x, this.player.y - this.player.height);
       if (bala) {
         bala.setActive(true);
         bala.setVisible(true);
@@ -376,8 +376,10 @@ class BaseLevel extends Phaser.Scene {
     if (enemigosVivos.length === 0) return;
 
     const enemigo = Phaser.Utils.Array.GetRandom(enemigosVivos);
-
-    const balaenem = this.balaenem.get(enemigo.x, enemigo.y);
+    const balaenem = this.balaenem.get(
+      enemigo.x,
+      enemigo.y + enemigo.displayHeight
+    );
     balaenem.setActive(true);
     balaenem.setVisible(true);
     balaenem.body.velocity.y = 200;
