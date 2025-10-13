@@ -86,7 +86,15 @@ class BaseLevel extends Phaser.Scene {
       );
     }
 
-    this.load.image("enemigo", "../imgs/enemigo.png");
+    this.load.spritesheet(
+      "enemigo",
+      "../imgs/enemigo.png",
+      {
+        frameWidth: 28,
+        frameHeight: 30,
+      }
+    );
+     
     this.load.image("bala", "../imgs/bala.png");
 
     this.load.image("balaenem", "../imgs/balaenem.png");
@@ -95,6 +103,28 @@ class BaseLevel extends Phaser.Scene {
   create() {
     this.player = this.physics.add.sprite(683, 700, "avion1");
     this.player.setCollideWorldBounds(true);
+
+    this.anims.create({
+      key: "enemigo",
+      frames: this.anims.generateFrameNumbers("enemigo", { start: 0, end: 2 }),
+      frameRate: 6,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "enemigo_disparo1",
+      frames: this.anims.generateFrameNumbers("enemigo", { start: 6, end: 8 }),
+      frameRate: 10,
+      repeat: 0
+    });
+    
+    this.anims.create({
+      key: "enemigo_disparo2",
+      frames: this.anims.generateFrameNumbers("enemigo", { start: 9, end: 11 }),
+      frameRate: 10,
+      repeat: 0
+    });
+    
 
     if (this.tipo === "ataque") {
       this.anims.create({
@@ -372,18 +402,27 @@ class BaseLevel extends Phaser.Scene {
     puntaje.innerText = "Puntaje: " + (enemigosDestruidos += 10);
   }
   enemyShoot() {
-    const enemigosVivos = this.enemigos.getChildren().filter((e) => e.active);
+    const enemigosVivos = this.enemigos.getChildren().filter(e => e.active);
     if (enemigosVivos.length === 0) return;
-
+  
     const enemigo = Phaser.Utils.Array.GetRandom(enemigosVivos);
-    const balaenem = this.balaenem.get(
-      enemigo.x,
-      enemigo.y + enemigo.displayHeight
-    );
-    balaenem.setActive(true);
-    balaenem.setVisible(true);
-    balaenem.body.velocity.y = 200;
-  }
+  
+    enemigo.play("enemigo_disparo1");
+  
+    enemigo.once("animationcomplete-enemigo_disparo1", () => {
+      const balaenem = this.balaenem.get(enemigo.x, enemigo.y + enemigo.displayHeight);
+      if (balaenem) {
+        balaenem.setActive(true);
+        balaenem.setVisible(true);
+        balaenem.body.velocity.y = 200;
+      }
+      enemigo.play("enemigo_disparo2");
+    });
+  
+    enemigo.once("animationcomplete-enemigo_disparo2", () => {
+      enemigo.play("enemigo");
+    });
+  }  
   hitPlayer(player, balaenem) {
     balaenem.destroy();
     vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
@@ -399,15 +438,19 @@ class Level1 extends BaseLevel {
 
   spawnEnemies() {
     this.enemigos = this.physics.add.group();
+  
     for (let row = 0; row < 3; row++) {
-      this.enemigos.createMultiple({
+      const enemigosFila = this.enemigos.createMultiple({
         key: "enemigo",
         repeat: 9,
         setXY: { x: 100, y: 100 + row * 80, stepX: 80 },
-        setScale: { x: 0.03, y: 0.03 },
+      });
+  
+      enemigosFila.forEach(enemigo => {
+        enemigo.play("enemigo");
       });
     }
-  }
+  }  
 }
 
 class Level2 extends BaseLevel {
@@ -434,7 +477,6 @@ class Level2 extends BaseLevel {
         key: "enemigo",
         repeat: 12,
         setXY: { x: 100, y: 100 + row * 80, stepX: 80 },
-        setScale: { x: 0.03, y: 0.03 },
       });
     }
   }
