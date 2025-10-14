@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
-    <link rel="stylesheet" href="../css/inicio.css" />
     <script src="main.js"></script>
     <link rel="icon" href="../imgs/icono.ico" />
   </head>
@@ -17,10 +16,19 @@
     </div>
     <style>
       body {
-        background: #37d5fb url(../imgs/skydefenders.png) no-repeat center fixed;
+        background: url(../imgs/skydefenders.png) no-repeat center fixed,
+          linear-gradient(
+            252.46deg,
+            #2596ff 0%,
+            #1156bd 38.46%,
+            #133a76 74.52%,
+            #132b4e 100%
+          );
+        background-size: cover;
         background-size: cover;
         overflow: hidden;
       }
+
       #divJugar {
         display: flex;
         align-items: center;
