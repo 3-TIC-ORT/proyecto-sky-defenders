@@ -248,7 +248,7 @@ class BaseLevel extends Phaser.Scene {
           this.player.anims.play("right_m");
         });
       }
-    } else {
+    } else if (this.player.anims.currentAnim.key !== "daño") {
       this.player.anims.play("idle", true);
     }
 
@@ -306,6 +306,9 @@ class BaseLevel extends Phaser.Scene {
     balaenem.destroy();
     vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
     player.anims.play("daño");
+    player.once("animationcomplete-daño", () => {
+      player.play("idle");
+    });
   }
 }
 
@@ -352,10 +355,14 @@ class Level2 extends BaseLevel {
   spawnEnemies() {
     this.enemigos = this.physics.add.group();
     for (let row = 0; row < 4; row++) {
-      this.enemigos.createMultiple({
+      const enemigosFila = this.enemigos.createMultiple({
         key: "enemigo",
         repeat: 12,
         setXY: { x: 100, y: 100 + row * 80, stepX: 80 },
+      });
+
+      enemigosFila.forEach((enemigo) => {
+        enemigo.play("enemigo");
       });
     }
   }
