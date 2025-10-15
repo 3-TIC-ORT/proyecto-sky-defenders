@@ -220,6 +220,8 @@ class BaseLevel extends Phaser.Scene {
 
   update(time) {
     if (vidasrestantes <= 0) {
+      localStorage.clear();
+      localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
       window.location.href =
         "GameOver.html?pais=" + this.pais + "&tipo=" + this.tipo;
     }
@@ -258,12 +260,14 @@ class BaseLevel extends Phaser.Scene {
         bala.setActive(true);
         bala.setVisible(true);
         bala.body.velocity.y = -400;
-        tiempoBala = time + 400;
+        tiempoBala = time + 4;
       }
     }
 
     if (this.enemigos.countActive(true) === 0) {
       if (this.nextLevel === "YouWin") {
+        localStorage.clear();
+        localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
         window.location.href = "YouWin.html";
       } else {
         this.scene.start(this.nextLevel);
