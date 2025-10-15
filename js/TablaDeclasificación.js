@@ -24,6 +24,8 @@ const PyN = [
   { usuario: "Mertt.", puntaje: 90 },
 ];
 
+const PyNa = JSON.parse(localStorage.getItem("listaDePyN"));
+
 const tabla = document.getElementById("tabla-cuerpo");
 const verMas = document.getElementById("verMas");
 
