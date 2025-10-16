@@ -9,7 +9,7 @@ botonGuardar.addEventListener("click", function () {
 
   if (nombre) {
     localStorage.setItem("nombreDeUsuario", JSON.stringify(nombre));
-    postEvent(
+/*acá está el postEvent*/  postEvent(
       "PuntajeyNombre",
       { PyN: { usuario: nombre, puntaje: puntaje } },
       (listaDePyN) => {
