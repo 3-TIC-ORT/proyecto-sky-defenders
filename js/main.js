@@ -78,6 +78,13 @@ class BaseLevel extends Phaser.Scene {
       repeat: 0,
     });
 
+    this.anims.create({
+      key: "enemigo_daño",
+      frames: this.anims.generateFrameNumbers("enemigo", { start: 12, end: 13 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+
     const animConfigs = {
       ataque: {
         idle: [24, 29, 10],
@@ -200,19 +207,21 @@ class BaseLevel extends Phaser.Scene {
 
     this.spawnEnemies();
 
-    this.tweens.add({
-      onYoyo: () => {
-        this.enemigos.incY(0.1);
-      },
-      onRepeat: () => {
-        this.enemigos.incY(0.1);
-      },
-      targets: this.enemigos.getChildren(),
-      x: "+=200",
-      ease: "Linear",
-      duration: 2000,
-      yoyo: true,
-      repeat: -1,
+    this.enemigos.getChildren().forEach(enemigo => {
+      this.tweens.add({
+        onYoyo: () => {
+          this.enemigos.incY(0.1);
+        },
+        onRepeat: () => {
+          this.enemigos.incY(0.1);
+        },
+        targets: enemigo,
+        x: enemigo.x + 200,
+        ease: "Linear",
+        duration: 2000,
+        yoyo: true,
+        repeat: -1,
+      });
     });
 
     this.physics.add.overlap(balas, this.enemigos, this.hitEnemigo, null, this);
@@ -277,10 +286,16 @@ class BaseLevel extends Phaser.Scene {
 
   hitEnemigo(bala, enemigo) {
     bala.destroy();
-    enemigo.destroy();
+    enemigo.play("enemigo_daño");
 
-    puntaje.innerText = "Puntaje: " + (enemigosDestruidos += 10);
-  }
+    enemigo.once("animationcomplete-enemigo_daño", () => {
+        enemigo.destroy();
+    });
+
+    enemigosDestruidos += 10;
+    puntaje.innerText = "Puntaje: " + enemigosDestruidos;
+}
+
   enemyShoot() {
     const enemigosVivos = this.enemigos.getChildren().filter((e) => e.active);
     if (enemigosVivos.length === 0) return;
