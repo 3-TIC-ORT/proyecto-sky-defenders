@@ -262,17 +262,7 @@ class BaseLevel extends Phaser.Scene {
         bala.setActive(true);
         bala.setVisible(true);
         bala.body.velocity.y = -400;
-        tiempoBala = time + 400;
-      }
-    }
-
-    if (this.enemigos.countActive(true) === 0) {
-      if (this.nextLevel === "YouWin") {
-        localStorage.clear();
-        localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
-        window.location.href = "YouWin.html";
-      } else {
-        this.scene.start(this.nextLevel);
+        tiempoBala = time + 4;
       }
     }
   }
@@ -280,14 +270,25 @@ class BaseLevel extends Phaser.Scene {
   hitEnemigo(bala, enemigo) {
     bala.destroy();
     enemigo.play("enemigo_daño");
-
+  
     enemigo.once("animationcomplete-enemigo_daño", () => {
-        enemigo.destroy();
+      enemigo.destroy();
+  
+      enemigosDestruidos += 10;
+      puntaje.innerText = "Puntaje: " + enemigosDestruidos;
+  
+      if (this.enemigos.countActive(true) === 0) {
+        if (this.nextLevel === "YouWin") {
+          localStorage.clear();
+          localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
+          window.location.href = "YouWin.html";
+        } else {
+          this.scene.start(this.nextLevel);
+        }
+      }
     });
-
-    enemigosDestruidos += 10;
-    puntaje.innerText = "Puntaje: " + enemigosDestruidos;
-}
+  }
+  
 
   enemyShoot() {
     const enemigosVivos = this.enemigos.getChildren().filter((e) => e.active);
