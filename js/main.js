@@ -262,7 +262,7 @@ class BaseLevel extends Phaser.Scene {
         bala.setActive(true);
         bala.setVisible(true);
         bala.body.velocity.y = -400;
-        tiempoBala = time + 4;
+        tiempoBala = time + 400;
       }
     }
   }
