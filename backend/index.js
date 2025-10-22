@@ -28,5 +28,4 @@ subscribePOSTEvent ("PuntajeyNombre", () => {
   
   fs.writeFileSync("data/pedidos.json", HistPuntajes.push );
     
-  // Guardar pedido
-  // COMPLETEN USTEDES
+  
