@@ -54,7 +54,7 @@ class BaseLevel extends Phaser.Scene {
   }
 
   create() {
-    this.player = this.physics.add.sprite(683, 700, "avion1");
+    this.player = this.physics.add.sprite(683, 700, "avion1").setScale(2);
     this.player.setCollideWorldBounds(true);
 
     this.anims.create({
@@ -228,13 +228,6 @@ class BaseLevel extends Phaser.Scene {
   }
 
   update(time) {
-    if (vidasrestantes <= 0) {
-      localStorage.clear();
-      localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
-      window.location.href =
-        "GameOver.html?pais=" + this.pais + "&tipo=" + this.tipo;
-    }
-
     this.player.setVelocityX(0);
 
     if (this.cursors.left.isDown) {
@@ -324,6 +317,12 @@ class BaseLevel extends Phaser.Scene {
   hitPlayer(player, balaenem) {
     balaenem.destroy();
     vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
+    if (vidasrestantes <= 0) {
+      localStorage.clear();
+      localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
+      window.location.href =
+        "GameOver.html?pais=" + this.pais + "&tipo=" + this.tipo;
+    }
     player.anims.play("daño");
     player.once("animationcomplete-daño", () => {
       player.play("idle");
