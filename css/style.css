@@ -62,3 +62,53 @@ p {
   height: 384px;
   width: 400px;
 }
+
+h2 {
+  color: #fff
+}
+
+.menu-boton {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.menu-div {
+  /*display: none;*/
+  padding: 40px;
+  position: absolute;
+  width: 400px;
+  height: 380px;
+  background: rgb(0, 0, 0);
+  border-radius: 15px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  background: #5e027a;
+}
+
+ button {
+  width: 200px;
+  padding: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #8102a8;
+  color: white;
+  cursor: pointer;
+}
+
+.div-botones {
+  height: 313px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;  
+}
