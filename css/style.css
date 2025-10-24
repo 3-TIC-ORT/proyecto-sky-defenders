@@ -77,7 +77,7 @@ h2 {
 }
 
 .menu-div {
-  /*display: none;*/
+  display: none;
   padding: 40px;
   position: absolute;
   width: 400px;
