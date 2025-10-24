@@ -46,12 +46,12 @@ Phaser.Game = function (config) {
 
 
   inicioBoton.addEventListener("click", () => {
-    window.location.href = "../index.html";
+    window.location.href = "../html/inicio.html";
   });
 
 
   tablaBoton.addEventListener("click", () => {
-    window.location.href = "TablaDeClasificación.html";
+    window.location.href = "../html/TablaDeClasificación.html";
   });
 
 
