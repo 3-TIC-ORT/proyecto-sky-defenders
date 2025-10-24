@@ -7,15 +7,67 @@ let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
 
+
+const menuBoton = document.getElementById("menuBoton");
+const menuDiv = document.getElementById("menu-div");
+const inicioBoton = document.getElementById("inicioBoton");
+const reanudarBoton = document.getElementById("reanudarBoton");
+const tablaBoton = document.getElementById("tablaBoton");
+
+
+let gameInstance;
+
+
+const originalGameConstructor = Phaser.Game;
+Phaser.Game = function (config) {
+  gameInstance = new originalGameConstructor(config);
+  return gameInstance;
+};
+
+
+  menuBoton.addEventListener("click", () => {
+    menuDiv.style.display = "block";
+
+
+    const activeScene = gameInstance.scene.getScenes(true)[0];
+    activeScene.scene.pause();
+  });
+
+
+  reanudarBoton.addEventListener("click", () => {
+    menuDiv.style.display = "none";
+
+
+    const pausedScene = gameInstance.scene.getScenes(false).find(s => s.sys.isPaused());
+    pausedScene.scene.resume();
+
+
+  });
+
+
+  inicioBoton.addEventListener("click", () => {
+    window.location.href = "../index.html";
+  });
+
+
+  tablaBoton.addEventListener("click", () => {
+    window.location.href = "TablaDeClasificación.html";
+  });
+
+
+
+
 class BaseLevel extends Phaser.Scene {
   constructor(BaseDelJuego) {
     super(BaseDelJuego);
   }
 
+
   preload() {
     const params = new URLSearchParams(window.location.search);
     this.pais = params.get("pais");
     this.tipo = params.get("tipo");
+
 
     const tiposConfig = {
       ataque: [
@@ -34,6 +86,7 @@ class BaseLevel extends Phaser.Scene {
       ],
     };
 
+
     const frames = tiposConfig[this.tipo];
     frames.forEach((cfg, i) => {
       this.load.spritesheet(
@@ -43,19 +96,24 @@ class BaseLevel extends Phaser.Scene {
       );
     });
 
+
     this.load.spritesheet("enemigo", "../imgs/enemigo.png", {
       frameWidth: 28,
       frameHeight: 30,
     });
 
+
     this.load.image("bala", "../imgs/bala.png");
+
 
     this.load.image("balaenem", "../imgs/balaenem.png");
   }
 
+
   create() {
     this.player = this.physics.add.sprite(683, 700, "avion1").setScale(2);
     this.player.setCollideWorldBounds(true);
+
 
     this.anims.create({
       key: "enemigo",
@@ -64,12 +122,14 @@ class BaseLevel extends Phaser.Scene {
       repeat: -1,
     });
 
+
     this.anims.create({
       key: "enemigo_disparo1",
       frames: this.anims.generateFrameNumbers("enemigo", { start: 6, end: 8 }),
       frameRate: 10,
       repeat: 0,
     });
+
 
     this.anims.create({
       key: "enemigo_disparo2",
@@ -78,12 +138,14 @@ class BaseLevel extends Phaser.Scene {
       repeat: 0,
     });
 
+
     this.anims.create({
       key: "enemigo_daño",
       frames: this.anims.generateFrameNumbers("enemigo", { start: 12, end: 13 }),
       frameRate: 10,
       repeat: 0,
     });
+
 
     const animConfigs = {
       ataque: {
@@ -109,7 +171,9 @@ class BaseLevel extends Phaser.Scene {
       },
     };
 
+
     const cfg = animConfigs[this.tipo];
+
 
     const animList = [
       {
@@ -170,6 +234,7 @@ class BaseLevel extends Phaser.Scene {
       },
     ];
 
+
     animList.forEach(({ key, sprite, start, end, rate, repeat }) => {
       this.anims.create({
         key: key,
@@ -179,16 +244,21 @@ class BaseLevel extends Phaser.Scene {
       });
     });
 
+
     this.player.anims.play("idle");
+
 
     this.cursors = this.input.keyboard.createCursorKeys();
     botonDisparo = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
+
     balas = this.physics.add.group({ defaultKey: "bala" });
 
+
     this.balaenem = this.physics.add.group({ defaultKey: "balaenem" });
+
 
     this.time.addEvent({
       delay: 600,
@@ -196,6 +266,7 @@ class BaseLevel extends Phaser.Scene {
       callbackScope: this,
       loop: true,
     });
+
 
     this.physics.add.overlap(
       this.balaenem,
@@ -205,7 +276,9 @@ class BaseLevel extends Phaser.Scene {
       this
     );
 
+
     this.spawnEnemies();
+
 
     this.enemigos.getChildren().forEach(enemigo => {
       this.tweens.add({
@@ -224,11 +297,14 @@ class BaseLevel extends Phaser.Scene {
       });
     });
 
+
     this.physics.add.overlap(balas, this.enemigos, this.hitEnemigo, null, this);
   }
 
+
   update(time) {
     this.player.setVelocityX(0);
+
 
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-200);
@@ -256,6 +332,7 @@ class BaseLevel extends Phaser.Scene {
       this.player.anims.play("idle", true);
     }
 
+
     if (botonDisparo.isDown && time > tiempoBala) {
       const bala = balas.get(this.player.x, this.player.y - this.player.height);
       if (bala) {
@@ -267,16 +344,17 @@ class BaseLevel extends Phaser.Scene {
     }
   }
 
+
   hitEnemigo(bala, enemigo) {
     bala.destroy();
     enemigo.play("enemigo_daño");
-  
+ 
     enemigo.once("animationcomplete-enemigo_daño", () => {
       enemigo.destroy();
-  
+ 
       enemigosDestruidos += 10;
       puntaje.innerText = "Puntaje: " + enemigosDestruidos;
-  
+ 
       if (this.enemigos.countActive(true) === 0) {
         if (this.nextLevel === "YouWin") {
           localStorage.clear();
@@ -288,15 +366,19 @@ class BaseLevel extends Phaser.Scene {
       }
     });
   }
-  
+ 
+
 
   enemyShoot() {
     const enemigosVivos = this.enemigos.getChildren().filter((e) => e.active);
     if (enemigosVivos.length === 0) return;
 
+
     const enemigo = Phaser.Utils.Array.GetRandom(enemigosVivos);
 
+
     enemigo.play("enemigo_disparo1");
+
 
     enemigo.once("animationcomplete-enemigo_disparo1", () => {
       const balaenem = this.balaenem.get(
@@ -310,6 +392,7 @@ class BaseLevel extends Phaser.Scene {
       }
       enemigo.play("enemigo_disparo2");
     });
+
 
     enemigo.once("animationcomplete-enemigo_disparo2", () => {
       enemigo.play("enemigo");
@@ -331,14 +414,17 @@ class BaseLevel extends Phaser.Scene {
   }
 }
 
+
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
     this.nextLevel = "Level2";
   }
 
+
   spawnEnemies() {
     this.enemigos = this.physics.add.group();
+
 
     for (let row = 0; row < 3; row++) {
       const enemigosFila = this.enemigos.createMultiple({
@@ -347,12 +433,14 @@ class Level1 extends BaseLevel {
         setXY: { x: 100, y: 100 + row * 80, stepX: 80 },
       });
 
+
       enemigosFila.forEach((enemigo) => {
         enemigo.play("enemigo");
       });
     }
   }
 }
+
 
 class Level2 extends BaseLevel {
   constructor() {
@@ -363,6 +451,7 @@ class Level2 extends BaseLevel {
     super.create();
     niveles.innerText = "Nivel: 2";
 
+
     this.time.addEvent({
       delay: 300,
       callback: this.enemyShoot,
@@ -370,6 +459,7 @@ class Level2 extends BaseLevel {
       loop: true,
     });
   }
+
 
   spawnEnemies() {
     this.enemigos = this.physics.add.group();
@@ -380,6 +470,7 @@ class Level2 extends BaseLevel {
         setXY: { x: 100, y: 100 + row * 80, stepX: 80 },
       });
 
+
       enemigosFila.forEach((enemigo) => {
         enemigo.play("enemigo");
       });
@@ -387,22 +478,26 @@ class Level2 extends BaseLevel {
   }
 }
 
+
 class Level3 extends BaseLevel {
   constructor() {
     super("Level3");
     this.nextLevel = "YouWin";
   }
 
+
   create() {
     super.create();
     niveles.innerText = "Nivel: 3";
   }
+
 
   spawnEnemies() {
     this.enemigos = this.physics.add.group();
     this.enemigos.create(683, 200, "enemigo").setScale(4);
   }
 }
+
 
 const config = {
   type: Phaser.AUTO,
@@ -415,5 +510,6 @@ const config = {
   },
   scene: [Level1, Level2, Level3],
 };
+
 
 new Phaser.Game(config);
