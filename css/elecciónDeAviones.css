@@ -1,0 +1,53 @@
+body {
+    overflow: hidden;
+    margin: 0;
+    background: url(../imgs/fondosimple.png) no-repeat center fixed,
+      linear-gradient(
+        252.46deg,
+        #2596ff 0%,
+        #1156bd 38.46%,
+        #133a76 74.52%,
+        #132b4e 100%
+      );
+    background-size: cover;
+  }
+  .itemBf, .itemBr {
+    background: #534024;
+    border: 20px solid #3a2514;
+    border-radius: 20px;
+  }
+  .itemBf:hover {
+    cursor: pointer;
+    content: url(../imgs/fight.gif);
+    background: none;
+    border: none;
+    border-radius: 0;
+  }
+  .itemBr:hover {
+    cursor: pointer;
+    content: url(../imgs/ready.gif);
+    background: none;
+    border: none;
+    border-radius: 0;
+  }
+  .divIMG {
+    display: flex;
+    justify-content: space-evenly;
+    height: 30vh;
+    align-items: center;
+  }
+  .elegituavion, .elegituequipo {
+    width: 800px;
+    height: 225px;
+  }
+  .items {
+    display: flex;
+    justify-content: space-evenly;
+    height: 70vh;
+    align-items: center;
+    gap: 15px;
+  }
+  .item {
+    height: 384px;
+    width: 400px;
+  }
