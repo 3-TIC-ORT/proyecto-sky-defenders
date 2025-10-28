@@ -58,13 +58,13 @@ p {
   align-items: center;
   gap: 15px;
 }
-.item{
+.item {
   height: 384px;
   width: 400px;
 }
 
 h2 {
-  color: #fff
+  color: #fff;
 }
 
 .menu-boton {
@@ -76,7 +76,8 @@ h2 {
   cursor: pointer;
 }
 
-.menu-div {
+.menu-div,
+#cfg-div {
   display: none;
   padding: 40px;
   position: absolute;
@@ -93,7 +94,7 @@ button:hover {
   background: #5e027a;
 }
 
- button {
+button {
   width: 200px;
   padding: 12px;
   font-size: 18px;
@@ -110,5 +111,5 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;  
+  gap: 25px;
 }
