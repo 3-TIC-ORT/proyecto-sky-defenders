@@ -14,7 +14,7 @@ const reanudarBoton = document.getElementById("reanudarBoton");
 const tablaBoton = document.getElementById("tablaBoton");
 const cfg = document.getElementById("cfg");
 const cfgDiv = document.getElementById("cfg-div");
-const eeBoton = document.getElementById("eeBoton");
+const esBoton = document.getElementById("esBoton");
 const musicaBoton = document.getElementById("musicaBoton");
 const atrasBoton = document.getElementById("atrasBoton");
 const audio = document.getElementById("audio");
@@ -55,7 +55,7 @@ cfg.addEventListener("click", () => {
   cfgDiv.style.display = "block";
 });
 
-eeBoton.addEventListener("click", () => {
+esBoton.addEventListener("click", () => {
   alert("Esta opción aún no está disponible.");
 });
 

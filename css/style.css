@@ -1,5 +1,4 @@
 body {
-  display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -39,22 +38,39 @@ p {
   font-weight: bold;
   text-shadow: 2px 2px 4px black;
 }
-.itemB {
+.itemBf, .itemBr {
   background: #534024;
   border: 20px solid #3a2514;
   border-radius: 20px;
 }
-.itemB:hover {
+.itemBf:hover {
   cursor: pointer;
   content: url(../imgs/fight.gif);
   background: none;
   border: none;
   border-radius: 0;
 }
+.itemBr:hover {
+  cursor: pointer;
+  content: url(../imgs/ready.gif);
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+.divIMG {
+  display: flex;
+  justify-content: space-evenly;
+  height: 30vh;
+  align-items: center;
+}
+.elegituavion, .elegituequipo {
+  width: 800px;
+  height: 225px;
+}
 .items {
   display: flex;
   justify-content: space-evenly;
-  height: 100vh;
+  height: 70vh;
   align-items: center;
   gap: 15px;
 }
