@@ -305,13 +305,13 @@ class BaseLevel extends Phaser.Scene {
     this.enemigos.getChildren().forEach((enemigo) => {
       this.tweens.add({
         onYoyo: () => {
-          this.enemigos.incY(0.1);
+          this.enemigos.incY(0.3);
         },
         onRepeat: () => {
-          this.enemigos.incY(0.1);
+          this.enemigos.incY(0.3);
         },
         targets: enemigo,
-        x: enemigo.x + 200,
+        x: enemigo.x + 400,
         ease: "Linear",
         duration: 2000,
         yoyo: true,
