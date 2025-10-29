@@ -2,7 +2,7 @@ let tiempoBala = 0;
 let balas;
 let botonDisparo;
 let enemigosDestruidos = 0;
-let vidasrestantes = 3;
+let vidasrestantes = 30000;
 let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
@@ -455,6 +455,7 @@ class Level2 extends BaseLevel {
     super("Level2");
     this.nextLevel = "Level3";
   }
+
   create() {
     super.create();
     niveles.innerText = "Nivel: 2";
@@ -464,6 +465,23 @@ class Level2 extends BaseLevel {
       callback: this.enemyShoot,
       callbackScope: this,
       loop: true,
+    });
+
+    this.enemigos.getChildren().forEach((enemigo) => {
+      this.tweens.add({
+        onYoyo: () => {
+          this.enemigos.incY(0.005);
+        },
+        onRepeat: () => {
+          this.enemigos.incY(0.005);
+        },
+        targets: enemigo,
+        x: enemigo.x + 100,
+        ease: "Linear",
+        duration: 2000,
+        yoyo: true,
+        repeat: -1,
+      });
     });
   }
 
@@ -483,6 +501,7 @@ class Level2 extends BaseLevel {
   }
 }
 
+
 class Level3 extends BaseLevel {
   constructor() {
     super("Level3");
@@ -492,12 +511,33 @@ class Level3 extends BaseLevel {
   create() {
     super.create();
     niveles.innerText = "Nivel: 3";
+
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.enemyShoot,
+      callbackScope: this,
+      loop: true,
+    });
   }
 
   spawnEnemies() {
     this.enemigos = this.physics.add.group();
-    this.enemigos.create(683, 200, "enemigo").setScale(4);
+    this.boss = this.enemigos.create(683, 200, "enemigo").setScale(4);
+    this.boss.play("enemigo");
   }
+
+  enemyShoot() {
+    if (!this.boss.active) return;
+  
+    const balaCentral = this.balaenem.get(this.boss.x, this.boss.y + this.boss.displayHeight);
+    if (balaCentral) {
+      balaCentral.setActive(true);
+      balaCentral.setVisible(true);
+
+      balaCentral.body.velocity.y = 250
+    }
+  }
+  
 }
 
 const config = {
