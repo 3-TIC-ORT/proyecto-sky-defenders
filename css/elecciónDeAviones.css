@@ -33,17 +33,16 @@ body {
   .divIMG {
     display: flex;
     justify-content: space-evenly;
-    height: 30vh;
+    height: 45vh;
     align-items: center;
   }
   .elegituavion, .elegituequipo {
-    width: 800px;
-    height: 225px;
+    width: 720px;
   }
   .items {
     display: flex;
     justify-content: space-evenly;
-    height: 70vh;
+    height: 55vh;
     align-items: center;
     gap: 15px;
   }

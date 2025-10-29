@@ -47,6 +47,14 @@ h2, p {
   cursor: pointer;
 }
 
+#botonOk:active {
+  content: url(../imgs/BotonOKPresionado.png);
+}
+
+#botonNo:active {
+  content: url(../imgs/BotonNoPresionado.png);
+}
+
 .menu-div,
 #cfg-div {
   display: none;
