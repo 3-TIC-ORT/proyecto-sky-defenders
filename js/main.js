@@ -327,10 +327,6 @@ class BaseLevel extends Phaser.Scene {
 
     fondo.tilePositionY -= velocidadFondo;
 
-    if (fondo.tilePositionY >= fondo.height) {
-        fondo.til
-    }
-    
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-200);
       if (
