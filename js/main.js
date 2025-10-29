@@ -98,6 +98,11 @@ class BaseLevel extends Phaser.Scene {
         { frameWidth: 23, frameHeight: 26 },
         { frameWidth: 25, frameHeight: 26 },
       ],
+      cazae: [
+        { frameWidth: 37, frameHeight: 22 },
+        { frameWidth: 26, frameHeight: 22 },
+        { frameWidth: 37, frameHeight: 22 },
+      ],
       bombardero: [
         { frameWidth: 41, frameHeight: 36 },
         { frameWidth: 31, frameHeight: 36 },
@@ -173,6 +178,13 @@ class BaseLevel extends Phaser.Scene {
         right: [8, 13],
         right_m: ["avion2", 0, 7],
         left_m: ["avion3", 0, 7],
+      },
+      cazae: {
+        idle: [0, 0, 10],
+        left: [6, 11],
+        right: [12, 17],
+        right_m: ["avion2", 0, 5],
+        left_m: ["avion2", 6, 11],
       },
       bombardero: {
         idle: [0, 9, 18],
