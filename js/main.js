@@ -21,6 +21,9 @@ const audio = document.getElementById("audio");
 
 let gameInstance;
 
+let fondo;
+let velocidadFondo = 2
+
 const originalGameConstructor = Phaser.Game;
 Phaser.Game = function (config) {
   gameInstance = new originalGameConstructor(config);
@@ -124,12 +127,18 @@ class BaseLevel extends Phaser.Scene {
       frameHeight: 30,
     });
 
+    this.load.image('fondo', '../imgs/Fondo.png');
+
     this.load.image("bala", "../imgs/bala.png");
 
     this.load.image("balaenem", "../imgs/balaenem.png");
   }
 
   create() {
+    
+    fondo = this.add.tileSprite(0, 0, 1366, 768, 'fondo');
+    fondo.setOrigin(0, 0);
+
     this.player = this.physics.add.sprite(683, 700, "avion1").setScale(2);
     this.player.setCollideWorldBounds(true);
 
@@ -316,6 +325,12 @@ class BaseLevel extends Phaser.Scene {
   update(time) {
     this.player.setVelocityX(0);
 
+    fondo.tilePositionY -= velocidadFondo;
+
+    if (fondo.tilePositionY >= fondo.height) {
+        fondo.til
+    }
+    
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-200);
       if (
