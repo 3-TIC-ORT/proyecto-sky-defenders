@@ -6,30 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
     <link rel="icon" href="../imgs/icono.ico" />
-    <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
     <style>
       body {
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        margin: 0;
-        background: #37d5fb url(../imgs/fondogameover.png) no-repeat center
-          fixed;
+        background: url(../imgs/fondogameover.png) no-repeat center fixed,
+          linear-gradient(
+            252.46deg,
+            #2596ff 0%,
+            #1156bd 38.46%,
+            #133a76 74.52%,
+            #132b4e 100%
+          );
         background-size: cover;
+        overflow: hidden;
       }
-      #BotonRetry:active {
+
+      #DivCartelGameOver {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 45vh;
+      }
+
+      #divRetryyExit {
+        position: absolute;
+        width: 100vw;
+        bottom: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+        align-items: center;
+      }
+      #botonRetry:active {
         content: url(../imgs/BotonRetryPresionado.png);
       }
-      #BotonExit:active {
+      #botonExit:active {
         content: url(../imgs/BotonExitPresionado.png);
       }
     </style>
-    <a href="" id="botonRetry"
-      ><img src="../imgs/BotonRetry.png" alt="BotónRetry"
-    /></a>
-    <a href="Save.html"><img src="../imgs/BotonExit.png" alt="BotónExit" /></a>
+
+    
+    <div id="DivCartelGameOver">
+      <img src="../imgs/GameOver.png" alt="">
+    </div>
+    <div id="divRetryyExit">
+    <a href="" id="botonRetry"><img src="../imgs/BotonRetry.png" alt="BotónRetry"/></a>
+    <a href="Save.html"><img id="botonExit" src="../imgs/BotonExit.png" alt="BotónExit" /></a>
+    </div>
 
     <script>
       const params = new URLSearchParams(window.location.search);
@@ -42,3 +66,4 @@
     </script>
   </body>
 </html>
+

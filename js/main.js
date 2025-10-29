@@ -311,7 +311,7 @@ class BaseLevel extends Phaser.Scene {
           this.enemigos.incY(0.3);
         },
         targets: enemigo,
-        x: enemigo.x + 400,
+        x: enemigo.x + 250,
         ease: "Linear",
         duration: 2000,
         yoyo: true,
