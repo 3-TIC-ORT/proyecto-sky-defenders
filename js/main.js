@@ -18,6 +18,7 @@ const esBoton = document.getElementById("esBoton");
 const musicaBoton = document.getElementById("musicaBoton");
 const atrasBoton = document.getElementById("atrasBoton");
 const audio = document.getElementById("audio");
+const audioDisparo = document.getElementById("audioDisparo");
 
 let gameInstance;
 
