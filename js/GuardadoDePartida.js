@@ -1,4 +1,4 @@
-connect2Server(3000);
+connect2Server();
 
 const puntaje = JSON.parse(localStorage.getItem("puntaje"));
 const botonGuardar = document.getElementById("botonGuardar");
@@ -9,14 +9,12 @@ botonGuardar.addEventListener("click", function () {
 
   if (nombre) {
     localStorage.setItem("nombreDeUsuario", JSON.stringify(nombre));
-/*acá está el postEvent*/  postEvent(
-      "PuntajeyNombre",
-      { PyN: { usuario: nombre, puntaje: puntaje } },
-      (listaDePyN) => {
-        localStorage.setItem("listaDePyN", JSON.stringify(listaDePyN));
-        window.location.href = "TablaDeClasificación.html";
-      }
-    );
+  //acá está el postEvent  
+  postEvent("PuntajeyNombre", { PyN: { usuario: nombre, puntaje: puntaje } }, (listaDePyN) => {
+          localStorage.setItem("listaDePyN", JSON.stringify(listaDePyN));
+          window.location.href = "TablaDeClasificación.html";
+        }
+  );
   } else {
     alert("Por favor ingresá tu nombre de usuario.");
   }
