@@ -471,10 +471,10 @@ class Level2 extends BaseLevel {
     this.enemigos.getChildren().forEach((enemigo) => {
       this.tweens.add({
         onYoyo: () => {
-          this.enemigos.incY(0.005);
+          this.enemigos.incY(0.01);
         },
         onRepeat: () => {
-          this.enemigos.incY(0.005);
+          this.enemigos.incY(0.01);
         },
         targets: enemigo,
         x: enemigo.x + 100,
@@ -530,14 +530,20 @@ class Level3 extends BaseLevel {
   enemyShoot() {
     if (!this.boss.active) return;
   
-    const balaCentral = this.balaenem.get(this.boss.x, this.boss.y + this.boss.displayHeight);
+    const playerX = this.player.x;
+    const playerY = this.player.y;
+  
+    const balaCentral = this.balaenem.get(this.boss.x, this.boss.y + this.boss.displayHeight * .5);
+    
     if (balaCentral) {
       balaCentral.setActive(true);
       balaCentral.setVisible(true);
-
-      balaCentral.body.velocity.y = 250
+  
+      balaCentral.body.velocity.x = (playerX - this.boss.x) *.5;
+      balaCentral.body.velocity.y = (playerY - this.boss.y) *.5;
     }
   }
+  
   
 }
 
