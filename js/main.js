@@ -23,7 +23,7 @@ const audioDisparo = document.getElementById("audioDisparo");
 let gameInstance;
 
 let fondo;
-let velocidadFondo = 2
+let velocidadFondo = 2;
 
 const originalGameConstructor = Phaser.Game;
 Phaser.Game = function (config) {
@@ -128,7 +128,7 @@ class BaseLevel extends Phaser.Scene {
       frameHeight: 30,
     });
 
-    this.load.image('fondo', '../imgs/Fondo.png');
+    this.load.image("fondo", "../imgs/Fondo.png");
 
     this.load.image("bala", "../imgs/bala.png");
 
@@ -136,8 +136,13 @@ class BaseLevel extends Phaser.Scene {
   }
 
   create() {
-    
-    fondo = this.add.tileSprite(0, 0, 1366, 768, 'fondo');
+    fondo = this.add.tileSprite(
+      0,
+      0,
+      this.scale.width,
+      this.scale.height,
+      "fondo"
+    );
     fondo.setOrigin(0, 0);
 
     this.player = this.physics.add.sprite(683, 700, "avion1").setScale(2);
@@ -361,6 +366,7 @@ class BaseLevel extends Phaser.Scene {
         bala.setVisible(true);
         bala.body.velocity.y = -400;
         tiempoBala = time + 400;
+        audioDisparo.play();
       }
     }
   }
@@ -502,7 +508,6 @@ class Level2 extends BaseLevel {
   }
 }
 
-
 class Level3 extends BaseLevel {
   constructor() {
     super("Level3");
@@ -529,28 +534,29 @@ class Level3 extends BaseLevel {
 
   enemyShoot() {
     if (!this.boss.active) return;
-  
+
     const playerX = this.player.x;
     const playerY = this.player.y;
-  
-    const balaCentral = this.balaenem.get(this.boss.x, this.boss.y + this.boss.displayHeight * .5);
-    
+
+    const balaCentral = this.balaenem.get(
+      this.boss.x,
+      this.boss.y + this.boss.displayHeight * 0.5
+    );
+
     if (balaCentral) {
       balaCentral.setActive(true);
       balaCentral.setVisible(true);
-  
-      balaCentral.body.velocity.x = (playerX - this.boss.x) *.5;
-      balaCentral.body.velocity.y = (playerY - this.boss.y) *.5;
+
+      balaCentral.body.velocity.x = (playerX - this.boss.x) * 0.5;
+      balaCentral.body.velocity.y = (playerY - this.boss.y) * 0.5;
     }
   }
-  
-  
 }
 
 const config = {
   type: Phaser.AUTO,
-  width: 1366,
-  height: 768,
+  width: window.innerWidth,
+  height: window.innerHeight,
   transparent: true,
   physics: {
     default: "arcade",
