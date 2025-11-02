@@ -42,7 +42,8 @@ body {
   text-shadow: 2px 2px 4px black;
 }
 
-h2, p {
+h2,
+p {
   color: #fff;
 }
 
@@ -99,4 +100,24 @@ button {
   justify-content: center;
   align-items: center;
   gap: 25px;
+}
+
+#transition-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  color: white;
+  font-size: 3rem;
+  font-family: sans-serif;
+  transition: opacity 2s ease, transform 2s ease, font-size 2s ease;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+#transition-text.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
+  font-size: 4rem;
 }

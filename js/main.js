@@ -6,6 +6,7 @@ let vidasrestantes = 3;
 let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
+let nivelActual = 2;
 
 const menuBoton = document.getElementById("menuBoton");
 const menuDiv = document.getElementById("menu-div");
@@ -81,6 +82,22 @@ atrasBoton.addEventListener("click", () => {
 });
 
 audio.play();
+
+function transitionToScene(newSceneName, text) {
+  const h1 = document.getElementById("transition-text");
+  h1.textContent = text;
+
+  h1.classList.add("show");
+
+  setTimeout(() => {
+    h1.classList.remove("show");
+
+    setTimeout(() => {
+      game.scene.start(newSceneName);
+    }, 2000);
+  }, 2000);
+  return (nivelActual += 1);
+}
 
 class BaseLevel extends Phaser.Scene {
   constructor(BaseDelJuego) {
@@ -387,6 +404,7 @@ class BaseLevel extends Phaser.Scene {
           localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
           window.location.href = "YouWin.html";
         } else {
+          transitionToScene("Level2", "Nivel: " + nivelActual);
           this.scene.start(this.nextLevel);
         }
       }
@@ -466,6 +484,7 @@ class Level2 extends BaseLevel {
   create() {
     super.create();
     niveles.innerText = "Nivel: 2";
+    nivelActual = 2;
 
     this.time.addEvent({
       delay: 300,
@@ -517,9 +536,10 @@ class Level3 extends BaseLevel {
   create() {
     super.create();
     niveles.innerText = "Nivel: 3";
+    nivelActual = 3;
 
     this.time.addEvent({
-      delay: 1000,
+      delay: 16000,
       callback: this.enemyShoot,
       callbackScope: this,
       loop: true,
