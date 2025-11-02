@@ -7,6 +7,15 @@ let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
 let nivelActual = 2;
+let gameInstance;
+let fondo;
+let velocidadFondo = 2;
+let musicaActiva = true;
+let esActivos = true;
+let musicVolume = 1.0;
+let effectsVolume = 1.0;
+let lastMusicVolume = musicVolume;
+let lastEffectsVolume = effectsVolume;
 
 const menuBoton = document.getElementById("menuBoton");
 const menuDiv = document.getElementById("menu-div");
@@ -20,14 +29,36 @@ const musicaBoton = document.getElementById("musicaBoton");
 const atrasBoton = document.getElementById("atrasBoton");
 const audio = document.getElementById("audio");
 const audioDisparo = document.getElementById("audioDisparo");
+const musicSlider = document.getElementById("musicVolume");
+const effectsSlider = document.getElementById("effectsVolume");
+const musicValue = document.getElementById("musicValue");
+const effectsValue = document.getElementById("effectsValue");
 
-let gameInstance;
+musicSlider.value = musicVolume;
+musicValue.innerText = Math.round(musicVolume * 100) + "%";
 
-let fondo;
-let velocidadFondo = 2;
+effectsSlider.value = effectsVolume;
+effectsValue.innerText = Math.round(effectsVolume * 100) + "%";
 
-let musicaActiva = true;
-let esActivos = true;
+audio.volume = musicVolume;
+
+musicSlider.addEventListener("input", (e) => {
+  musicVolume = parseFloat(e.target.value);
+  musicValue.innerText = Math.round(musicVolume * 100) + "%";
+  audio.volume = musicVolume;
+});
+
+effectsSlider.addEventListener("input", (e) => {
+  effectsVolume = parseFloat(e.target.value);
+  effectsValue.innerText = Math.round(effectsVolume * 100) + "%";
+});
+
+function playEffect(audioElement) {
+  if (!audioElement) return;
+  const clone = audioElement.cloneNode();
+  clone.volume = effectsVolume;
+  clone.play();
+}
 
 const originalGameConstructor = Phaser.Game;
 Phaser.Game = function (config) {
@@ -65,22 +96,67 @@ cfg.addEventListener("click", () => {
 
 esBoton.addEventListener("click", () => {
   if (esActivos) {
+    lastEffectsVolume = effectsVolume;
     esBoton.textContent = "Efectos de sonido: OFF";
+    effectsSlider.value = 0;
+    effectsValue.innerText = "0%";
+    effectsVolume = 0;
   } else {
     esBoton.textContent = "Efectos de sonido: ON";
+    effectsSlider.value = lastEffectsVolume;
+    effectsValue.innerText = Math.round(lastEffectsVolume * 100) + "%";
+    effectsVolume = lastEffectsVolume;
   }
   esActivos = !esActivos;
 });
 
 musicaBoton.addEventListener("click", () => {
   if (musicaActiva) {
+    lastMusicVolume = musicVolume;
     audio.pause();
     musicaBoton.textContent = "Música: OFF";
+    musicSlider.value = 0;
+    musicValue.innerText = "0%";
+    musicVolume = 0;
+    audio.volume = 0;
   } else {
-    audio.play();
     musicaBoton.textContent = "Música: ON";
+    musicSlider.value = lastMusicVolume;
+    musicValue.innerText = Math.round(lastMusicVolume * 100) + "%";
+    musicVolume = lastMusicVolume;
+    audio.volume = musicVolume;
+    audio.play().catch(() => {});
   }
   musicaActiva = !musicaActiva;
+});
+
+musicSlider.addEventListener("input", (e) => {
+  musicVolume = parseFloat(e.target.value);
+  musicValue.innerText = Math.round(musicVolume * 100) + "%";
+  audio.volume = musicVolume;
+
+  if (musicVolume === 0) {
+    musicaBoton.textContent = "Música: OFF";
+    musicaActiva = false;
+    audio.pause();
+  } else {
+    musicaBoton.textContent = "Música: ON";
+    musicaActiva = true;
+    if (audio.paused) audio.play();
+  }
+});
+
+effectsSlider.addEventListener("input", (e) => {
+  effectsVolume = parseFloat(e.target.value);
+  effectsValue.innerText = Math.round(effectsVolume * 100) + "%";
+
+  if (effectsVolume === 0) {
+    esBoton.textContent = "Efectos de sonido: OFF";
+    esActivos = false;
+  } else {
+    esBoton.textContent = "Efectos de sonido: ON";
+    esActivos = true;
+  }
 });
 
 atrasBoton.addEventListener("click", () => {
@@ -389,10 +465,7 @@ class BaseLevel extends Phaser.Scene {
         bala.setVisible(true);
         bala.body.velocity.y = -400;
         tiempoBala = time + 400;
-        if (esActivos) {
-          audioDisparo.currentTime = 0;
-          audioDisparo.play();
-        }
+        playEffect(audioDisparo);
       }
     }
   }
@@ -464,7 +537,7 @@ class BaseLevel extends Phaser.Scene {
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
-    this.nextLevel = "Level2";
+    this.nextLevel = "Level3";
   }
 
   spawnEnemies() {
@@ -548,7 +621,7 @@ class Level3 extends BaseLevel {
     nivelActual = 3;
 
     this.time.addEvent({
-      delay: 16000,
+      delay: 50000,
       callback: this.enemyShoot,
       callbackScope: this,
       loop: true,
