@@ -244,7 +244,10 @@ class BaseLevel extends Phaser.Scene {
     );
     fondo.setOrigin(0, 0);
 
-    this.player = this.physics.add.sprite(683, 700, "avion1").setScale(2);
+    this.player = this.physics.add
+      .sprite(this.scale.width / 2, this.scale.height * 0.9, "avion1")
+      .setScale(2);
+
     this.player.setCollideWorldBounds(true);
 
     this.anims.create({
