@@ -26,6 +26,9 @@ let gameInstance;
 let fondo;
 let velocidadFondo = 2;
 
+let musicaActiva = true;
+let esActivos = true;
+
 const originalGameConstructor = Phaser.Game;
 Phaser.Game = function (config) {
   gameInstance = new originalGameConstructor(config);
@@ -61,10 +64,13 @@ cfg.addEventListener("click", () => {
 });
 
 esBoton.addEventListener("click", () => {
-  alert("Esta opción aún no está disponible.");
+  if (esActivos) {
+    esBoton.textContent = "Efectos de sonido: OFF";
+  } else {
+    esBoton.textContent = "Efectos de sonido: ON";
+  }
+  esActivos = !esActivos;
 });
-
-let musicaActiva = true;
 
 musicaBoton.addEventListener("click", () => {
   if (musicaActiva) {
@@ -383,8 +389,10 @@ class BaseLevel extends Phaser.Scene {
         bala.setVisible(true);
         bala.body.velocity.y = -400;
         tiempoBala = time + 400;
-        audioDisparo.currentTime = 0;
-        audioDisparo.play();
+        if (esActivos) {
+          audioDisparo.currentTime = 0;
+          audioDisparo.play();
+        }
       }
     }
   }
