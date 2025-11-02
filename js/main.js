@@ -12,8 +12,8 @@ let fondo;
 let velocidadFondo = 2;
 let musicaActiva = true;
 let esActivos = true;
-let musicVolume = 1;
-let effectsVolume = 1;
+let musicVolume = 1.0;
+let effectsVolume = 1.0;
 let lastMusicVolume = musicVolume;
 let lastEffectsVolume = effectsVolume;
 
