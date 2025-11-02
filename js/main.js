@@ -540,7 +540,7 @@ class BaseLevel extends Phaser.Scene {
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
-    this.nextLevel = "Level3";
+    this.nextLevel = "Level2";
   }
 
   spawnEnemies() {
