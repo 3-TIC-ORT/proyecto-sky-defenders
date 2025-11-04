@@ -13,6 +13,8 @@ body {
       #132b4e 100%
     );
   background-size: cover;
+  width: 100vw;
+  height: 100vh;
 }
 
 #botonRetry:active {
