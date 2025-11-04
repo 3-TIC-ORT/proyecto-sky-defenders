@@ -16,6 +16,9 @@ let musicVolume = 1;
 let effectsVolume = 1;
 let lastMusicVolume = musicVolume;
 let lastEffectsVolume = effectsVolume;
+let tiempo = 0;
+let intervaloTiempo = null;
+let contadorActivo = false;
 
 const menuBoton = document.getElementById("menuBoton");
 const menuDiv = document.getElementById("menu-div");
@@ -34,6 +37,25 @@ const musicSlider = document.getElementById("musicVolume");
 const effectsSlider = document.getElementById("effectsVolume");
 const musicValue = document.getElementById("musicValue");
 const effectsValue = document.getElementById("effectsValue");
+
+function iniciarContador() {
+  if (contadorActivo) return;
+
+  contadorActivo = true;
+  intervaloTiempo = setInterval(() => {
+    tiempo++;
+
+    const minutos = Math.floor(tiempo / 60);
+    const segundos = tiempo % 60;
+    const formato = minutos + ":" + (segundos < 10 ? "0" : "") + segundos;
+    document.getElementById("tiempo").textContent = "Tiempo: " + formato;
+  }, 1000);
+}
+
+function pausarContador() {
+  clearInterval(intervaloTiempo);
+  contadorActivo = false;
+}
 
 musicSlider.value = musicVolume;
 musicValue.innerText = Math.round(musicVolume * 100) + "%";
@@ -68,6 +90,7 @@ Phaser.Game = function (config) {
 };
 
 menuBoton.addEventListener("click", () => {
+  pausarContador();
   menuDiv.style.display = "block";
 
   const activeScene = gameInstance.scene.getScenes(true)[0];
@@ -85,6 +108,7 @@ reanudarBoton.addEventListener("click", () => {
     .getScenes(false)
     .find((s) => s.sys.isPaused());
   pausedScene.scene.resume();
+  iniciarContador();
 });
 
 inicioBoton.addEventListener("click", () => {
@@ -171,21 +195,19 @@ atrasBoton.addEventListener("click", () => {
 document.addEventListener("keydown", (event) => {
   if (event.code === "Escape") {
     const activeScene = gameInstance.scene.getScenes(true)[0];
-    const pausedScene = gameInstance.scene.getScenes(false).find(s => s.sys.isPaused());
+    const pausedScene = gameInstance.scene
+      .getScenes(false)
+      .find((s) => s.sys.isPaused());
 
     if (menuDiv.style.display === "block") {
       menuDiv.style.display = "none";
       if (pausedScene) pausedScene.scene.resume();
-    } 
-    else {
+    } else {
       menuDiv.style.display = "block";
       if (activeScene) activeScene.scene.pause();
     }
   }
 });
-
-
-audio.play();
 
 function transitionToScene(newSceneName, text) {
   const h1 = document.getElementById("transition-text");
@@ -202,6 +224,10 @@ function transitionToScene(newSceneName, text) {
   }, 2000);
   return (nivelActual += 1);
 }
+
+audio.play();
+
+iniciarContador();
 
 class BaseLevel extends Phaser.Scene {
   constructor(BaseDelJuego) {

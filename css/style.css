@@ -24,18 +24,23 @@ body {
   content: url(../imgs/BotonExitPresionado.png);
 }
 
+#tiempo {
+  top: 5px;
+  left: 20px;
+}
 #puntaje {
-  top: 20px;
+  top: 45px;
   left: 20px;
 }
 #vidas {
-  top: 60px;
+  top: 85px;
   left: 20px;
 }
 #niveles {
-  top: 100px;
+  top: 125px;
   left: 20px;
 }
+
 .datos {
   position: absolute;
   font-size: 20px;
@@ -78,7 +83,13 @@ p {
   text-align: center;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, #000000 0%, #1D0018 61.54%, #5B004A 90.87%, #87006E 100%);
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    #1d0018 61.54%,
+    #5b004a 90.87%,
+    #87006e 100%
+  );
 }
 
 button:hover {
@@ -91,7 +102,7 @@ button {
   font-size: 18px;
   border: none;
   border-radius: 10px;
-  background: #87006E;
+  background: #87006e;
   color: white;
   cursor: pointer;
 }
