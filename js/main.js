@@ -398,7 +398,7 @@ class BaseLevel extends Phaser.Scene {
 
     this.balaenem = this.physics.add.group({ defaultKey: "balaenem" });
 
-    this.time.addEvent({
+    this.enemyShootEvent = this.time.addEvent({
       delay: 600,
       callback: this.enemyShoot,
       callbackScope: this,
@@ -504,6 +504,8 @@ class BaseLevel extends Phaser.Scene {
       enemigosDestruidos += 10;
       puntaje.innerText = "Puntaje: " + enemigosDestruidos;
 
+      this.enemyShootEvent.delay += 100;
+
       if (this.enemigos.countActive(true) === 0) {
         if (this.nextLevel === "YouWin") {
           localStorage.clear();
@@ -597,8 +599,8 @@ class Level2 extends BaseLevel {
     niveles.innerText = "Nivel: 2";
     nivelActual = 2;
 
-    this.time.addEvent({
-      delay: 300,
+    this.enemyShootEvent = this.time.addEvent({
+      delay: 600,
       callback: this.enemyShoot,
       callbackScope: this,
       loop: true,
@@ -649,7 +651,7 @@ class Level3 extends BaseLevel {
     niveles.innerText = "Nivel: 3";
     nivelActual = 3;
 
-    this.time.addEvent({
+    this.enemyShootEvent = this.time.addEvent({
       delay: 50000,
       callback: this.enemyShoot,
       callbackScope: this,
