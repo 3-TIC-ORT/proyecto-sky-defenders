@@ -400,14 +400,6 @@ class BaseLevel extends Phaser.Scene {
       loop: true,
     });
 
-    this.physics.add.overlap(
-      this.balaenem,
-      this.player,
-      this.hitPlayer,
-      null,
-      this
-    );
-
     this.spawnEnemies();
 
     this.enemigos.getChildren().forEach((enemigo) => {
@@ -428,6 +420,20 @@ class BaseLevel extends Phaser.Scene {
     });
 
     this.physics.add.overlap(balas, this.enemigos, this.hitEnemigo, null, this);
+    this.physics.add.overlap(
+      this.balaenem,
+      this.player,
+      this.hitPlayer,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.player,
+      this.enemigos,
+      this.gameOver,
+      null,
+      this
+    );
   }
 
   update(time) {
@@ -471,6 +477,16 @@ class BaseLevel extends Phaser.Scene {
         playEffect(audioDisparo);
       }
     }
+
+    this.enemigos.children.iterate((enemigo) => {
+      if (
+        enemigo &&
+        enemigo.active &&
+        enemigo.y > this.sys.game.config.height
+      ) {
+        this.gameOver();
+      }
+    });
   }
 
   hitEnemigo(bala, enemigo) {
@@ -521,14 +537,19 @@ class BaseLevel extends Phaser.Scene {
       enemigo.play("enemigo");
     });
   }
+  gameOver() {
+    localStorage.clear();
+    localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
+    window.location.href =
+      "GameOver.html?pais=" + this.pais + "&tipo=" + this.tipo;
+  }
   hitPlayer(player, balaenem) {
     balaenem.destroy();
     vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
     if (vidasrestantes <= 0) {
       localStorage.clear();
       localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
-      window.location.href =
-        "GameOver.html?pais=" + this.pais + "&tipo=" + this.tipo;
+      this.gameOver();
     }
     player.anims.play("daño");
     player.once("animationcomplete-daño", () => {
