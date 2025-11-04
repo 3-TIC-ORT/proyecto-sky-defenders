@@ -168,6 +168,23 @@ atrasBoton.addEventListener("click", () => {
   cfgDiv.style.display = "none";
 });
 
+document.addEventListener("keydown", (event) => {
+  if (event.code === "Escape") {
+    const activeScene = gameInstance.scene.getScenes(true)[0];
+    const pausedScene = gameInstance.scene.getScenes(false).find(s => s.sys.isPaused());
+
+    if (menuDiv.style.display === "block") {
+      menuDiv.style.display = "none";
+      if (pausedScene) pausedScene.scene.resume();
+    } 
+    else {
+      menuDiv.style.display = "block";
+      if (activeScene) activeScene.scene.pause();
+    }
+  }
+});
+
+
 audio.play();
 
 function transitionToScene(newSceneName, text) {
