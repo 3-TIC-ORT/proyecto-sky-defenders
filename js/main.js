@@ -19,8 +19,9 @@ let lastEffectsVolume = effectsVolume;
 
 const menuBoton = document.getElementById("menuBoton");
 const menuDiv = document.getElementById("menu-div");
-const inicioBoton = document.getElementById("inicioBoton");
 const reanudarBoton = document.getElementById("reanudarBoton");
+const reintentarBoton = document.getElementById("reintentarBoton");
+const inicioBoton = document.getElementById("inicioBoton");
 const tablaBoton = document.getElementById("tablaBoton");
 const cfg = document.getElementById("cfg");
 const cfgDiv = document.getElementById("cfg-div");
@@ -71,6 +72,10 @@ menuBoton.addEventListener("click", () => {
 
   const activeScene = gameInstance.scene.getScenes(true)[0];
   activeScene.scene.pause();
+});
+
+reintentarBoton.addEventListener("click", () => {
+  window.location.reload();
 });
 
 reanudarBoton.addEventListener("click", () => {
@@ -482,7 +487,7 @@ class BaseLevel extends Phaser.Scene {
       if (
         enemigo &&
         enemigo.active &&
-        enemigo.y > this.sys.game.config.height
+        enemigo.y - enemigo.displayHeight / 2 > this.sys.game.config.height
       ) {
         this.gameOver();
       }

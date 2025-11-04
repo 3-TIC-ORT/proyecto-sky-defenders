@@ -70,16 +70,17 @@ p {
   padding: 40px;
   position: absolute;
   width: 400px;
-  height: 380px;
+  height: 420px;
   background: rgb(0, 0, 0);
   border-radius: 15px;
   text-align: center;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(180deg, #000000 0%, #1D0018 61.54%, #5B004A 90.87%, #87006E 100%);
 }
 
 button:hover {
-  background: #5e027a;
+  background: #660053;
 }
 
 button {
@@ -88,13 +89,13 @@ button {
   font-size: 18px;
   border: none;
   border-radius: 10px;
-  background: #8102a8;
+  background: #87006E;
   color: white;
   cursor: pointer;
 }
 
 .div-botones {
-  height: 313px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
