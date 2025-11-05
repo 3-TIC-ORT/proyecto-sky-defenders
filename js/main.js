@@ -120,7 +120,7 @@ inicioBoton.addEventListener("click", () => {
 
 cfg.addEventListener("click", () => {
   cfgDiv.style.display = "flex";
-  menuDiv.style.display = "none"
+  menuDiv.style.display = "none";
 });
 
 esBoton.addEventListener("click", () => {
@@ -190,7 +190,7 @@ effectsSlider.addEventListener("input", (e) => {
 
 atrasBoton.addEventListener("click", () => {
   cfgDiv.style.display = "none";
-  menuDiv.style.display = "flex"
+  menuDiv.style.display = "flex";
 });
 
 document.addEventListener("keydown", (event) => {
@@ -498,7 +498,7 @@ class BaseLevel extends Phaser.Scene {
       null,
       this
     );
-    
+
     this.physics.add.overlap(
       this.player,
       this.enemigos,
@@ -506,9 +506,9 @@ class BaseLevel extends Phaser.Scene {
       null,
       this
     );
-    
-    pantallaDeCarga.style.display = "none"
-    
+
+    pantallaDeCarga.style.display = "none";
+
     audio.play();
 
     iniciarContador();
@@ -728,8 +728,8 @@ class Level3 extends BaseLevel {
     niveles.innerText = "Nivel: 3";
 
     if (this.enemyCollider) {
-    this.physics.world.removeCollider(this.enemyCollider);
-  }
+      this.physics.world.removeCollider(this.enemyCollider);
+    }
 
     this.enemyShootEvent = this.time.addEvent({
       delay: 50000,
@@ -840,26 +840,28 @@ class Level3 extends BaseLevel {
 
   spawnEnemies() {
     this.bossGroup = this.physics.add.group();
-  
+
     const centerX = this.scale.width / 2;
     const topY = 100;
-  
-    const cabeza = this.bossGroup.create(centerX, topY, "bossCabeza").setDepth(2).setScale(1.25);
-  
+
+    const cabeza = this.bossGroup
+      .create(centerX, topY, "bossCabeza")
+      .setDepth(2)
+      .setScale(1.25);
+
     const brazoDerecho = this.bossGroup
       .create(centerX - 440, 200, "bossBrazoIzquierdo")
       .setDepth(1);
-  
+
     const brazoIzquierdo = this.bossGroup
       .create(centerX + 440, 200, "bossBrazoDerecho")
       .setDepth(1);
-  
+
     this.bossParts = [brazoDerecho, brazoIzquierdo, cabeza];
     this.bossArms = [brazoDerecho, brazoIzquierdo];
-    
+
     cabeza.play("bossCabeza-Idle");
   }
-  
 
   hitBoss(bala, parte) {
     bala.destroy();
@@ -868,19 +870,17 @@ class Level3 extends BaseLevel {
     vidaBoss.innerText = "Vida del boss: " + bossHP;
 
     if (bossHP <= 0) {
-      this.bossGroup.getChildren().forEach(p => p.destroy());
+      this.bossGroup.getChildren().forEach((p) => p.destroy());
       this.bossGroup.clear(true, true);
       enemigosDestruidos += 500;
       puntaje.innerText = "Puntaje: " + enemigosDestruidos;
-  
+
       localStorage.clear();
       localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
       localStorage.setItem("tiempo", JSON.stringify(tiempo));
       window.location.href = "YouWin.html";
     }
-    
   }
-  
 
   enemyShoot() {
     if (!this.bossParts) return;
