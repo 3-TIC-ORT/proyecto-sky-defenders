@@ -2,7 +2,7 @@ let tiempoBala = 0;
 let balas;
 let botonDisparo;
 let enemigosDestruidos = 0;
-let vidasrestantes = 3;
+let vidasrestantes = 300000000;
 let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
@@ -107,7 +107,8 @@ reanudarBoton.addEventListener("click", () => {
   const pausedScene = gameInstance.scene
     .getScenes(false)
     .find((s) => s.sys.isPaused());
-  pausedScene.scene.resume();
+
+  if (pausedScene) pausedScene.scene.resume();
   iniciarContador();
 });
 
@@ -202,9 +203,11 @@ document.addEventListener("keydown", (event) => {
     if (menuDiv.style.display === "block") {
       menuDiv.style.display = "none";
       if (pausedScene) pausedScene.scene.resume();
+      iniciarContador();
     } else {
       menuDiv.style.display = "block";
       if (activeScene) activeScene.scene.pause();
+      pausarContador();
     }
   }
 });
@@ -219,7 +222,7 @@ function transitionToScene(newSceneName, text) {
     h1.classList.remove("show");
 
     setTimeout(() => {
-      game.scene.start(newSceneName);
+      gameInstance.scene.start(newSceneName);
     }, 2000);
   }, 2000);
   return (nivelActual += 1);
@@ -273,6 +276,25 @@ class BaseLevel extends Phaser.Scene {
     this.load.spritesheet("enemigo", "../imgs/enemigo.png", {
       frameWidth: 28,
       frameHeight: 30,
+    });
+
+    this.load.spritesheet("bossBrazoDerecho", "../imgs/bossBrazoDerecho.png", {
+      frameWidth: 491,
+      frameHeight: 400,
+    });
+
+    this.load.spritesheet(
+      "bossBrazoIzquierdo",
+      "../imgs/bossBrazoIzquierdo.png",
+      {
+        frameWidth: 491,
+        frameHeight: 400,
+      }
+    );
+
+    this.load.spritesheet("bossCabeza", "../imgs/bossCabeza.png", {
+      frameWidth: 300,
+      frameHeight: 300,
     });
 
     this.load.image("fondo", "../imgs/Fondo.png");
@@ -450,22 +472,24 @@ class BaseLevel extends Phaser.Scene {
 
     this.spawnEnemies();
 
-    this.enemigos.getChildren().forEach((enemigo) => {
-      this.tweens.add({
-        onYoyo: () => {
-          this.enemigos.incY(0.3);
-        },
-        onRepeat: () => {
-          this.enemigos.incY(0.3);
-        },
-        targets: enemigo,
-        x: enemigo.x + 250,
-        ease: "Linear",
-        duration: 2000,
-        yoyo: true,
-        repeat: -1,
+    if (this.enemigos) {
+      this.enemigos.getChildren().forEach((enemigo) => {
+        this.tweens.add({
+          onYoyo: () => {
+            this.enemigos.incY(0.3);
+          },
+          onRepeat: () => {
+            this.enemigos.incY(0.3);
+          },
+          targets: enemigo,
+          x: enemigo.x + 250,
+          ease: "Linear",
+          duration: 2000,
+          yoyo: true,
+          repeat: -1,
+        });
       });
-    });
+    }
 
     this.physics.add.overlap(balas, this.enemigos, this.hitEnemigo, null, this);
     this.physics.add.overlap(
@@ -526,15 +550,17 @@ class BaseLevel extends Phaser.Scene {
       }
     }
 
-    this.enemigos.children.iterate((enemigo) => {
-      if (
-        enemigo &&
-        enemigo.active &&
-        enemigo.y - enemigo.displayHeight / 2 > this.sys.game.config.height
-      ) {
-        this.gameOver();
-      }
-    });
+    if (this.enemigos) {
+      this.enemigos.children.iterate((enemigo) => {
+        if (
+          enemigo &&
+          enemigo.active &&
+          enemigo.y - enemigo.displayHeight / 2 > this.sys.game.config.height
+        ) {
+          this.gameOver();
+        }
+      });
+    }
   }
 
   hitEnemigo(bala, enemigo) {
@@ -611,7 +637,7 @@ class BaseLevel extends Phaser.Scene {
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
-    this.nextLevel = "Level2";
+    this.nextLevel = "Level3";
   }
 
   spawnEnemies() {
@@ -700,32 +726,134 @@ class Level3 extends BaseLevel {
       callbackScope: this,
       loop: true,
     });
+
+    const animacionesBoss = [
+      {
+        key: "bossBrazoDerecho-Ataque-1",
+        sprite: "bossBrazoDerecho",
+        start: 0,
+        end: 6,
+      },
+      {
+        key: "bossBrazoDerecho-Ataque-1-1",
+        sprite: "bossBrazoDerecho",
+        start: 6,
+        end: 13,
+      },
+      {
+        key: "bossBrazoDerecho-Ataque-1-Aviso",
+        sprite: "bossBrazoDerecho",
+        start: 14,
+        end: 15,
+      },
+      {
+        key: "bossBrazoDerecho-Ataque-2",
+        sprite: "bossBrazoDerecho",
+        start: 28,
+        end: 30,
+      },
+      {
+        key: "bossBrazoDerecho-Ataque-2-2",
+        sprite: "bossBrazoDerecho",
+        start: 31,
+        end: 33,
+      },
+      {
+        key: "bossBrazoDerecho-Ataque-2-Aviso",
+        sprite: "bossBrazoDerecho",
+        start: 42,
+        end: 43,
+      },
+
+      {
+        key: "bossBrazoIzquierdo-Ataque-1",
+        sprite: "bossBrazoIzquierdo",
+        start: 0,
+        end: 6,
+      },
+      {
+        key: "bossBrazoIzquierdo-Ataque-1-1",
+        sprite: "bossBrazoIzquierdo",
+        start: 6,
+        end: 13,
+      },
+      {
+        key: "bossBrazoIzquierdo-Ataque-1-Aviso",
+        sprite: "bossBrazoIzquierdo",
+        start: 14,
+        end: 15,
+      },
+      {
+        key: "bossBrazoIzquierdo-Ataque-2",
+        sprite: "bossBrazoIzquierdo",
+        start: 28,
+        end: 30,
+      },
+      {
+        key: "bossBrazoIzquierdo-Ataque-2-2",
+        sprite: "bossBrazoIzquierdo",
+        start: 31,
+        end: 33,
+      },
+      {
+        key: "bossBrazoIzquierdo-Ataque-2-Aviso",
+        sprite: "bossBrazoIzquierdo",
+        start: 42,
+        end: 43,
+      },
+
+      { key: "bossCabeza-Ataque-1", sprite: "bossCabeza", start: 22, end: 27 },
+    ];
+
+    animacionesBoss.forEach(({ key, sprite, start, end }) => {
+      this.anims.create({
+        key,
+        frames: this.anims.generateFrameNumbers(sprite, { start, end }),
+        frameRate: 10,
+        repeat: 0,
+      });
+    });
+
+    this.bossParts.forEach((brazo, i) => {
+      this.tweens.add({
+        targets: brazo,
+        y: brazo.y + 100,
+        duration: 2000,
+        yoyo: true,
+        repeat: -1,
+      });
+    });
   }
 
   spawnEnemies() {
-    this.enemigos = this.physics.add.group();
-    this.boss = this.enemigos.create(683, 200, "enemigo").setScale(4);
-    this.boss.play("enemigo");
+    this.bossGroup = this.physics.add.group();
+
+    const parteAncho = this.scale.width / 3;
+    const yPos = 0;
+
+    this.bossParts = [
+      this.bossGroup.create(parteAncho * 2.5, yPos, "bossBrazoDerecho"),
+      this.bossGroup.create(parteAncho * 0.5, yPos, "bossBrazoIzquierdo"),
+      this.bossGroup.create(parteAncho * 1.5, yPos, "bossCabeza"),
+    ];
   }
 
   enemyShoot() {
-    if (!this.boss.active) return;
+    if (!this.bossParts) return;
 
-    const playerX = this.player.x;
-    const playerY = this.player.y;
+    this.bossParts.forEach((brazo, i) => {
+      const bala = this.balaenem.get(
+        brazo.x,
+        brazo.y + brazo.displayHeight * 0.5
+      );
 
-    const balaCentral = this.balaenem.get(
-      this.boss.x,
-      this.boss.y + this.boss.displayHeight * 0.5
-    );
-
-    if (balaCentral) {
-      balaCentral.setActive(true);
-      balaCentral.setVisible(true);
-
-      balaCentral.body.velocity.x = (playerX - this.boss.x) * 0.5;
-      balaCentral.body.velocity.y = (playerY - this.boss.y) * 0.5;
-    }
+      if (bala) {
+        bala.setActive(true);
+        bala.setVisible(true);
+        bala.body.velocity.x = 0;
+        bala.body.velocity.y = 300;
+      }
+    });
   }
 }
 
