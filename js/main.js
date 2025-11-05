@@ -38,6 +38,7 @@ const musicSlider = document.getElementById("musicVolume");
 const effectsSlider = document.getElementById("effectsVolume");
 const musicValue = document.getElementById("musicValue");
 const effectsValue = document.getElementById("effectsValue");
+const pantallaDeCarga = document.getElementById("loading");
 
 function iniciarContador() {
   if (contadorActivo) return;
@@ -223,10 +224,6 @@ function transitionToScene(text) {
   return nivelActual;
 }
 
-audio.play();
-
-iniciarContador();
-
 class BaseLevel extends Phaser.Scene {
   constructor(BaseDelJuego) {
     super(BaseDelJuego);
@@ -288,8 +285,8 @@ class BaseLevel extends Phaser.Scene {
     );
 
     this.load.spritesheet("bossCabeza", "../imgs/bossCabeza.png", {
-      frameWidth: 495,
-      frameHeight: 286,
+      frameWidth: 492,
+      frameHeight: 295,
     });
 
     this.load.image("fondo", "../imgs/Fondo.png");
@@ -509,6 +506,12 @@ class BaseLevel extends Phaser.Scene {
       null,
       this
     );
+    
+    pantallaDeCarga.style.display = "none"
+    
+    audio.play();
+
+    iniciarContador();
   }
 
   update(time) {
@@ -810,7 +813,7 @@ class Level3 extends BaseLevel {
         end: 43,
       },
 
-      { key: "bossCabeza-Ataque-1", sprite: "bossCabeza", start: 22, end: 27 },
+      { key: "bossCabeza-Idle", sprite: "bossCabeza", start: 22, end: 27 },
     ];
 
     animacionesBoss.forEach(({ key, sprite, start, end }) => {
@@ -818,15 +821,15 @@ class Level3 extends BaseLevel {
         key,
         frames: this.anims.generateFrameNumbers(sprite, { start, end }),
         frameRate: 10,
-        repeat: 0,
+        repeat: -1,
       });
     });
 
-    this.bossParts.forEach((brazo, i) => {
+    this.bossArms.forEach((brazo, i) => {
       this.tweens.add({
         targets: brazo,
-        y: brazo.y + 0,
-        duration: 2000,
+        y: brazo.y - 20,
+        duration: 1000,
         yoyo: true,
         repeat: -1,
       });
@@ -841,7 +844,7 @@ class Level3 extends BaseLevel {
     const centerX = this.scale.width / 2;
     const topY = 100;
   
-    const cabeza = this.bossGroup.create(centerX, topY, "bossCabeza").setDepth(2);
+    const cabeza = this.bossGroup.create(centerX, topY, "bossCabeza").setDepth(2).setScale(1.25);
   
     const brazoDerecho = this.bossGroup
       .create(centerX - 440, 200, "bossBrazoIzquierdo")
@@ -852,6 +855,9 @@ class Level3 extends BaseLevel {
       .setDepth(1);
   
     this.bossParts = [brazoDerecho, brazoIzquierdo, cabeza];
+    this.bossArms = [brazoDerecho, brazoIzquierdo];
+    
+    cabeza.play("bossCabeza-Idle");
   }
   
 

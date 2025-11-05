@@ -4,15 +4,6 @@ body {
   align-items: center;
   overflow: hidden;
   margin: 0;
-  background: url(../imgs/fondosimple.png) no-repeat center fixed,
-    linear-gradient(
-      252.46deg,
-      #2596ff 0%,
-      #1156bd 38.46%,
-      #133a76 74.52%,
-      #132b4e 100%
-    );
-  background-size: cover;
   width: 100vw;
   height: 100vh;
 }
@@ -60,6 +51,19 @@ p {
 h2{
   font-weight: 700;
   font-size: 48px
+}
+
+#loading{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .menu-boton {
