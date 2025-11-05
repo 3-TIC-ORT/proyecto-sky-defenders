@@ -575,6 +575,7 @@ class BaseLevel extends Phaser.Scene {
         if (this.nextLevel === "YouWin") {
           localStorage.clear();
           localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
+          localStorage.setItem("tiempo", JSON.stringify(tiempo));
           window.location.href = "YouWin.html";
         } else {
           transitionToScene("Nivel: " + nivelActual);
