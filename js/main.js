@@ -212,7 +212,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-function transitionToScene(newSceneName, text) {
+function transitionToScene(text) {
   const h1 = document.getElementById("transition-text");
   h1.textContent = text;
 
@@ -220,10 +220,6 @@ function transitionToScene(newSceneName, text) {
 
   setTimeout(() => {
     h1.classList.remove("show");
-
-    setTimeout(() => {
-      gameInstance.scene.start(newSceneName);
-    }, 2000);
   }, 2000);
   return (nivelActual += 1);
 }
@@ -581,7 +577,7 @@ class BaseLevel extends Phaser.Scene {
           localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
           window.location.href = "YouWin.html";
         } else {
-          transitionToScene("Level2", "Nivel: " + nivelActual);
+          transitionToScene("Nivel: " + nivelActual);
           this.scene.start(this.nextLevel);
         }
       }
