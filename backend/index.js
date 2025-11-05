@@ -7,12 +7,14 @@ subscribePOSTEvent ("PuntajeyNombre", (datos) => {
   const usuario = datos.PyN.usuario;
 
   const puntaje = datos.PyN.puntaje;
+
+  const tiempo = datos.PyN.tiempo
   
 
   let PuntajeNuevo = {
     "nombre": usuario,
     "puntaje": puntaje,
-    
+    "tiempo": tiempo
   }
   
   let data = fs.readFileSync("datos/puntajes.json","utf-8")
@@ -20,7 +22,13 @@ subscribePOSTEvent ("PuntajeyNombre", (datos) => {
   let HistPuntajes = JSON.parse(data);
   
   HistPuntajes.push(PuntajeNuevo)
-  HistPuntajes.sort((a, b) => b.puntaje - a.puntaje);
+
+  HistPuntajes.sort((a, b) => {
+    if (b.puntaje === a.puntaje) {
+      return a.tiempo - b.tiempo;
+    }
+    return b.puntaje - a.puntaje;
+  });
 
   let NuevoHistorialP = JSON.stringify(HistPuntajes, null, 2);
   
