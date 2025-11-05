@@ -2,7 +2,7 @@ let tiempoBala = 0;
 let balas;
 let botonDisparo;
 let enemigosDestruidos = 0;
-let vidasrestantes = 300000000;
+let vidasrestantes = 3;
 let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
@@ -637,7 +637,7 @@ class BaseLevel extends Phaser.Scene {
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
-    this.nextLevel = "Level3";
+    this.nextLevel = "Level2";
   }
 
   spawnEnemies() {
