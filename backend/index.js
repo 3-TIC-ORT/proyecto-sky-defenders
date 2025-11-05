@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { subscribeGETEvent, subscribePOSTEvent, realTimeEvent, startServer } from "soquetic";
+import { SerialPort } from 'serialport'
 
 startServer(3000);
 subscribePOSTEvent ("PuntajeyNombre", (datos) => {
@@ -37,3 +38,5 @@ subscribePOSTEvent ("PuntajeyNombre", (datos) => {
   
   return JSON.parse(fs.readFileSync("datos/puntajes.json","utf-8"))
 })
+
+const serialport = require('serialport')
