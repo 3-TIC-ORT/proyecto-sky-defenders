@@ -25,7 +25,6 @@ const menuDiv = document.getElementById("menu-div");
 const reanudarBoton = document.getElementById("reanudarBoton");
 const reintentarBoton = document.getElementById("reintentarBoton");
 const inicioBoton = document.getElementById("inicioBoton");
-const tablaBoton = document.getElementById("tablaBoton");
 const cfg = document.getElementById("cfg");
 const cfgDiv = document.getElementById("cfg-div");
 const esBoton = document.getElementById("esBoton");
@@ -91,7 +90,7 @@ Phaser.Game = function (config) {
 
 menuBoton.addEventListener("click", () => {
   pausarContador();
-  menuDiv.style.display = "block";
+  menuDiv.style.display = "flex";
 
   const activeScene = gameInstance.scene.getScenes(true)[0];
   activeScene.scene.pause();
@@ -116,12 +115,9 @@ inicioBoton.addEventListener("click", () => {
   window.location.href = "../html/inicio.html";
 });
 
-tablaBoton.addEventListener("click", () => {
-  window.location.href = "../html/TablaDeClasificación.html";
-});
-
 cfg.addEventListener("click", () => {
-  cfgDiv.style.display = "block";
+  cfgDiv.style.display = "flex";
+  menuDiv.style.display = "none"
 });
 
 esBoton.addEventListener("click", () => {
@@ -191,6 +187,7 @@ effectsSlider.addEventListener("input", (e) => {
 
 atrasBoton.addEventListener("click", () => {
   cfgDiv.style.display = "none";
+  menuDiv.style.display = "flex"
 });
 
 document.addEventListener("keydown", (event) => {
@@ -200,12 +197,12 @@ document.addEventListener("keydown", (event) => {
       .getScenes(false)
       .find((s) => s.sys.isPaused());
 
-    if (menuDiv.style.display === "block") {
+    if (menuDiv.style.display === "flex") {
       menuDiv.style.display = "none";
       if (pausedScene) pausedScene.scene.resume();
       iniciarContador();
     } else {
-      menuDiv.style.display = "block";
+      menuDiv.style.display = "flex";
       if (activeScene) activeScene.scene.pause();
       pausarContador();
     }
