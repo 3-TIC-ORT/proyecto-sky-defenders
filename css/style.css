@@ -40,6 +40,9 @@ body {
   top: 125px;
   left: 20px;
 }
+#vidaBoss {
+  bottom: 0px;
+}
 
 .datos {
   position: absolute;

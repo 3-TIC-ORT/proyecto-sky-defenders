@@ -6,6 +6,7 @@ let vidasrestantes = 3;
 let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
+let vidaBoss = document.getElementById("vidaBoss");
 let nivelActual = 2;
 let gameInstance;
 let fondo;
@@ -19,6 +20,7 @@ let lastEffectsVolume = effectsVolume;
 let tiempo = 0;
 let intervaloTiempo = null;
 let contadorActivo = false;
+let bossHP = 30;
 
 const menuBoton = document.getElementById("menuBoton");
 const menuDiv = document.getElementById("menu-div");
@@ -218,7 +220,7 @@ function transitionToScene(text) {
   setTimeout(() => {
     h1.classList.remove("show");
   }, 2000);
-  return (nivelActual += 1);
+  return nivelActual;
 }
 
 audio.play();
@@ -484,14 +486,22 @@ class BaseLevel extends Phaser.Scene {
       });
     }
 
-    this.physics.add.overlap(balas, this.enemigos, this.hitEnemigo, null, this);
+    this.enemyCollider = this.physics.add.overlap(
+      balas,
+      this.enemigos,
+      this.hitEnemigo,
+      null,
+      this
+    );
+
     this.physics.add.overlap(
-      this.balaenem,
       this.player,
+      this.balaenem,
       this.hitPlayer,
       null,
       this
     );
+    
     this.physics.add.overlap(
       this.player,
       this.enemigos,
@@ -538,7 +548,7 @@ class BaseLevel extends Phaser.Scene {
         bala.setActive(true);
         bala.setVisible(true);
         bala.body.velocity.y = -400;
-        tiempoBala = time + 400;
+        tiempoBala = time + 4;
         playEffect(audioDisparo);
       }
     }
@@ -631,7 +641,7 @@ class BaseLevel extends Phaser.Scene {
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
-    this.nextLevel = "Level2";
+    this.nextLevel = "Level3";
   }
 
   spawnEnemies() {
@@ -660,7 +670,7 @@ class Level2 extends BaseLevel {
   create() {
     super.create();
     niveles.innerText = "Nivel: 2";
-    nivelActual = 2;
+    nivelActual = 3;
 
     this.enemyShootEvent = this.time.addEvent({
       delay: 600,
@@ -712,7 +722,10 @@ class Level3 extends BaseLevel {
   create() {
     super.create();
     niveles.innerText = "Nivel: 3";
-    nivelActual = 3;
+
+    if (this.enemyCollider) {
+    this.physics.world.removeCollider(this.enemyCollider);
+  }
 
     this.enemyShootEvent = this.time.addEvent({
       delay: 50000,
@@ -817,6 +830,8 @@ class Level3 extends BaseLevel {
         repeat: -1,
       });
     });
+
+    this.physics.add.overlap(balas, this.bossGroup, this.hitBoss, null, this);
   }
 
   spawnEnemies() {
@@ -831,6 +846,27 @@ class Level3 extends BaseLevel {
       this.bossGroup.create(parteAncho * 1.5, yPos, "bossCabeza"),
     ];
   }
+
+  hitBoss(bala, parte) {
+    bala.destroy();
+
+    bossHP--;
+    vidaBoss.innerText = "Vida del boss: " + bossHP;
+
+    if (bossHP <= 0) {
+      this.bossGroup.getChildren().forEach(p => p.destroy());
+      this.bossGroup.clear(true, true);
+      enemigosDestruidos += 500;
+      puntaje.innerText = "Puntaje: " + enemigosDestruidos;
+  
+      localStorage.clear();
+      localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
+      localStorage.setItem("tiempo", JSON.stringify(tiempo));
+      window.location.href = "YouWin.html";
+    }
+    
+  }
+  
 
   enemyShoot() {
     if (!this.bossParts) return;
