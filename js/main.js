@@ -288,8 +288,8 @@ class BaseLevel extends Phaser.Scene {
     );
 
     this.load.spritesheet("bossCabeza", "../imgs/bossCabeza.png", {
-      frameWidth: 300,
-      frameHeight: 300,
+      frameWidth: 495,
+      frameHeight: 286,
     });
 
     this.load.image("fondo", "../imgs/Fondo.png");
@@ -629,6 +629,7 @@ class BaseLevel extends Phaser.Scene {
     if (vidasrestantes <= 0) {
       localStorage.clear();
       localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
+      localStorage.setItem("tiempo", JSON.stringify(tiempo));
       this.gameOver();
     }
     player.anims.play("daño");
@@ -824,7 +825,7 @@ class Level3 extends BaseLevel {
     this.bossParts.forEach((brazo, i) => {
       this.tweens.add({
         targets: brazo,
-        y: brazo.y + 100,
+        y: brazo.y + 0,
         duration: 2000,
         yoyo: true,
         repeat: -1,
@@ -836,16 +837,23 @@ class Level3 extends BaseLevel {
 
   spawnEnemies() {
     this.bossGroup = this.physics.add.group();
-
-    const parteAncho = this.scale.width / 3;
-    const yPos = 0;
-
-    this.bossParts = [
-      this.bossGroup.create(parteAncho * 2.5, yPos, "bossBrazoDerecho"),
-      this.bossGroup.create(parteAncho * 0.5, yPos, "bossBrazoIzquierdo"),
-      this.bossGroup.create(parteAncho * 1.5, yPos, "bossCabeza"),
-    ];
+  
+    const centerX = this.scale.width / 2;
+    const topY = 100;
+  
+    const cabeza = this.bossGroup.create(centerX, topY, "bossCabeza").setDepth(2);
+  
+    const brazoDerecho = this.bossGroup
+      .create(centerX - 440, 200, "bossBrazoIzquierdo")
+      .setDepth(1);
+  
+    const brazoIzquierdo = this.bossGroup
+      .create(centerX + 440, 200, "bossBrazoDerecho")
+      .setDepth(1);
+  
+    this.bossParts = [brazoDerecho, brazoIzquierdo, cabeza];
   }
+  
 
   hitBoss(bala, parte) {
     bala.destroy();

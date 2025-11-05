@@ -8,7 +8,7 @@ subscribePOSTEvent ("PuntajeyNombre", (datos) => {
 
   const puntaje = datos.PyN.puntaje;
 
-  const tiempo = datos.PyN.tiempo
+  const tiempo = datos.PyN.tiempo;
   
 
   let PuntajeNuevo = {
