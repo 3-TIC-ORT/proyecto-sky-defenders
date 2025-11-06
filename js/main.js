@@ -551,7 +551,7 @@ class BaseLevel extends Phaser.Scene {
         bala.setActive(true);
         bala.setVisible(true);
         bala.body.velocity.y = -400;
-        tiempoBala = time + 4;
+        tiempoBala = time + 400;
         playEffect(audioDisparo);
       }
     }
@@ -645,7 +645,7 @@ class BaseLevel extends Phaser.Scene {
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
-    this.nextLevel = "Level3";
+    this.nextLevel = "Level2";
   }
 
   spawnEnemies() {
