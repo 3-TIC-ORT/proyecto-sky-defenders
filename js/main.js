@@ -126,12 +126,16 @@ cfg.addEventListener("click", () => {
 esBoton.addEventListener("click", () => {
   if (esActivos) {
     lastEffectsVolume = effectsVolume;
-    esBoton.textContent = "Efectos de sonido: OFF";
+    esBoton.src = "../imgs/Boton No Audio.png";
+    esBoton.classList.add("esBotonMuteado");
+    esBoton.classList.remove("esBoton");
     effectsSlider.value = 0;
     effectsValue.innerText = "0%";
     effectsVolume = 0;
   } else {
-    esBoton.textContent = "Efectos de sonido: ON";
+    esBoton.src = "../imgs/Boton Audio.png";
+    esBoton.classList.add("esBoton");
+    esBoton.classList.remove("esBotonMuteado");
     effectsSlider.value = lastEffectsVolume;
     effectsValue.innerText = Math.round(lastEffectsVolume * 100) + "%";
     effectsVolume = lastEffectsVolume;
@@ -143,13 +147,17 @@ musicaBoton.addEventListener("click", () => {
   if (musicaActiva) {
     lastMusicVolume = musicVolume;
     audio.pause();
-    musicaBoton.textContent = "Música: OFF";
+    musicaBoton.src = "../imgs/Boton No Musica.png";
+    musicaBoton.classList.add("musicaBotonMuteado");
+    musicaBoton.classList.remove("musicaBoton");
     musicSlider.value = 0;
     musicValue.innerText = "0%";
     musicVolume = 0;
     audio.volume = 0;
   } else {
-    musicaBoton.textContent = "Música: ON";
+    musicaBoton.src = "../imgs/Boton Musica.png";
+    musicaBoton.classList.add("musicaBoton");
+    musicaBoton.classList.remove("musicaBotonMuteado");
     musicSlider.value = lastMusicVolume;
     musicValue.innerText = Math.round(lastMusicVolume * 100) + "%";
     musicVolume = lastMusicVolume;
@@ -165,11 +173,15 @@ musicSlider.addEventListener("input", (e) => {
   audio.volume = musicVolume;
 
   if (musicVolume === 0) {
-    musicaBoton.textContent = "Música: OFF";
+    musicaBoton.src = "../imgs/Boton No Musica.png";
+    musicaBoton.classList.add("musicaBotonMuteado");
+    musicaBoton.classList.remove("musicaBoton");
     musicaActiva = false;
     audio.pause();
   } else {
-    musicaBoton.textContent = "Música: ON";
+    musicaBoton.src = "../imgs/Boton Musica.png";
+    musicaBoton.classList.add("musicaBoton");
+    musicaBoton.classList.remove("musicaBotonMuteado");
     musicaActiva = true;
     if (audio.paused) audio.play();
   }
@@ -180,10 +192,14 @@ effectsSlider.addEventListener("input", (e) => {
   effectsValue.innerText = Math.round(effectsVolume * 100) + "%";
 
   if (effectsVolume === 0) {
-    esBoton.textContent = "Efectos de sonido: OFF";
+    esBoton.src = "../imgs/Boton No Audio.png";
+    esBoton.classList.add("esBotonMuteado");
+    esBoton.classList.remove("esBoton");
     esActivos = false;
   } else {
-    esBoton.textContent = "Efectos de sonido: ON";
+    esBoton.src = "../imgs/Boton Audio.png";
+    esBoton.classList.add("esBoton");
+    esBoton.classList.remove("esBotonMuteado");
     esActivos = true;
   }
 });

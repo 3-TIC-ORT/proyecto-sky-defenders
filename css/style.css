@@ -144,6 +144,22 @@ h2 {
   align-items: center;
 }
 
+.esBotonMuteado:active{
+  content: url(../imgs/Boton\ No\ Audio\ mantenido.png);
+}
+
+.esBoton:active{
+  content: url(../imgs/Boton\ Audio\ mantenido.png);
+}
+
+.musicaBotonMuteado:active{
+  content: url(../imgs/Boton\ No\ Musica\ mantenido.png);
+}
+
+.musicaBoton:active{
+  content: url(../imgs/Boton\ Musica\ mantenido.png);
+}
+
 .div-botones img {
   cursor: pointer;
   transition: transform 0.2s ease;
