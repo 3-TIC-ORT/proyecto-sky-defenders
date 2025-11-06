@@ -305,32 +305,20 @@ class BaseLevel extends Phaser.Scene {
       frameHeight: 286,
     });
 
-    this.load.spritesheet(
-      "Estrella-boss",
-      "../imgs/estrellaAtaqueBoss.png",
-      {
-        frameWidth: 95,
-        frameHeight: 94,
-      }
-    );
+    this.load.spritesheet("Estrella-boss", "../imgs/estrellaAtaqueBoss.png", {
+      frameWidth: 95,
+      frameHeight: 94,
+    });
 
-    this.load.spritesheet(
-      "Esfera-boss",
-      "../imgs/esferaAtaqueBoss.png",
-      {
-        frameWidth: 174,
-        frameHeight: 174,
-      }
-    );
+    this.load.spritesheet("Esfera-boss", "../imgs/esferaAtaqueBoss.png", {
+      frameWidth: 174,
+      frameHeight: 174,
+    });
 
-    this.load.spritesheet(
-      "Laser-boss",
-      "../imgs/rayoLaserAtaqueBoss.png",
-      {
-        frameWidth: 186,
-        frameHeight: 600,
-      }
-    );
+    this.load.spritesheet("Laser-boss", "../imgs/rayoLaserAtaqueBoss.png", {
+      frameWidth: 186,
+      frameHeight: 600,
+    });
 
     this.load.image("fondo", "../imgs/Fondo.png");
 
@@ -770,6 +758,18 @@ class Level3 extends BaseLevel {
     super.create();
     niveles.innerText = "Nivel: 3";
 
+    this.balasBoss = this.physics.add.group();
+
+    this.bossHead = this.bossGroup
+      .getChildren()
+      .find((p) => p.texture.key === "bossCabeza");
+    this.bossBrazoDerecho = this.bossGroup
+      .getChildren()
+      .find((p) => p.texture.key === "bossBrazoDerecho");
+    this.bossBrazoIzquierdo = this.bossGroup
+      .getChildren()
+      .find((p) => p.texture.key === "bossBrazoIzquierdo");
+
     if (this.enemyCollider) {
       this.physics.world.removeCollider(this.enemyCollider);
     }
@@ -782,7 +782,7 @@ class Level3 extends BaseLevel {
     });
 
     this.time.addEvent({
-      delay: 1800,
+      delay: 4000,
       callback: this.ataqueEsfera,
       callbackScope: this,
       loop: true,
@@ -882,34 +882,89 @@ class Level3 extends BaseLevel {
         repeat: -1,
       },
 
-      { key: "bossCabeza-Idle",
+      {
+        key: "bossCabeza-Idle",
         sprite: "bossCabeza",
         start: 0,
         end: 5,
         repeat: -1,
       },
 
-      { key: "bossCabeza-Ataque1",
+      {
+        key: "bossCabeza-Ataque1",
         sprite: "bossCabeza",
         start: 11,
         end: 21,
-        repeat: 0
+        repeat: 0,
       },
 
-      { key: "bossCabeza-Idle-Ataque2",
+      {
+        key: "bossCabeza-Idle-Ataque2",
         sprite: "bossCabeza",
         start: 22,
         end: 29,
         repeat: 0,
       },
 
-      { key: "bossCabeza-Idle-Ataque3",
+      {
+        key: "bossCabeza-Idle-Ataque3",
         sprite: "bossCabeza",
         start: 33,
         end: 34,
         repeat: -1,
       },
     ];
+
+    this.anims.create({
+      key: "estrella_anim",
+      frames: this.anims.generateFrameNumbers("Estrella-boss", {
+        start: 0,
+        end: 8,
+      }),
+      frameRate: 6,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "esfera_anim",
+      frames: this.anims.generateFrameNumbers("Esfera-boss", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "laser_apareciendo",
+      frames: this.anims.generateFrameNumbers("Laser-boss", {
+        start: 0,
+        end: 9,
+      }),
+      frameRate: 20,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "laser_encendido",
+      frames: this.anims.generateFrameNumbers("Laser-boss", {
+        start: 10,
+        end: 11,
+      }),
+      frameRate: 15,
+      repeat: -1,
+    });
+
+    // 🔴 ANIMACIÓN LÁSER (apagado, reversa)
+    this.anims.create({
+      key: "laser_apagado",
+      frames: this.anims.generateFrameNumbers("Laser-boss", {
+        start: 8,
+        end: 0,
+      }),
+      frameRate: 20,
+      repeat: 0,
+    });
 
     animacionesBoss.forEach(({ key, sprite, start, end, repeat }) => {
       this.anims.create({
@@ -965,13 +1020,63 @@ class Level3 extends BaseLevel {
     }
   }
 
-  ataqueEstrella() {
-  }
+  ataqueEstrella() {}
 
   ataqueEsfera() {
+    const rightX1 =
+      this.bossBrazoDerecho.x -
+      this.bossBrazoDerecho.displayWidth / 2 +
+      this.bossBrazoDerecho.displayWidth * 0.63;
+
+    const leftX1 =
+      this.bossBrazoIzquierdo.x -
+      this.bossBrazoIzquierdo.displayWidth / 2 +
+      this.bossBrazoIzquierdo.displayWidth * 0.36;
+
+    this.dispararDesde(rightX1, this.bossBrazoDerecho.y + 50);
+    this.dispararDesde(leftX1, this.bossBrazoIzquierdo.y + 50);
   }
 
+  dispararDesde(x, y) {
+    const bala = this.balasBoss.get(x, y, "Esfera-boss");
+    if (bala) {
+      bala.setActive(true);
+      bala.setVisible(true);
+      bala.setScale(0.5);
+      bala.play("esfera_anim");
+
+      const angle = Phaser.Math.Angle.Between(
+        x,
+        y,
+        this.player.x,
+        this.player.y
+      );
+      const speed = 220;
+      bala.body.velocity.x = Math.cos(angle) * speed;
+      bala.body.velocity.y = Math.sin(angle) * speed;
+    }
+  }
   ataqueLaser() {
+    if (!this.bossHead) return;
+
+    const headLeft = this.bossHead.x - this.bossHead.displayWidth / 2;
+    const x_head_50 = headLeft + this.bossHead.displayWidth * 0.5;
+    const yHead = this.bossHead.y + this.bossHead.displayHeight * 0.5;
+
+    const laser = this.balaenem.get(x_head_50, yHead, "Laser-boss");
+    if (laser) {
+      laser.setActive(true);
+      laser.setVisible(true);
+      laser.setScale(1.0);
+      laser.body.velocity.x = 0;
+      laser.body.velocity.y = 500;
+
+      // destruir / limpiar después de 1.5s para no saturar
+      laser.body.setSize(laser.width, laser.height, true);
+      this.time.delayedCall(1500, () => {
+        if (laser && laser.active) laser.destroy();
+      });
+    }
   }
 
   hitBoss(bala, parte) {
@@ -993,23 +1098,7 @@ class Level3 extends BaseLevel {
     }
   }
 
-  enemyShoot() {
-    if (!this.bossParts) return;
-
-    this.bossParts.forEach((brazo, i) => {
-      const bala = this.balaenem.get(
-        brazo.x,
-        brazo.y + brazo.displayHeight * 0.5
-      );
-
-      if (bala) {
-        bala.setActive(true);
-        bala.setVisible(true);
-        bala.body.velocity.x = 0;
-        bala.body.velocity.y = 300;
-      }
-    });
-  }
+  enemyShoot() {}
 }
 
 const config = {
