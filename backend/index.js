@@ -39,4 +39,7 @@ subscribePOSTEvent ("PuntajeyNombre", (datos) => {
   return JSON.parse(fs.readFileSync("datos/puntajes.json","utf-8"))
 })
 
-const serialport = require('serialport')
+const port = new SerialPort({
+  path: 'COM5', 
+  baudRate: 9600
+})
