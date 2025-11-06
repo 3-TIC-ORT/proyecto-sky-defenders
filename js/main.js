@@ -2,7 +2,7 @@ let tiempoBala = 0;
 let balas;
 let botonDisparo;
 let enemigosDestruidos = 0;
-let vidasrestantes = 3;
+let vidasrestantes = 30000000000;
 let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
@@ -301,9 +301,36 @@ class BaseLevel extends Phaser.Scene {
     );
 
     this.load.spritesheet("bossCabeza", "../imgs/bossCabeza.png", {
-      frameWidth: 492,
-      frameHeight: 295,
+      frameWidth: 493,
+      frameHeight: 286,
     });
+
+    this.load.spritesheet(
+      "Estrella-boss",
+      "../imgs/estrellaAtaqueBoss.png",
+      {
+        frameWidth: 95,
+        frameHeight: 94,
+      }
+    );
+
+    this.load.spritesheet(
+      "Esfera-boss",
+      "../imgs/esferaAtaqueBoss.png",
+      {
+        frameWidth: 174,
+        frameHeight: 174,
+      }
+    );
+
+    this.load.spritesheet(
+      "Laser-boss",
+      "../imgs/rayoLaserAtaqueBoss.png",
+      {
+        frameWidth: 186,
+        frameHeight: 600,
+      }
+    );
 
     this.load.image("fondo", "../imgs/Fondo.png");
 
@@ -567,7 +594,7 @@ class BaseLevel extends Phaser.Scene {
         bala.setActive(true);
         bala.setVisible(true);
         bala.body.velocity.y = -400;
-        tiempoBala = time + 400;
+        tiempoBala = time + 4;
         playEffect(audioDisparo);
       }
     }
@@ -661,7 +688,7 @@ class BaseLevel extends Phaser.Scene {
 class Level1 extends BaseLevel {
   constructor() {
     super("Level1");
-    this.nextLevel = "Level2";
+    this.nextLevel = "Level3";
   }
 
   spawnEnemies() {
@@ -747,9 +774,23 @@ class Level3 extends BaseLevel {
       this.physics.world.removeCollider(this.enemyCollider);
     }
 
-    this.enemyShootEvent = this.time.addEvent({
-      delay: 50000,
-      callback: this.enemyShoot,
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.tryEstrella,
+      callbackScope: this,
+      loop: true,
+    });
+
+    this.time.addEvent({
+      delay: 1800,
+      callback: this.ataqueEsfera,
+      callbackScope: this,
+      loop: true,
+    });
+
+    this.time.addEvent({
+      delay: 2500,
+      callback: this.ataqueLaser,
       callbackScope: this,
       loop: true,
     });
@@ -760,36 +801,42 @@ class Level3 extends BaseLevel {
         sprite: "bossBrazoDerecho",
         start: 0,
         end: 6,
+        repeat: -1,
       },
       {
         key: "bossBrazoDerecho-Ataque-1-1",
         sprite: "bossBrazoDerecho",
         start: 6,
         end: 13,
+        repeat: -1,
       },
       {
         key: "bossBrazoDerecho-Ataque-1-Aviso",
         sprite: "bossBrazoDerecho",
         start: 14,
         end: 15,
+        repeat: -1,
       },
       {
         key: "bossBrazoDerecho-Ataque-2",
         sprite: "bossBrazoDerecho",
         start: 28,
         end: 30,
+        repeat: -1,
       },
       {
         key: "bossBrazoDerecho-Ataque-2-2",
         sprite: "bossBrazoDerecho",
         start: 31,
         end: 33,
+        repeat: -1,
       },
       {
         key: "bossBrazoDerecho-Ataque-2-Aviso",
         sprite: "bossBrazoDerecho",
         start: 42,
         end: 43,
+        repeat: -1,
       },
 
       {
@@ -797,47 +844,79 @@ class Level3 extends BaseLevel {
         sprite: "bossBrazoIzquierdo",
         start: 0,
         end: 6,
+        repeat: -1,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-1-1",
         sprite: "bossBrazoIzquierdo",
         start: 6,
         end: 13,
+        repeat: -1,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-1-Aviso",
         sprite: "bossBrazoIzquierdo",
         start: 14,
         end: 15,
+        repeat: -1,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-2",
         sprite: "bossBrazoIzquierdo",
         start: 28,
         end: 30,
+        repeat: -1,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-2-2",
         sprite: "bossBrazoIzquierdo",
         start: 31,
         end: 33,
+        repeat: -1,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-2-Aviso",
         sprite: "bossBrazoIzquierdo",
         start: 42,
         end: 43,
+        repeat: -1,
       },
 
-      { key: "bossCabeza-Idle", sprite: "bossCabeza", start: 22, end: 27 },
+      { key: "bossCabeza-Idle",
+        sprite: "bossCabeza",
+        start: 0,
+        end: 5,
+        repeat: -1,
+      },
+
+      { key: "bossCabeza-Ataque1",
+        sprite: "bossCabeza",
+        start: 11,
+        end: 21,
+        repeat: 0
+      },
+
+      { key: "bossCabeza-Idle-Ataque2",
+        sprite: "bossCabeza",
+        start: 22,
+        end: 29,
+        repeat: 0,
+      },
+
+      { key: "bossCabeza-Idle-Ataque3",
+        sprite: "bossCabeza",
+        start: 33,
+        end: 34,
+        repeat: -1,
+      },
     ];
 
-    animacionesBoss.forEach(({ key, sprite, start, end }) => {
+    animacionesBoss.forEach(({ key, sprite, start, end, repeat }) => {
       this.anims.create({
         key,
         frames: this.anims.generateFrameNumbers(sprite, { start, end }),
         frameRate: 10,
-        repeat: -1,
+        repeat: repeat,
       });
     });
 
@@ -877,6 +956,22 @@ class Level3 extends BaseLevel {
     this.bossArms = [brazoDerecho, brazoIzquierdo];
 
     cabeza.play("bossCabeza-Idle");
+  }
+
+  tryEstrella() {
+    const chance = Math.random();
+    if (chance <= 0.3) {
+      this.ataqueEstrella();
+    }
+  }
+
+  ataqueEstrella() {
+  }
+
+  ataqueEsfera() {
+  }
+
+  ataqueLaser() {
   }
 
   hitBoss(bala, parte) {
