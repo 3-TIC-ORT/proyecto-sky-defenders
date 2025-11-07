@@ -781,15 +781,15 @@ class Level3 extends BaseLevel {
     });
 
     this.time.addEvent({
-      delay: 4000,
+      delay: 1000,
       callback: this.tryEsfera,
       callbackScope: this,
       loop: true,
     });
 
     this.time.addEvent({
-      delay: 2500,
-      callback: tryLaser,
+      delay: 1000,
+      callback: this.tryLaser,
       callbackScope: this,
       loop: true,
     });
@@ -801,20 +801,23 @@ class Level3 extends BaseLevel {
         start: 0,
         end: 6,
         repeat: 0,
+        frameRate: 10,
       },
       {
         key: "bossBrazoDerecho-Ataque-1-1",
         sprite: "bossBrazoDerecho",
         start: 6,
-        end: 13,
+        end: 12,
         repeat: 0,
+        frameRate: 10,
       },
       {
         key: "bossBrazoDerecho-Ataque-1-Aviso",
         sprite: "bossBrazoDerecho",
-        start: 14,
-        end: 15,
-        repeat: -1,
+        start: 13,
+        end: 14,
+        repeat: 2,
+        frameRate: 5,
       },
       {
         key: "bossBrazoDerecho-Ataque-2",
@@ -822,6 +825,7 @@ class Level3 extends BaseLevel {
         start: 28,
         end: 30,
         repeat: -1,
+        frameRate: 10,
       },
       {
         key: "bossBrazoDerecho-Ataque-2-2",
@@ -829,6 +833,7 @@ class Level3 extends BaseLevel {
         start: 31,
         end: 33,
         repeat: -1,
+        frameRate: 10,
       },
       {
         key: "bossBrazoDerecho-Ataque-2-Aviso",
@@ -836,6 +841,7 @@ class Level3 extends BaseLevel {
         start: 42,
         end: 43,
         repeat: -1,
+        frameRate: 10,
       },
 
       {
@@ -844,20 +850,23 @@ class Level3 extends BaseLevel {
         start: 0,
         end: 6,
         repeat: 0,
+        frameRate: 10,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-1-1",
         sprite: "bossBrazoIzquierdo",
         start: 6,
-        end: 13,
+        end: 12,
         repeat: 0,
+        frameRate: 10,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-1-Aviso",
         sprite: "bossBrazoIzquierdo",
-        start: 14,
-        end: 15,
-        repeat: -1,
+        start: 13,
+        end: 14,
+        repeat: 2,
+        frameRate: 5,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-2",
@@ -865,6 +874,7 @@ class Level3 extends BaseLevel {
         start: 28,
         end: 30,
         repeat: -1,
+        frameRate: 10,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-2-2",
@@ -872,6 +882,7 @@ class Level3 extends BaseLevel {
         start: 31,
         end: 33,
         repeat: -1,
+        frameRate: 10,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-2-Aviso",
@@ -879,6 +890,7 @@ class Level3 extends BaseLevel {
         start: 42,
         end: 43,
         repeat: -1,
+        frameRate: 10,
       },
 
       {
@@ -887,6 +899,7 @@ class Level3 extends BaseLevel {
         start: 0,
         end: 5,
         repeat: -1,
+        frameRate: 10,
       },
 
       {
@@ -895,6 +908,7 @@ class Level3 extends BaseLevel {
         start: 11,
         end: 21,
         repeat: 0,
+        frameRate: 10,
       },
 
       {
@@ -903,6 +917,7 @@ class Level3 extends BaseLevel {
         start: 22,
         end: 29,
         repeat: 0,
+        frameRate: 10,
       },
 
       {
@@ -911,6 +926,7 @@ class Level3 extends BaseLevel {
         start: 33,
         end: 34,
         repeat: -1,
+        frameRate: 10,
       },
     ];
 
@@ -922,6 +938,7 @@ class Level3 extends BaseLevel {
       }),
       frameRate: 6,
       repeat: 0,
+      frameRate: 10,
     });
 
     this.anims.create({
@@ -932,6 +949,7 @@ class Level3 extends BaseLevel {
       }),
       frameRate: 10,
       repeat: -1,
+      frameRate: 10,
     });
 
     this.anims.create({
@@ -942,6 +960,7 @@ class Level3 extends BaseLevel {
       }),
       frameRate: 20,
       repeat: 0,
+      frameRate: 10,
     });
 
     this.anims.create({
@@ -952,6 +971,7 @@ class Level3 extends BaseLevel {
       }),
       frameRate: 15,
       repeat: -1,
+      frameRate: 10,
     });
 
     this.anims.create({
@@ -964,11 +984,11 @@ class Level3 extends BaseLevel {
       repeat: 0,
     });
 
-    animacionesBoss.forEach(({ key, sprite, start, end, repeat }) => {
+    animacionesBoss.forEach(({ key, sprite, start, end, repeat, frameRate }) => {
       this.anims.create({
         key,
         frames: this.anims.generateFrameNumbers(sprite, { start, end }),
-        frameRate: 10,
+        frameRate: frameRate,
         repeat: repeat,
       });
     });
@@ -1012,6 +1032,7 @@ class Level3 extends BaseLevel {
   }
 
   tryEstrella() {
+    if (this.ataqueActivo) return;
     const chance = Math.random();
     if (chance <= 0.3) {
       this.ataqueEstrella();
@@ -1019,10 +1040,17 @@ class Level3 extends BaseLevel {
   }
 
   tryEsfera() {
+    if (this.ataqueActivo) return;
     const chance = Math.random();
-    if (chance <= 0.3) {
-      this.ataqueEsfera();
+    if (chance <= 0.7) {
       this.ataqueActivo = true;
+      this.bossArms[1].play("bossBrazoDerecho-Ataque-1-Aviso");
+      this.bossArms[0].play("bossBrazoIzquierdo-Ataque-1-Aviso");
+      this.bossBrazoIzquierdo.once(
+          "bossBrazoIzquierdo-Ataque-1-Aviso",
+          () => {
+        this.ataqueEsfera();
+      });
     }
   }
 
@@ -1034,7 +1062,6 @@ class Level3 extends BaseLevel {
   }
 
   ataqueEstrella() {
-    if (this.ataqueActivo) return;
     this.ataqueActivo = true;
   
     const brazoIzq = this.bossArms[0];
