@@ -53,29 +53,32 @@ const port = new SerialPort({
 
 function GuardarSeñales(data) {
   
-  const texto = data.toString()
+  const texto = data.toString().trim()
 
   if (texto == "led 1"){
     fs.writeFileSync("señales.json","");
   } 
    else if(texto==="led 2"){
-   fs.writeFileSync("señales.json","");
+   fs.writeFileSync("señales.json",JSON.stringify(""));
   }
   else if(texto==="led 3"){
-    fs.writeFileSync("señales.json","");
+   fs.writeFileSync("señales.json",JSON.stringify(""));
    }
    else if(texto==="led 4"){
-    fs.writeFileSync("señales.json","");
+   fs.writeFileSync("señales.json",JSON.stringify(""));
    }
    else if(texto==="led 5"){
-    fs.writeFileSync("señales.json","");
+    fs.writeFileSync("señales.json",JSON.stringify(""));
    }
    else if(texto==="led 6"){
-    fs.writeFileSync("señales.json","");
+    fs.writeFileSync("señales.json",JSON.stringify(""));
    }
    else if(texto==="boton 1"){
-    fs.writeFileSync("señales.json","");
-   }
+    fs.writeFileSync("señales.json",JSON.stringify(""));
+  }
    else if(texto==="boton 2"){
-    fs.writeFileSync("señales.json","");
-   }}
+    fs.writeFileSync("señales.json",JSON.stringify(""));
+   }
+  }
+const data = fs.readFileSync("señales.json", "utf-8");
+realTimeEvent("nuevaSeñal", data);
