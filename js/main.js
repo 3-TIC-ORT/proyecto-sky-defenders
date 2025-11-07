@@ -654,6 +654,7 @@ class BaseLevel extends Phaser.Scene {
   gameOver() {
     localStorage.clear();
     localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
+    localStorage.setItem("tiempo", JSON.stringify(tiempo));
     window.location.href =
       "GameOver.html?pais=" + this.pais + "&tipo=" + this.tipo;
   }
@@ -661,9 +662,6 @@ class BaseLevel extends Phaser.Scene {
     balaenem.destroy();
     vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
     if (vidasrestantes <= 0) {
-      localStorage.clear();
-      localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
-      localStorage.setItem("tiempo", JSON.stringify(tiempo));
       this.gameOver();
     }
     player.anims.play("daño");
