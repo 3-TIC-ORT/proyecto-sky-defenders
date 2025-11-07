@@ -801,14 +801,14 @@ class Level3 extends BaseLevel {
         sprite: "bossBrazoDerecho",
         start: 0,
         end: 6,
-        repeat: -1,
+        repeat: 0,
       },
       {
         key: "bossBrazoDerecho-Ataque-1-1",
         sprite: "bossBrazoDerecho",
         start: 6,
         end: 13,
-        repeat: -1,
+        repeat: 0,
       },
       {
         key: "bossBrazoDerecho-Ataque-1-Aviso",
@@ -844,14 +844,14 @@ class Level3 extends BaseLevel {
         sprite: "bossBrazoIzquierdo",
         start: 0,
         end: 6,
-        repeat: -1,
+        repeat: 0,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-1-1",
         sprite: "bossBrazoIzquierdo",
         start: 6,
         end: 13,
-        repeat: -1,
+        repeat: 0,
       },
       {
         key: "bossBrazoIzquierdo-Ataque-1-Aviso",
@@ -955,7 +955,6 @@ class Level3 extends BaseLevel {
       repeat: -1,
     });
 
-    // 🔴 ANIMACIÓN LÁSER (apagado, reversa)
     this.anims.create({
       key: "laser_apagado",
       frames: this.anims.generateFrameNumbers("Laser-boss", {
@@ -1038,23 +1037,43 @@ class Level3 extends BaseLevel {
   }
 
   dispararDesde(x, y) {
-    const bala = this.balasBoss.get(x, y, "Esfera-boss");
-    if (bala) {
-      bala.setActive(true);
-      bala.setVisible(true);
-      bala.setScale(0.5);
-      bala.play("esfera_anim");
+    this.bossBrazoDerecho.play("bossBrazoDerecho-Ataque-1");
+    this.bossBrazoIzquierdo.play("bossBrazoIzquierdo-Ataque-1");
 
-      const angle = Phaser.Math.Angle.Between(
-        x,
-        y,
-        this.player.x,
-        this.player.y
-      );
-      const speed = 220;
-      bala.body.velocity.x = Math.cos(angle) * speed;
-      bala.body.velocity.y = Math.sin(angle) * speed;
-    }
+    this.bossBrazoIzquierdo.once(
+      "animationcomplete-bossBrazoIzquierdo-Ataque-1",
+      () => {
+        const bala = this.balasBoss.get(x, y, "Esfera-boss");
+        if (bala) {
+          bala.setActive(true);
+          bala.setVisible(true);
+          bala.setScale(0.5);
+          bala.play("esfera_anim");
+
+          this.bossBrazoDerecho.play("bossBrazoDerecho-Ataque-1-1");
+          this.bossBrazoIzquierdo.play("bossBrazoIzquierdo-Ataque-1-1");
+
+          const velocidadInicial = 200;
+          bala.body.velocity.x = 0;
+          bala.body.velocity.y = velocidadInicial;
+
+          this.time.delayedCall(400, () => {
+            if (!bala.active || !this.player) return;
+
+            const angle = Phaser.Math.Angle.Between(
+              bala.x,
+              bala.y,
+              this.player.x,
+              this.player.y
+            );
+            const velocidadFinal = 250;
+
+            bala.body.velocity.x = Math.cos(angle) * velocidadFinal;
+            bala.body.velocity.y = Math.sin(angle) * velocidadFinal;
+          });
+        }
+      }
+    );
   }
   ataqueLaser() {
     if (!this.bossHead) return;
@@ -1071,7 +1090,6 @@ class Level3 extends BaseLevel {
       laser.body.velocity.x = 0;
       laser.body.velocity.y = 500;
 
-      // destruir / limpiar después de 1.5s para no saturar
       laser.body.setSize(laser.width, laser.height, true);
       this.time.delayedCall(1500, () => {
         if (laser && laser.active) laser.destroy();
