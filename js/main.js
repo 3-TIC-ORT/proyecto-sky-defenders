@@ -1042,15 +1042,20 @@ class Level3 extends BaseLevel {
   tryEsfera() {
     if (this.ataqueActivo) return;
     const chance = Math.random();
-    if (chance <= 0.7) {
+    if (chance <= 0.3) {
       this.ataqueActivo = true;
-      this.bossArms[1].play("bossBrazoDerecho-Ataque-1-Aviso");
-      this.bossArms[0].play("bossBrazoIzquierdo-Ataque-1-Aviso");
-      this.bossBrazoIzquierdo.once(
-          "bossBrazoIzquierdo-Ataque-1-Aviso",
-          () => {
-        this.ataqueEsfera();
+
+      const leftArm = this.bossBrazoIzquierdo;
+      const rightArm = this.bossBrazoDerecho;
+  
+      leftArm.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (anim) => {
+        if (anim.key === "bossBrazoIzquierdo-Ataque-1-Aviso") {
+          this.ataqueEsfera();
+        }
       });
+  
+      rightArm.play("bossBrazoDerecho-Ataque-1-Aviso");
+      leftArm.play("bossBrazoIzquierdo-Ataque-1-Aviso");
     }
   }
 
@@ -1103,22 +1108,21 @@ class Level3 extends BaseLevel {
   }  
 
   ataqueEsfera() {
-    if (this.ataqueActivo) return;
-    this.ataqueActivo = true;
+  if (!this.ataqueActivo) return;
 
-    const rightX1 =
-      this.bossBrazoDerecho.x -
-      this.bossBrazoDerecho.displayWidth / 2 +
-      this.bossBrazoDerecho.displayWidth * 0.63;
+  const rightX1 =
+    this.bossBrazoDerecho.x -
+    this.bossBrazoDerecho.displayWidth / 2 +
+    this.bossBrazoDerecho.displayWidth * 0.63;
 
-    const leftX1 =
-      this.bossBrazoIzquierdo.x -
-      this.bossBrazoIzquierdo.displayWidth / 2 +
-      this.bossBrazoIzquierdo.displayWidth * 0.36;
+  const leftX1 =
+    this.bossBrazoIzquierdo.x -
+    this.bossBrazoIzquierdo.displayWidth / 2 +
+    this.bossBrazoIzquierdo.displayWidth * 0.36;
 
-    this.dispararDesde(rightX1, this.bossBrazoDerecho.y + 50);
-    this.dispararDesde(leftX1, this.bossBrazoIzquierdo.y + 50);
-  }
+  this.dispararDesde(rightX1, this.bossBrazoDerecho.y + 50);
+  this.dispararDesde(leftX1, this.bossBrazoIzquierdo.y + 50);
+}
 
   dispararDesde(x, y) {
     this.bossBrazoDerecho.play("bossBrazoDerecho-Ataque-1");
@@ -1154,6 +1158,8 @@ class Level3 extends BaseLevel {
 
             bala.body.velocity.x = Math.cos(angle) * velocidadFinal;
             bala.body.velocity.y = Math.sin(angle) * velocidadFinal;
+
+            this.ataqueActivo = false;
           });
         }
       }
@@ -1216,3 +1222,4 @@ const config = {
 };
 
 new Phaser.Game(config);
+  
