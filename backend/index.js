@@ -43,3 +43,7 @@ const port = new SerialPort({
   path: 'COM5', 
   baudRate: 9600
 })
+
+port.on('data', function (data) {
+  console.log('Data:', data)
+})
