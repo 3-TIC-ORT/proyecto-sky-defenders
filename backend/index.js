@@ -42,8 +42,38 @@ subscribePOSTEvent ("PuntajeyNombre", (datos) => {
 const port = new SerialPort({
   path: 'COM5', 
   baudRate: 9600
+  data.toString().
 })
 
 port.on('data', function (data) {
   console.log('Data:', data)
 })
+
+function (GuardarSeñales) {
+  
+  const texto = data.toString()
+
+  if (texto == "led 1"){
+    fs.writeFileSync("señales.json",null);
+  } 
+   else if(texto==="led 2"){
+   fs.writeFileSync("señales.json",null);
+  }
+  else if(texto==="led 3"){
+    fs.writeFileSync("señales.json",null);
+   }
+   else if(texto==="led 4"){
+    fs.writeFileSync("señales.json",null);
+   }
+   else if(texto==="led 5"){
+    fs.writeFileSync("señales.json",null);
+   }
+   else if(texto==="led 6"){
+    fs.writeFileSync("señales.json",null);
+   }
+   else if(texto==="boton 1"){
+    fs.writeFileSync("señales.json",null);
+   }
+   else if(texto==="boton 2"){
+    fs.writeFileSync("señales.json",null);
+   }}
