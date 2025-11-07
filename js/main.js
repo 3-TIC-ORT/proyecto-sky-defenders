@@ -20,7 +20,7 @@ let lastEffectsVolume = effectsVolume;
 let tiempo = 0;
 let intervaloTiempo = null;
 let contadorActivo = false;
-let bossHP = 30;
+let bossHP = 3000;
 
 const menuBoton = document.getElementById("menuBoton");
 const menuDiv = document.getElementById("menu-div");
@@ -759,6 +759,7 @@ class Level3 extends BaseLevel {
     niveles.innerText = "Nivel: 3";
 
     this.balasBoss = this.physics.add.group();
+    this.ataqueActivo = false;
 
     this.bossHead = this.bossGroup
       .getChildren()
@@ -783,14 +784,14 @@ class Level3 extends BaseLevel {
 
     this.time.addEvent({
       delay: 4000,
-      callback: this.ataqueEsfera,
+      callback: this.tryEsfera,
       callbackScope: this,
       loop: true,
     });
 
     this.time.addEvent({
       delay: 2500,
-      callback: this.ataqueLaser,
+      callback: tryLaser,
       callbackScope: this,
       loop: true,
     });
@@ -1019,9 +1020,67 @@ class Level3 extends BaseLevel {
     }
   }
 
-  ataqueEstrella() {}
+  tryEsfera() {
+    const chance = Math.random();
+    if (chance <= 0.3) {
+      this.ataqueEsfera();
+      this.ataqueActivo = true;
+    }
+  }
+
+  tryLaser() {
+    const chance = Math.random();
+    if (chance <= 0.1) {
+      this.ataqueEsfera();
+    }
+  }
+
+  ataqueEstrella() {
+    if (this.ataqueActivo) return;
+    this.ataqueActivo = true;
+  
+    const brazoIzq = this.bossArms[0];
+    const brazoDer = this.bossArms[1];
+    const velocidad = 300;
+  
+    const angulosGrados = [90, 135, 45];
+  
+    const salidaIzq = {
+      x: brazoIzq.x + brazoIzq.displayWidth * 0.27,
+      y: brazoIzq.y + brazoIzq.displayHeight * 0.5,
+    };
+  
+    const salidaDer = {
+      x: brazoDer.x - brazoDer.displayWidth * 0.2,
+      y: brazoDer.y + brazoDer.displayHeight * 0.5,
+    };
+  
+    const dispararDesde = (x, y) => {
+      angulosGrados.forEach((grados) => {
+        const rad = Phaser.Math.DegToRad(grados);
+        const bala = this.balasBoss.get(x, y, "Estrella-boss");
+  
+        if (bala) {
+          bala.setActive(true);
+          bala.setVisible(true);
+          bala.play("estrella_anim");
+  
+          bala.body.velocity.x = Math.cos(rad) * velocidad;
+          bala.body.velocity.y = Math.sin(rad) * velocidad;
+        
+        }
+      });
+      this.ataqueActivo = false;
+    };
+  
+    dispararDesde(salidaIzq.x, salidaIzq.y);
+    dispararDesde(salidaDer.x, salidaDer.y);
+  }  
 
   ataqueEsfera() {
+    if (this.ataqueActivo) return;
+    this.ataqueActivo = true;
+
     const rightX1 =
       this.bossBrazoDerecho.x -
       this.bossBrazoDerecho.displayWidth / 2 +
@@ -1066,7 +1125,7 @@ class Level3 extends BaseLevel {
               this.player.x,
               this.player.y
             );
-            const velocidadFinal = 250;
+            const velocidadFinal = 400;
 
             bala.body.velocity.x = Math.cos(angle) * velocidadFinal;
             bala.body.velocity.y = Math.sin(angle) * velocidadFinal;
