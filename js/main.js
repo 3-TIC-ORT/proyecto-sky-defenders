@@ -250,15 +250,6 @@ class BaseLevel extends Phaser.Scene {
     this.pais = params.get("pais");
     this.tipo = params.get("tipo");
 
-    const velocidades = {
-      ataque: 200,
-      caza: 300,
-      bombardero: 400,
-      cazae: 300,
-    };
-
-    this.velocidadPlayer = velocidades[this.tipo];
-
     const tiposConfig = {
       ataque: [
         { frameWidth: 19, frameHeight: 19 },
@@ -496,7 +487,7 @@ class BaseLevel extends Phaser.Scene {
     this.balaenem = this.physics.add.group({ defaultKey: "balaenem" });
 
     this.enemyShootEvent = this.time.addEvent({
-      delay: 600,
+      delay: 400,
       callback: this.enemyShoot,
       callbackScope: this,
       loop: true,
@@ -560,7 +551,7 @@ class BaseLevel extends Phaser.Scene {
     fondo.tilePositionY -= velocidadFondo;
 
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-this.velocidadPlayer);
+      this.player.setVelocityX(-200);
       if (
         this.player.anims.currentAnim.key !== "left" &&
         this.player.anims.currentAnim.key !== "left_m"
@@ -571,7 +562,7 @@ class BaseLevel extends Phaser.Scene {
         });
       }
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(this.velocidadPlayer);
+      this.player.setVelocityX(200);
       if (
         this.player.anims.currentAnim.key !== "right" &&
         this.player.anims.currentAnim.key !== "right_m"
@@ -619,7 +610,11 @@ class BaseLevel extends Phaser.Scene {
       enemigosDestruidos += 10;
       puntaje.innerText = "Puntaje: " + enemigosDestruidos;
 
-      this.enemyShootEvent.delay += 100;
+      if (this.scene.key === "Level2") {
+        this.enemyShootEvent.delay += 10;
+      } else {
+        this.enemyShootEvent.delay += 20;
+      }
 
       if (this.enemigos.countActive(true) === 0) {
         if (this.nextLevel === "YouWin") {
@@ -713,13 +708,6 @@ class Level2 extends BaseLevel {
     super.create();
     niveles.innerText = "Nivel: 2";
     nivelActual = 3;
-
-    this.enemyShootEvent = this.time.addEvent({
-      delay: 600,
-      callback: this.enemyShoot,
-      callbackScope: this,
-      loop: true,
-    });
 
     this.enemigos.getChildren().forEach((enemigo) => {
       this.tweens.add({
