@@ -41,6 +41,7 @@ body {
   left: 20px;
 }
 #vidaBoss {
+  display: none;
   bottom: 0px;
 }
 
@@ -144,19 +145,19 @@ h2 {
   align-items: center;
 }
 
-.esBotonMuteado:active{
+.esBotonMuteado:active {
   content: url(../imgs/Boton\ No\ Audio\ mantenido.png);
 }
 
-.esBoton:active{
+.esBoton:active {
   content: url(../imgs/Boton\ Audio\ mantenido.png);
 }
 
-.musicaBotonMuteado:active{
+.musicaBotonMuteado:active {
   content: url(../imgs/Boton\ No\ Musica\ mantenido.png);
 }
 
-.musicaBoton:active{
+.musicaBoton:active {
   content: url(../imgs/Boton\ Musica\ Presionado.png);
 }
 
