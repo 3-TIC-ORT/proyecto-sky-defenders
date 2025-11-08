@@ -250,6 +250,15 @@ class BaseLevel extends Phaser.Scene {
     this.pais = params.get("pais");
     this.tipo = params.get("tipo");
 
+    const velocidades = {
+      ataque: 200,
+      caza: 300,
+      bombardero: 400,
+      cazae: 300,
+    };
+
+    this.velocidadPlayer = velocidades[this.tipo];
+
     const tiposConfig = {
       ataque: [
         { frameWidth: 19, frameHeight: 19 },
@@ -551,7 +560,7 @@ class BaseLevel extends Phaser.Scene {
     fondo.tilePositionY -= velocidadFondo;
 
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-200);
+      this.player.setVelocityX(-this.velocidadPlayer);
       if (
         this.player.anims.currentAnim.key !== "left" &&
         this.player.anims.currentAnim.key !== "left_m"
@@ -562,7 +571,7 @@ class BaseLevel extends Phaser.Scene {
         });
       }
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(200);
+      this.player.setVelocityX(this.velocidadPlayer);
       if (
         this.player.anims.currentAnim.key !== "right" &&
         this.player.anims.currentAnim.key !== "right_m"
