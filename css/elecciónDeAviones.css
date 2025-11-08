@@ -1,52 +1,64 @@
 body {
-    overflow: hidden;
-    margin: 0;
-    background: url(../imgs/fondosimple.png) no-repeat center fixed,
-      linear-gradient(
-        252.46deg,
-        #2596ff 0%,
-        #1156bd 38.46%,
-        #133a76 74.52%,
-        #132b4e 100%
-      );
-    background-size: cover;
-  }
-  .itemBf, .itemBr {
-    background: #534024;
-    border: 20px solid #3a2514;
-    border-radius: 20px;
-  }
-  .itemBf:hover {
-    cursor: pointer;
-    content: url(../imgs/fight.gif);
-    background: none;
-    border: none;
-    border-radius: 0;
-  }
-  .itemBr:hover {
-    cursor: pointer;
-    content: url(../imgs/ready.gif);
-    background: none;
-    border: none;
-    border-radius: 0;
-  }
-  .divIMG {
-    display: flex;
-    justify-content: space-evenly;
-    height: 45vh;
-    align-items: center;
-  }
-  .elegituavion, .elegituequipo {
-    width: 720px;
-  }
-  .items {
-    display: flex;
-    justify-content: space-evenly;
-    height: 55vh;
-    align-items: center;
-    gap: 15px;
-  }
-  .item {
-    height: 384px;
-    width: 400px;
-  }
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+  background: url(../imgs/fondosimple.png) no-repeat center fixed,
+    linear-gradient(
+      252.46deg,
+      #2596ff 0%,
+      #1156bd 38.46%,
+      #133a76 74.52%,
+      #132b4e 100%
+    );
+  background-size: cover;
+}
+.divOp {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #00449c5d;
+  z-index: -1;
+}
+.itemBf,
+.itemBr {
+  background: #534024;
+  border: 20px solid #3a2514;
+  border-radius: 20px;
+}
+.itemBf:hover {
+  cursor: pointer;
+  content: url(../imgs/fight.gif);
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+.itemBr:hover {
+  cursor: pointer;
+  content: url(../imgs/ready.gif);
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+.divIMG {
+  display: flex;
+  justify-content: space-evenly;
+  height: 45vh;
+  align-items: center;
+}
+.elegituavion,
+.elegituequipo {
+  width: 720px;
+}
+.items {
+  display: flex;
+  justify-content: space-evenly;
+  height: 55vh;
+  align-items: center;
+  gap: 15px;
+}
+.item {
+  height: 384px;
+  width: 400px;
+}
