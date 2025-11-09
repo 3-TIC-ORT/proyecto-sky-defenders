@@ -210,6 +210,11 @@ atrasBoton.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (cfgDiv.style.display === "flex") {
+    cfgDiv.style.display = "none";
+    menuDiv.style.display = "flex";
+    return;
+  }
   if (event.code === "Escape") {
     const activeScene = gameInstance.scene.getScenes(true)[0];
     const pausedScene = gameInstance.scene
