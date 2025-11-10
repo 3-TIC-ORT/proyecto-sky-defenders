@@ -1,3 +1,44 @@
+connect2Server(3000);
+
+const params = new URLSearchParams(window.location.search);
+const pais = params.get("pais");
+const tipo = params.get("tipo");
+
+const velocidades = {
+  ataque: 200,
+  caza: 300,
+  bombardero: 400,
+  cazae: 300,
+};
+
+let velocidadPlayer = velocidades[tipo];
+
+let velocidadPlayerActualizada;
+
+function activarSuscripcion(scene) {
+  subscribeRealTimeEvent("nuevaSeñal", (data) => {
+    if (data.señal) {
+      const señal = data.señal;
+
+      scene.velocidadPlayerActualizada =
+        señal === "1"
+          ? -100
+          : señal === "2"
+          ? -50
+          : señal === "3"
+          ? 0
+          : señal === "4"
+          ? -100
+          : señal === "5"
+          ? -50
+          : señal === "6"
+          ? 0
+          : 0;
+      scene.velocidadPlayerActualizada += velocidadPlayer;
+    }
+  });
+}
+
 let tiempoBala = 0;
 let balas;
 let botonDisparo;
@@ -251,9 +292,10 @@ class BaseLevel extends Phaser.Scene {
   }
 
   preload() {
-    const params = new URLSearchParams(window.location.search);
-    this.pais = params.get("pais");
-    this.tipo = params.get("tipo");
+    this.pais = pais;
+    this.tipo = tipo;
+
+    this.velocidadPlayer = velocidadPlayer;
 
     const tiposConfig = {
       ataque: [
@@ -333,6 +375,8 @@ class BaseLevel extends Phaser.Scene {
   }
 
   create() {
+    activarSuscripcion(this);
+
     fondo = this.add.tileSprite(
       0,
       0,
@@ -556,7 +600,7 @@ class BaseLevel extends Phaser.Scene {
     fondo.tilePositionY -= velocidadFondo;
 
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-200);
+      this.player.setVelocityX(-this.velocidadPlayer);
       if (
         this.player.anims.currentAnim.key !== "left" &&
         this.player.anims.currentAnim.key !== "left_m"
@@ -567,7 +611,7 @@ class BaseLevel extends Phaser.Scene {
         });
       }
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(200);
+      this.player.setVelocityX(this.velocidadPlayer);
       if (
         this.player.anims.currentAnim.key !== "right" &&
         this.player.anims.currentAnim.key !== "right_m"
