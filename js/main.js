@@ -1313,16 +1313,16 @@ class Level3 extends BaseLevel {
     const x = this.scale.width / 2;
     const y = this.bossHead.y + this.bossHead.displayHeight;
 
-    const laser = this.balasBossLaser.get(x, y, "Laser-boss");
-
-    laser.body.allowGravity = false;
-    laser.body.immovable = true;
-    laser.body.velocity.x = 0;
-    laser.body.velocity.y = 0;
     this.bossCabeza.play("bossCabeza-Aviso1");
     this.bossCabeza.once("animationcomplete-bossCabeza-Aviso1", () => {
       this.bossCabeza.play("bossCabeza-Aviso2");
       this.bossCabeza.once("animationcomplete-bossCabeza-Aviso2", () => {
+        const laser = this.balasBossLaser.get(x, y, "Laser-boss");
+
+        laser.body.allowGravity = false;
+        laser.body.immovable = true;
+        laser.body.velocity.x = 0;
+        laser.body.velocity.y = 0;
         laser.play("laser_apareciendo");
 
         laser.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (anim) => {
