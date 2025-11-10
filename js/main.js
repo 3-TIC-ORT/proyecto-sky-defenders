@@ -597,7 +597,7 @@ class BaseLevel extends Phaser.Scene {
 
     fondo.tilePositionY -= velocidadFondo;
 
-    if (this.cursors.left.isDown) {
+    if (this.cursors.left.isDown || velocidadPlayerActualizada < 0) {
       this.player.setVelocityX(-velocidadPlayerActualizada);
       if (
         this.player.anims.currentAnim.key !== "left" &&
@@ -608,7 +608,7 @@ class BaseLevel extends Phaser.Scene {
           this.player.anims.play("left_m");
         });
       }
-    } else if (this.cursors.right.isDown) {
+    } else if (this.cursors.right.isDown || velocidadPlayerActualizada > 0) {
       this.player.setVelocityX(velocidadPlayerActualizada);
       if (
         this.player.anims.currentAnim.key !== "right" &&
