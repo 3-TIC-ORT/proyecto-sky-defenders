@@ -289,7 +289,6 @@ function transitionToScene(text) {
 class BaseLevel extends Phaser.Scene {
   constructor(BaseDelJuego) {
     super(BaseDelJuego);
-    this.velocidadPlayer = velocidadPlayer;
   }
 
   preload() {
@@ -599,7 +598,7 @@ class BaseLevel extends Phaser.Scene {
     fondo.tilePositionY -= velocidadFondo;
 
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-this.velocidadPlayer);
+      this.player.setVelocityX(-velocidadPlayerActualizada);
       if (
         this.player.anims.currentAnim.key !== "left" &&
         this.player.anims.currentAnim.key !== "left_m"
@@ -610,7 +609,7 @@ class BaseLevel extends Phaser.Scene {
         });
       }
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(this.velocidadPlayer);
+      this.player.setVelocityX(velocidadPlayerActualizada);
       if (
         this.player.anims.currentAnim.key !== "right" &&
         this.player.anims.currentAnim.key !== "right_m"
