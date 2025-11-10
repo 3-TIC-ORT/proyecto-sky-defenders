@@ -289,13 +289,12 @@ function transitionToScene(text) {
 class BaseLevel extends Phaser.Scene {
   constructor(BaseDelJuego) {
     super(BaseDelJuego);
+    this.velocidadPlayer = velocidadPlayer;
   }
 
   preload() {
     this.pais = pais;
     this.tipo = tipo;
-
-    this.velocidadPlayer = velocidadPlayer;
 
     const tiposConfig = {
       ataque: [
