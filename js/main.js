@@ -9,18 +9,18 @@ const velocidades = {
   caza: 300,
   bombardero: 400,
   cazae: 300,
-};
+}
 
 let velocidadPlayer = velocidades[tipo];
 
 let velocidadPlayerActualizada;
 
-function activarSuscripcion(scene) {
+function activarSuscripcion() {
   subscribeRealTimeEvent("nuevaSeñal", (data) => {
     if (data.señal) {
       const señal = data.señal;
 
-      scene.velocidadPlayerActualizada =
+      velocidadPlayerActualizada =
         señal === "1"
           ? -100
           : señal === "2"
@@ -34,7 +34,7 @@ function activarSuscripcion(scene) {
           : señal === "6"
           ? 0
           : 0;
-      scene.velocidadPlayerActualizada += velocidadPlayer;
+      velocidadPlayerActualizada += velocidadPlayer;
     }
   });
 }
@@ -51,7 +51,7 @@ let vidaBoss = document.getElementById("vidaBoss");
 let nivelActual = 2;
 let gameInstance;
 let fondo;
-let velocidadFondo  = 2;
+let velocidadFondo = 2;
 let musicaActiva = true;
 let esActivos = true;
 let musicVolume = 1;
@@ -292,8 +292,9 @@ class BaseLevel extends Phaser.Scene {
   }
 
   preload() {
-    this.pais = pais;
-    this.tipo = tipo;
+    const params = new URLSearchParams(window.location.search);
+    this.pais = params.get("pais");
+    this.tipo = params.get("tipo");
 
     const tiposConfig = {
       ataque: [
@@ -373,7 +374,7 @@ class BaseLevel extends Phaser.Scene {
   }
 
   create() {
-    activarSuscripcion(this);
+    activarSuscripcion();
 
     fondo = this.add.tileSprite(
       0,
@@ -437,9 +438,9 @@ class BaseLevel extends Phaser.Scene {
         left_m: ["avion3", 0, 7],
       },
       cazae: {
-        idle: [6, 11, 10],
-        left: [12, 17],
-        right: [18, 23],
+        idle: [0, 0, 10],
+        left: [6, 11],
+        right: [12, 17],
         right_m: ["avion2", 0, 5],
         left_m: ["avion2", 6, 11],
       },
@@ -597,8 +598,10 @@ class BaseLevel extends Phaser.Scene {
 
     fondo.tilePositionY -= velocidadFondo;
 
-    if (this.cursors.left.isDown || velocidadPlayerActualizada < 0) {
-      this.player.setVelocityX(-velocidadPlayerActualizada);
+    const velActual = velocidadPlayerActualizada ?? velocidadPlayer;
+
+    if (this.cursors.left.isDown) {
+      this.player.setVelocityX(-velActual);
       if (
         this.player.anims.currentAnim.key !== "left" &&
         this.player.anims.currentAnim.key !== "left_m"
@@ -608,8 +611,8 @@ class BaseLevel extends Phaser.Scene {
           this.player.anims.play("left_m");
         });
       }
-    } else if (this.cursors.right.isDown || velocidadPlayerActualizada > 0) {
-      this.player.setVelocityX(velocidadPlayerActualizada);
+    } else if (this.cursors.right.isDown) {
+      this.player.setVelocityX(velActual);
       if (
         this.player.anims.currentAnim.key !== "right" &&
         this.player.anims.currentAnim.key !== "right_m"
