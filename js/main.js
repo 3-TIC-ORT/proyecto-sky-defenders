@@ -51,7 +51,7 @@ let vidaBoss = document.getElementById("vidaBoss");
 let nivelActual = 2;
 let gameInstance;
 let fondo;
-let velocidadFondo = 2;
+let velocidadFondo  = 2;
 let musicaActiva = true;
 let esActivos = true;
 let musicVolume = 1;
@@ -437,9 +437,9 @@ class BaseLevel extends Phaser.Scene {
         left_m: ["avion3", 0, 7],
       },
       cazae: {
-        idle: [0, 0, 10],
-        left: [6, 11],
-        right: [12, 17],
+        idle: [6, 11, 10],
+        left: [12, 17],
+        right: [18, 23],
         right_m: ["avion2", 0, 5],
         left_m: ["avion2", 6, 11],
       },
