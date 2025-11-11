@@ -15,10 +15,12 @@ let velocidadPlayer = velocidades[tipo];
 
 let velocidadPlayerActualizada;
 
+let señal;
+
 function activarSuscripcion() {
   subscribeRealTimeEvent("nuevaSeñal", (data) => {
     if (data.señal) {
-      const señal = data.señal;
+      señal = data.señal;
 
       velocidadPlayerActualizada =
         señal === "1"
@@ -33,6 +35,10 @@ function activarSuscripcion() {
           ? -50
           : señal === "6"
           ? 0
+          : señal === "b1"
+          ? "b1"
+          : señal === "b2"
+          ? "b2"
           : 0;
       velocidadPlayerActualizada += velocidadPlayer;
     }
@@ -257,6 +263,17 @@ document.addEventListener("keydown", (event) => {
     return;
   }
   if (event.code === "Escape") {
+    escenePauseResume();
+  }
+});
+
+function escenePauseResume(){
+  if (cfgDiv.style.display === "flex") {
+    cfgDiv.style.display = "none";
+    menuDiv.style.display = "flex";
+    return;
+  }
+  if (event.code === "Escape") {
     const activeScene = gameInstance.scene.getScenes(true)[0];
     const pausedScene = gameInstance.scene
       .getScenes(false)
@@ -272,7 +289,7 @@ document.addEventListener("keydown", (event) => {
       pausarContador();
     }
   }
-});
+}
 
 function transitionToScene(text) {
   const h1 = document.getElementById("transition-text");
@@ -600,7 +617,7 @@ class BaseLevel extends Phaser.Scene {
 
     const velActual = velocidadPlayerActualizada ?? velocidadPlayer;
 
-    if (this.cursors.left.isDown) {
+    if (this.cursors.left.isDown || señal === 1 || señal === 2 || señal === 3) {
       this.player.setVelocityX(-velActual);
       if (
         this.player.anims.currentAnim.key !== "left" &&
@@ -611,7 +628,7 @@ class BaseLevel extends Phaser.Scene {
           this.player.anims.play("left_m");
         });
       }
-    } else if (this.cursors.right.isDown) {
+    } else if (this.cursors.right.isDown || señal === 5 || señal === 6 || señal === 7) {
       this.player.setVelocityX(velActual);
       if (
         this.player.anims.currentAnim.key !== "right" &&
@@ -626,7 +643,7 @@ class BaseLevel extends Phaser.Scene {
       this.player.anims.play("idle", true);
     }
 
-    if (botonDisparo.isDown && time > tiempoBala) {
+    if (botonDisparo.isDown && time > tiempoBala || señal === "b1") {
       const bala = balas.get(this.player.x, this.player.y - this.player.height);
       if (bala) {
         bala.setActive(true);
@@ -635,6 +652,10 @@ class BaseLevel extends Phaser.Scene {
         tiempoBala = time + 400;
         playEffect(audioDisparo);
       }
+
+      if (señal === "b2") {
+
+        }
     }
 
     if (this.enemigos) {
