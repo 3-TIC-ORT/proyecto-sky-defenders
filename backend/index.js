@@ -55,21 +55,24 @@ function GuardarSeñales(data) {
   const texto = data.toString().trim();
 
   if (texto === "led 1") {
-    fs.writeFileSync("señales.json", "");
+    fs.writeFileSync("señales.json", "max left");
   } else if (texto === "led 2") {
-    fs.writeFileSync("señales.json", JSON.stringify(""));
+    fs.writeFileSync("señales.json", JSON.stringify("mid left"));
   } else if (texto === "led 3") {
-    fs.writeFileSync("señales.json", JSON.stringify(""));
+    fs.writeFileSync("señales.json", JSON.stringify("minimum left"));
   } else if (texto === "led 4") {
-    fs.writeFileSync("señales.json", JSON.stringify(""));
+    fs.writeFileSync("señales.json", JSON.stringify("punto muerto"));
   } else if (texto === "led 5") {
-    fs.writeFileSync("señales.json", JSON.stringify(""));
+    fs.writeFileSync("señales.json", JSON.stringify("minimum right"));
   } else if (texto === "led 6") {
-    fs.writeFileSync("señales.json", JSON.stringify(""));
-  } else if (texto === "boton 1") {
-    fs.writeFileSync("señales.json", JSON.stringify(""));
+    fs.writeFileSync("señales.json", JSON.stringify("mid right"));
+  } else if (texto === "led 7") {
+    fs.writeFileSync("señales.json", JSON.stringify("max rigth"));
+  }
+    else if (texto === "boton 1") {
+    fs.writeFileSync("señales.json", JSON.stringify("disparar"));
   } else if (texto === "boton 2") {
-    fs.writeFileSync("señales.json", JSON.stringify(""));
+    fs.writeFileSync("señales.json", JSON.stringify("pausa"));
   }
 }
 const data = fs.readFileSync("señales.json", "utf-8");
