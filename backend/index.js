@@ -79,5 +79,5 @@ function GuardarSeñales(data) {
   realTimeEvent("nuevaSeñal", { señal: contenido });
 }
 
-
+  
 

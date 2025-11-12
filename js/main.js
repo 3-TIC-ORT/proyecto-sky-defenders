@@ -21,24 +21,24 @@ function activarSuscripcion() {
     if (data) {
       const texto = data;
 
-      console.log(texto);
+      console.log(texto.señal);
       
       señal =
-        texto === "LED 1 encendido"
+        texto.señal === "1"
           ? "1"
-          : texto === "LED 2 encendido"
+          : texto.señal === "2"
           ? "2"
-          : texto === "LED 3 encendido"
+          : texto.señal === "3"
           ? "3"
-          : texto === "LED 5 encendido"
+          : texto.señal === "5"
           ? "5"
-          : texto === "LED 6 encendido"
+          : texto.señal === "6"
           ? "6"
-          : texto === "LED 7 encendido"
+          : texto.señal === "7"
           ? "7"
-          : texto === "Boton uno encendido"
+          : texto.señal === "Boton uno encendido"
           ? "b1"
-          : texto === "Boton dos encendido"
+          : texto.señal === "Boton dos encendido"
           ? "b2"
           : null;
 
@@ -47,9 +47,9 @@ function activarSuscripcion() {
       window.señal = señal;
 
       const delta = {
-        1: -100,
+        1: 0,
         2: -50,
-        3: 0,
+        3: -100,
         4: -100,
         5: -50,
         6: 0,
@@ -634,7 +634,7 @@ class BaseLevel extends Phaser.Scene {
 
     const velActual = velocidadPlayerActualizada ?? velocidadPlayer;
 
-    if (this.cursors.left.isDown || señal === "1" || señal === "2" || señal === "3") {
+    if (this.cursors.left.isDown || señal === "5" || señal === "6" || señal === "7") {
       this.player.setVelocityX(-velActual);
       if (
         this.player.anims.currentAnim.key !== "left" &&
@@ -647,9 +647,9 @@ class BaseLevel extends Phaser.Scene {
       }
     } else if (
       this.cursors.right.isDown ||
-      señal === "5" ||
-      señal === "6" ||
-      señal === "7"
+      señal === "1" ||
+      señal === "2" ||
+      señal === "3"
     ) {
       this.player.setVelocityX(velActual);
       if (
