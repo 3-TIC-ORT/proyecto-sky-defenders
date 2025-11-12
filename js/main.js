@@ -667,7 +667,7 @@ class BaseLevel extends Phaser.Scene {
       this.player.anims.play("idle", true);
     }
 
-    if ((botonDisparo.isDown && time > tiempoBala) || señal === "b1") {
+    if ((botonDisparo.isDown && time > tiempoBala) || (señal === "b1" && time > tiempoBala)) {
       const bala = balas.get(this.player.x, this.player.y - this.player.height);
       if (bala) {
         bala.setActive(true);
