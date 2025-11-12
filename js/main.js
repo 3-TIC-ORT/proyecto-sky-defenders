@@ -292,21 +292,19 @@ function escenePauseResume() {
     menuDiv.style.display = "flex";
     return;
   }
-  if (event.code === "Escape") {
     const activeScene = gameInstance.scene.getScenes(true)[0];
     const pausedScene = gameInstance.scene
       .getScenes(false)
       .find((s) => s.sys.isPaused());
 
-    if (menuDiv.style.display === "flex") {
-      menuDiv.style.display = "none";
-      if (pausedScene) pausedScene.scene.resume();
-      iniciarContador();
-    } else {
-      menuDiv.style.display = "flex";
-      if (activeScene) activeScene.scene.pause();
-      pausarContador();
-    }
+  if (menuDiv.style.display === "flex") {
+    menuDiv.style.display = "none";
+    if (pausedScene) pausedScene.scene.resume();
+    iniciarContador();
+  } else {
+    menuDiv.style.display = "flex";
+    if (activeScene) activeScene.scene.pause();
+    pausarContador();
   }
 }
 
@@ -678,6 +676,12 @@ class BaseLevel extends Phaser.Scene {
       }
 
       if (señal === "b2") {
+        if (cfgDiv.style.display === "flex") {
+          cfgDiv.style.display = "none";
+          menuDiv.style.display = "flex";
+          return;
+        }
+          escenePauseResume();
       }
     }
 

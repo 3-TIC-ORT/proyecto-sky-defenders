@@ -56,7 +56,7 @@ parser.on("data", function (data) {
 });
 
 function GuardarSeñales(data) {
-  const texto = data.toString().trim(); // 👈 elimina espacios, saltos de línea, etc.
+  const texto = data.toString().trim();
   console.log("Texto limpio recibido:", texto);
 
   let valor = null;
@@ -71,15 +71,11 @@ function GuardarSeñales(data) {
   else if (texto.includes("boton 1")) valor = "b1";
   else if (texto.includes("boton 2")) valor = "b2";
 
-  // Si no se reconoció señal, no hace nada
   if (!valor) return;
 
-  // Guarda el valor detectado
   fs.writeFileSync("señales.json", JSON.stringify(valor));
 
-  // Lee y emite el contenido actualizado
   const contenido = JSON.parse(fs.readFileSync("señales.json", "utf-8"));
-  console.log("➡ Señal guardada:", contenido);
   realTimeEvent("nuevaSeñal", { señal: contenido });
 }
 
