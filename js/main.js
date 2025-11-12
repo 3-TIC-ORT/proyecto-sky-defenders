@@ -9,38 +9,53 @@ const velocidades = {
   caza: 300,
   bombardero: 400,
   cazae: 300,
-}
+};
 
-let velocidadPlayer = velocidades[tipo];
-
+let velocidadPlayer = velocidades[tipo] || 200;
 let velocidadPlayerActualizada;
-
-let señal;
 
 function activarSuscripcion() {
   subscribeRealTimeEvent("nuevaSeñal", (data) => {
-    if (data.señal) {
-      señal = data.señal;
+    if (data) {
+      const texto = data.toString().trim();
 
-      velocidadPlayerActualizada =
-        señal === "1"
-          ? -100
-          : señal === "2"
-          ? -50
-          : señal === "3"
-          ? 0
-          : señal === "4"
-          ? -100
-          : señal === "5"
-          ? -50
-          : señal === "6"
-          ? 0
-          : señal === "b1"
+      const señal =
+        texto === "led 1"
+          ? "1"
+          : texto === "led 2"
+          ? "2"
+          : texto === "led 3"
+          ? "3"
+          : texto === "led 4"
+          ? "4"
+          : texto === "led 5"
+          ? "5"
+          : texto === "led 6"
+          ? "6"
+          : texto === "boton 1"
           ? "b1"
-          : señal === "b2"
+          : texto === "boton 2"
           ? "b2"
-          : 0;
-      velocidadPlayerActualizada += velocidadPlayer;
+          : null;
+
+      if (!señal) return;
+
+      window.señal = señal;
+
+      const delta = {
+        1: -100,
+        2: -50,
+        3: 0,
+        4: -100,
+        5: -50,
+        6: 0,
+      }[señal];
+
+      if (typeof delta === "number") {
+        velocidadPlayerActualizada = velocidadPlayer + delta;
+      } else {
+        velocidadPlayerActualizada = velocidadPlayer;
+      }
     }
   });
 }
@@ -267,7 +282,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-function escenePauseResume(){
+function escenePauseResume() {
   if (cfgDiv.style.display === "flex") {
     cfgDiv.style.display = "none";
     menuDiv.style.display = "flex";
@@ -628,7 +643,12 @@ class BaseLevel extends Phaser.Scene {
           this.player.anims.play("left_m");
         });
       }
-    } else if (this.cursors.right.isDown || señal === 5 || señal === 6 || señal === 7) {
+    } else if (
+      this.cursors.right.isDown ||
+      señal === 5 ||
+      señal === 6 ||
+      señal === 7
+    ) {
       this.player.setVelocityX(velActual);
       if (
         this.player.anims.currentAnim.key !== "right" &&
@@ -643,7 +663,7 @@ class BaseLevel extends Phaser.Scene {
       this.player.anims.play("idle", true);
     }
 
-    if (botonDisparo.isDown && time > tiempoBala || señal === "b1") {
+    if ((botonDisparo.isDown && time > tiempoBala) || señal === "b1") {
       const bala = balas.get(this.player.x, this.player.y - this.player.height);
       if (bala) {
         bala.setActive(true);
@@ -654,8 +674,7 @@ class BaseLevel extends Phaser.Scene {
       }
 
       if (señal === "b2") {
-
-        }
+      }
     }
 
     if (this.enemigos) {
