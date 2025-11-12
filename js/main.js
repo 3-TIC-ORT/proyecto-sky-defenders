@@ -14,27 +14,31 @@ const velocidades = {
 let velocidadPlayer = velocidades[tipo] || 200;
 let velocidadPlayerActualizada;
 
+let señal;
+
 function activarSuscripcion() {
   subscribeRealTimeEvent("nuevaSeñal", (data) => {
     if (data) {
-      const texto = data.toString().trim();
+      const texto = data;
 
-      const señal =
-        texto === "led 1"
+      console.log(texto);
+      
+      señal =
+        texto === "LED 1 encendido"
           ? "1"
-          : texto === "led 2"
+          : texto === "LED 2 encendido"
           ? "2"
-          : texto === "led 3"
+          : texto === "LED 3 encendido"
           ? "3"
-          : texto === "led 4"
-          ? "4"
-          : texto === "led 5"
+          : texto === "LED 5 encendido"
           ? "5"
-          : texto === "led 6"
+          : texto === "LED 6 encendido"
           ? "6"
-          : texto === "boton 1"
+          : texto === "LED 7 encendido"
+          ? "7"
+          : texto === "Boton uno encendido"
           ? "b1"
-          : texto === "boton 2"
+          : texto === "Boton dos encendido"
           ? "b2"
           : null;
 
@@ -632,7 +636,7 @@ class BaseLevel extends Phaser.Scene {
 
     const velActual = velocidadPlayerActualizada ?? velocidadPlayer;
 
-    if (this.cursors.left.isDown || señal === 1 || señal === 2 || señal === 3) {
+    if (this.cursors.left.isDown || señal === "1" || señal === "2" || señal === "3") {
       this.player.setVelocityX(-velActual);
       if (
         this.player.anims.currentAnim.key !== "left" &&
@@ -645,9 +649,9 @@ class BaseLevel extends Phaser.Scene {
       }
     } else if (
       this.cursors.right.isDown ||
-      señal === 5 ||
-      señal === 6 ||
-      señal === 7
+      señal === "5" ||
+      señal === "6" ||
+      señal === "7"
     ) {
       this.player.setVelocityX(velActual);
       if (

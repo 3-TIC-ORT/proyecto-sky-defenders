@@ -44,7 +44,7 @@ subscribePOSTEvent("PuntajeyNombre", (datos) => {
 });
 
 const port = new SerialPort({
-  path: "COM5",
+  path: "COM3",
   baudRate: 9600,
 });
 
@@ -56,30 +56,32 @@ parser.on("data", function (data) {
 });
 
 function GuardarSeñales(data) {
-  const texto = data.toString().trim();
+  const texto = data.toString().trim(); // 👈 elimina espacios, saltos de línea, etc.
+  console.log("Texto limpio recibido:", texto);
 
- 
-  if (texto === "led 1") {
-    fs.writeFileSync("señales.json",JSON.stringify("1"));
-  } else if (texto === "led 2") {
-    fs.writeFileSync("señales.json", JSON.stringify("2"));
-  } else if (texto === "led 3") {
-    fs.writeFileSync("señales.json", JSON.stringify("3"));
-  } else if (texto === "led 4") {
-    fs.writeFileSync("señales.json", JSON.stringify("4"));
-  } else if (texto === "led 5") {
-    fs.writeFileSync("señales.json", JSON.stringify("5"));
-  } else if (texto === "led 6") {
-    fs.writeFileSync("señales.json", JSON.stringify("6"));
-  } else if (texto === "led 7") {
-    fs.writeFileSync("señales.json", JSON.stringify("7"));
-  }
-    else if (texto === "boton 1") {
-    fs.writeFileSync("señales.json", JSON.stringify("b1"));
-  } else if (texto === "boton 2") {
-    fs.writeFileSync("señales.json", JSON.stringify("b2"));
-  }
-  realTimeEvent("nuevaSeñal", texto);
+  let valor = null;
+
+  if (texto.includes("LED 1")) valor = "1";
+  else if (texto.includes("LED 2")) valor = "2";
+  else if (texto.includes("LED 3")) valor = "3";
+  else if (texto.includes("LED 4")) valor = "4";
+  else if (texto.includes("LED 5")) valor = "5";
+  else if (texto.includes("LED 6")) valor = "6";
+  else if (texto.includes("LED 7")) valor = "7";
+  else if (texto.includes("boton 1")) valor = "b1";
+  else if (texto.includes("boton 2")) valor = "b2";
+
+  // Si no se reconoció señal, no hace nada
+  if (!valor) return;
+
+  // Guarda el valor detectado
+  fs.writeFileSync("señales.json", JSON.stringify(valor));
+
+  // Lee y emite el contenido actualizado
+  const contenido = JSON.parse(fs.readFileSync("señales.json", "utf-8"));
+  console.log("➡ Señal guardada:", contenido);
+  realTimeEvent("nuevaSeñal", { señal: contenido });
 }
+
 
 
