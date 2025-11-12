@@ -20,8 +20,6 @@ function activarSuscripcion() {
   subscribeRealTimeEvent("nuevaSeñal", (data) => {
     if (data) {
       const texto = data;
-
-      console.log(texto.señal);
       
       señal =
         texto.señal === "1"
@@ -36,11 +34,13 @@ function activarSuscripcion() {
           ? "6"
           : texto.señal === "7"
           ? "7"
-          : texto.señal === "Boton uno encendido"
+          : texto.señal === "b1"
           ? "b1"
-          : texto.señal === "Boton dos encendido"
+          : texto.señal === "b2"
           ? "b2"
           : null;
+
+          console.log(señal);
 
       if (!señal) return;
 
@@ -674,15 +674,15 @@ class BaseLevel extends Phaser.Scene {
         tiempoBala = time + 400;
         playEffect(audioDisparo);
       }
-
-      if (señal === "b2") {
-        if (cfgDiv.style.display === "flex") {
-          cfgDiv.style.display = "none";
-          menuDiv.style.display = "flex";
-          return;
-        }
-          escenePauseResume();
+    }
+    
+    if (señal === "b2") {
+      if (cfgDiv.style.display === "flex") {
+        cfgDiv.style.display = "none";
+        menuDiv.style.display = "flex";
+        return;
       }
+        escenePauseResume();
     }
 
     if (this.enemigos) {

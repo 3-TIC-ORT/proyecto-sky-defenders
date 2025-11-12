@@ -68,16 +68,16 @@ function GuardarSeñales(data) {
   else if (texto.includes("LED 5")) valor = "5";
   else if (texto.includes("LED 6")) valor = "6";
   else if (texto.includes("LED 7")) valor = "7";
-  else if (texto.includes("boton 1")) valor = "b1";
-  else if (texto.includes("boton 2")) valor = "b2";
+  else if (texto.includes("Boton uno")) valor = "b1";
+  else if (texto.includes("Boton dos")) valor = "b2";
 
   if (!valor) return;
 
   fs.writeFileSync("señales.json", JSON.stringify(valor));
 
   const contenido = JSON.parse(fs.readFileSync("señales.json", "utf-8"));
-  realTimeEvent("nuevaSeñal", { señal: contenido });
+  realTimeEvent("nuevaSeñal", { señal: valor });
 }
 
-  
+
 
