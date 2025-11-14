@@ -361,7 +361,7 @@ class BaseLevel extends Phaser.Scene {
       bombarderoe: [
         { frameWidth: 41, frameHeight: 34 },
         { frameWidth: 31, frameHeight: 34 },
-        { frameWidth: 37, frameHeight: 36 },
+        { frameWidth: 41, frameHeight: 36 },
       ],
       bombarderoj: [
         { frameWidth: 41, frameHeight: 36 },
