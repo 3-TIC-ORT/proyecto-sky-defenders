@@ -63,6 +63,9 @@ function activarSuscripcion() {
       } else {
         velocidadPlayerActualizada = velocidadPlayer;
       }
+      if (señal === "b2") {
+        escenePauseResume();
+      }
     }
   });
 }
@@ -280,16 +283,7 @@ atrasBoton.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (cfgDiv.style.display === "flex") {
-    cfgDiv.style.display = "none";
-    menuDiv.style.display = "flex";
-    return;
-  }
-  if (event.code === "Escape") {
-    escenePauseResume();
-  }
-  
-  document.addEventListener("keydown", (event) => {
+
     const escenaActiva = gameInstance.scene.getScenes(true)[0];
   
     if (event.code === "Escape") {
@@ -314,8 +308,6 @@ document.addEventListener("keydown", (event) => {
       escenaActiva.scene.start("Level3");
     }
   });
-  
-});
 
 
 function escenePauseResume() {
@@ -789,15 +781,6 @@ class BaseLevel extends Phaser.Scene {
           this.player.anims.play("idle", true);
         });
       });
-    }
-
-    if (señal === "b2") {
-      if (cfgDiv.style.display === "flex") {
-        cfgDiv.style.display = "none";
-        menuDiv.style.display = "flex";
-        return;
-      }
-      escenePauseResume();
     }
 
     if (this.enemigos) {
