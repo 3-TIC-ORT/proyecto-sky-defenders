@@ -288,7 +288,35 @@ document.addEventListener("keydown", (event) => {
   if (event.code === "Escape") {
     escenePauseResume();
   }
+  
+  document.addEventListener("keydown", (event) => {
+    const escenaActiva = gameInstance.scene.getScenes(true)[0];
+  
+    if (event.code === "Escape") {
+      escenePauseResume();
+    }
+  
+    if (event.key === "1") {
+      nivelActual = 1;
+      transitionToScene("Nivel: 1");
+      escenaActiva.scene.start("Level1");
+    }
+  
+    if (event.key === "2") {
+      nivelActual = 2;
+      transitionToScene("Nivel: 2");
+      escenaActiva.scene.start("Level2");
+    }
+  
+    if (event.key === "3") {
+      nivelActual = 3;
+      transitionToScene("Nivel: 3");
+      escenaActiva.scene.start("Level3");
+    }
+  });
+  
 });
+
 
 function escenePauseResume() {
   if (cfgDiv.style.display === "flex") {
