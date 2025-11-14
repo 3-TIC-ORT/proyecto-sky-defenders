@@ -103,6 +103,7 @@ const musicaBoton = document.getElementById("musicaBoton");
 const atrasBoton = document.getElementById("atrasBoton");
 const audio = document.getElementById("audio");
 const audioDisparo = document.getElementById("audioDisparo");
+const audioMuertePlayer = document.getElementById("audioMuertePlayer");
 const musicSlider = document.getElementById("musicVolume");
 const effectsSlider = document.getElementById("effectsVolume");
 const musicValue = document.getElementById("musicValue");
@@ -849,8 +850,13 @@ class BaseLevel extends Phaser.Scene {
   hitPlayer(player, balaenem) {
     balaenem.destroy();
     vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
+    playEffect(audioMuertePlayer);
+
     if (vidasrestantes <= 0) {
-      this.gameOver();
+      player.anims.play("daño");
+      setTimeout(() => {
+        this.gameOver();
+      }, 400);
     }
     player.anims.play("daño");
     player.once("animationcomplete-daño", () => {
