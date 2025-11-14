@@ -6,9 +6,12 @@ const tipo = params.get("tipo");
 
 const velocidades = {
   ataque: 200,
-  caza: 300,
-  bombardero: 400,
+  cazaa: 300,
   cazae: 300,
+  cazaj: 300,
+  bombarderoa: 400,
+  bombarderoe: 400,
+  bombarderoj: 400,
 };
 
 let velocidadPlayer = velocidades[tipo] || 200;
@@ -20,7 +23,7 @@ function activarSuscripcion() {
   subscribeRealTimeEvent("nuevaSeñal", (data) => {
     if (data) {
       const texto = data;
-      
+
       señal =
         texto.señal === "1"
           ? "1"
@@ -40,7 +43,7 @@ function activarSuscripcion() {
           ? "b2"
           : null;
 
-          console.log(señal);
+      console.log(señal);
 
       if (!señal) return;
 
@@ -292,10 +295,10 @@ function escenePauseResume() {
     menuDiv.style.display = "flex";
     return;
   }
-    const activeScene = gameInstance.scene.getScenes(true)[0];
-    const pausedScene = gameInstance.scene
-      .getScenes(false)
-      .find((s) => s.sys.isPaused());
+  const activeScene = gameInstance.scene.getScenes(true)[0];
+  const pausedScene = gameInstance.scene
+    .getScenes(false)
+    .find((s) => s.sys.isPaused());
 
   if (menuDiv.style.display === "flex") {
     menuDiv.style.display = "none";
@@ -335,17 +338,31 @@ class BaseLevel extends Phaser.Scene {
         { frameWidth: 19, frameHeight: 19 },
         { frameWidth: 13, frameHeight: 19 },
       ],
-      caza: [
-        { frameWidth: 33, frameHeight: 26 },
-        { frameWidth: 23, frameHeight: 26 },
-        { frameWidth: 25, frameHeight: 26 },
+      cazaa: [
+        { frameWidth: 37, frameHeight: 29 },
+        { frameWidth: 27.125, frameHeight: 29 },
       ],
       cazae: [
         { frameWidth: 37, frameHeight: 22 },
         { frameWidth: 26, frameHeight: 22 },
-        { frameWidth: 37, frameHeight: 22 },
+        { frameWidth: 37, frameHeight: 27 },
       ],
-      bombardero: [
+      cazaj: [
+        { frameWidth: 33, frameHeight: 26 },
+        { frameWidth: 23, frameHeight: 26 },
+        { frameWidth: 25, frameHeight: 26 },
+      ],
+      bombarderoa: [
+        { frameWidth: 43, frameHeight: 33 },
+        { frameWidth: 33, frameHeight: 33 },
+        { frameWidth: 43, frameHeight: 33 },
+      ],
+      bombarderoe: [
+        { frameWidth: 41, frameHeight: 34 },
+        { frameWidth: 31, frameHeight: 34 },
+        { frameWidth: 37, frameHeight: 36 },
+      ],
+      bombarderoj: [
         { frameWidth: 41, frameHeight: 36 },
         { frameWidth: 31, frameHeight: 36 },
         { frameWidth: 41, frameHeight: 36 },
@@ -463,27 +480,62 @@ class BaseLevel extends Phaser.Scene {
         right: [18, 23],
         right_m: ["avion2", 0, 5],
         left_m: ["avion2", 6, 11],
+        attack1: ["avion1", 6, 8],
+        attack2: ["avion1", 9, 11],
       },
-      caza: {
+      cazaa: {
+        idle: [8, 15, 10],
+        left: [24, 29],
+        right: [16, 21],
+        right_m: ["avion2", 8, 15],
+        left_m: ["avion2", 0, 7],
+        attack1: ["avion1", 32, 34],
+        attack2: ["avion1", 35, 39],
+      },
+      cazae: {
+        idle: [6, 11, 10],
+        left: [12, 17],
+        right: [18, 23],
+        right_m: ["avion2", 0, 5],
+        left_m: ["avion2", 6, 11],
+        attack1: ["avion3", 0, 3],
+        attack2: ["avion3", 4, 5],
+      },
+      cazaj: {
         idle: [0, 7, 14],
         left: [16, 21],
         right: [8, 13],
         right_m: ["avion2", 0, 7],
         left_m: ["avion3", 0, 7],
+        attack1: ["avion1", 24, 27],
+        attack2: ["avion1", 28, 31],
       },
-      cazae: {
-        idle: [0, 0, 10],
-        left: [6, 11],
-        right: [12, 17],
-        right_m: ["avion2", 0, 5],
-        left_m: ["avion2", 6, 11],
+      bombarderoa: {
+        idle: [10, 19, 18],
+        left: [20, 25],
+        right: [30, 35],
+        right_m: ["avion2", 12, 21],
+        left_m: ["avion2", 0, 9],
+        attack1: ["avion3", 0, 3],
+        attack2: ["avion3", 4, 9],
       },
-      bombardero: {
+      bombarderoe: {
+        idle: [30, 39, 18],
+        left: [20, 25],
+        right: [10, 15],
+        right_m: ["avion2", 10, 19],
+        left_m: ["avion2", 0, 9],
+        attack1: ["avion3", 0, 3],
+        attack2: ["avion3", 4, 9],
+      },
+      bombarderoj: {
         idle: [0, 9, 18],
         left: [10, 15],
         right: [20, 25],
         right_m: ["avion2", 10, 19],
         left_m: ["avion2", 0, 9],
+        attack1: ["avion3", 0, 3],
+        attack2: ["avion3", 4, 9],
       },
     };
 
@@ -499,10 +551,18 @@ class BaseLevel extends Phaser.Scene {
         repeat: -1,
       },
       {
-        key: "attack",
-        sprite: "avion1",
-        start: 9,
-        end: 14,
+        key: "attack1",
+        sprite: cfg.attack1[0],
+        start: cfg.attack1[1],
+        end: cfg.attack1[2],
+        rate: 30,
+        repeat: 0,
+      },
+      {
+        key: "attack2",
+        sprite: cfg.attack2[0],
+        start: cfg.attack2[1],
+        end: cfg.attack2[2],
         rate: 10,
         repeat: 0,
       },
@@ -634,7 +694,12 @@ class BaseLevel extends Phaser.Scene {
 
     const velActual = velocidadPlayerActualizada ?? velocidadPlayer;
 
-    if (this.cursors.left.isDown || señal === "5" || señal === "6" || señal === "7") {
+    if (
+      this.cursors.left.isDown ||
+      señal === "5" ||
+      señal === "6" ||
+      señal === "7"
+    ) {
       this.player.setVelocityX(-velActual);
       if (
         this.player.anims.currentAnim.key !== "left" &&
@@ -661,11 +726,26 @@ class BaseLevel extends Phaser.Scene {
           this.player.anims.play("right_m");
         });
       }
-    } else if (this.player.anims.currentAnim.key !== "daño") {
+    } else if (
+      this.player.anims.currentAnim.key !== "daño" &&
+      this.player.anims.currentAnim.key !== "attack1" &&
+      this.player.anims.currentAnim.key !== "attack2"
+    ) {
       this.player.anims.play("idle", true);
     }
 
-    if ((botonDisparo.isDown && time > tiempoBala) || (señal === "b1" && time > tiempoBala)) {
+    if (
+      (botonDisparo.isDown && time > tiempoBala) ||
+      (señal === "b1" && time > tiempoBala)
+    ) {
+      if (
+        !(this.player.anims.currentAnim.key === "right") &&
+        !(this.player.anims.currentAnim.key === "right_m") &&
+        !(this.player.anims.currentAnim.key === "left") &&
+        !(this.player.anims.currentAnim.key === "left_m")
+      ) {
+        this.player.anims.play("attack1");
+      }
       const bala = balas.get(this.player.x, this.player.y - this.player.height);
       if (bala) {
         bala.setActive(true);
@@ -674,15 +754,21 @@ class BaseLevel extends Phaser.Scene {
         tiempoBala = time + 400;
         playEffect(audioDisparo);
       }
+      this.player.once("animationcomplete-attack1", () => {
+        this.player.anims.play("attack2");
+        this.player.once("animationcomplete-attack2", () => {
+          this.player.anims.play("idle", true);
+        });
+      });
     }
-    
+
     if (señal === "b2") {
       if (cfgDiv.style.display === "flex") {
         cfgDiv.style.display = "none";
         menuDiv.style.display = "flex";
         return;
       }
-        escenePauseResume();
+      escenePauseResume();
     }
 
     if (this.enemigos) {
