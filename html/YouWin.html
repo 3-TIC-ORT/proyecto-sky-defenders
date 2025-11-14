@@ -8,15 +8,15 @@
     <link rel="icon" href="../imgs/icono.ico" />
   </head>
   <body>
-    <h1>You Win</h1>
-    <a href="Save.html"><button>Next</button></a>
+    <div id="DivCartelYouWin">
+      <img src="../imgs/YouWinCartel.png" alt="Cartel de You Win" id="cartelYouWin">
+    </div>
+    <div id="divExit">
+    <a href="Save.html" id="botonExit"><img src="../imgs/BotonExit.png" alt="BotónExit"/></a>
+    </div>
     <style>
       body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        margin: 0;
+        height: 100vh;
         background: url(../imgs/YouWin.png) no-repeat center fixed,
           linear-gradient(
             252.46deg,
@@ -26,8 +26,30 @@
             #132b4e 100%
           );
         background-size: cover;
+        overflow: hidden;
+      }
+
+      #DivCartelYouWin {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 60vh;
+      }
+
+      #divExit {
+        position: absolute;
         width: 100vw;
-        height: 100vh;
+        bottom: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+        align-items: center;
+      }
+      #botonExit:active {
+        content: url(../imgs/BotonExitPresionado.png);
+      }
+      #cartelYouWin{
+        width: 350px;
       }
     </style>
   </body>
