@@ -2,6 +2,11 @@ const PyN = JSON.parse(localStorage.getItem("listaDePyN"));
 
 const tabla = document.getElementById("tabla-cuerpo");
 const verMas = document.getElementById("verMas");
+const botonExit = document.getElementById("botonExit");
+
+botonExit.addEventListener("click", () => {
+ window.location.href = "inicio.html";
+});
 
 let i = 0;
 const cantidadPorClick = 10;
