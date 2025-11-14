@@ -85,14 +85,6 @@ h2 {
   cursor: pointer;
 }
 
-#botonOk:active {
-  content: url(../imgs/BotonOKPresionado.png);
-}
-
-#botonNo:active {
-  content: url(../imgs/BotonNoPresionado.png);
-}
-
 #cfg-div {
   display: none;
   padding: 40px;

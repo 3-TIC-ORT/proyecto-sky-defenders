@@ -5,15 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
-    <link rel="stylesheet" href="../css/style.css" />
     <link rel="icon" href="../imgs/icono.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/JZylber/SoqueTIC-Client@v1.4.2/soquetic-client.js"></script>
+    <script defer src="../js/GuardadoDePartida.js"></script>
   </head>
   <body>
-    <h1>
-      ¿Querés que se guarde tu puntuación en el ranking mundial de Sky
-      Defenders?
-    </h1>
-    <a href="GuardadoDePartida.html"><img id="botonOk" src="../imgs/BotonOk.png" alt="BotonOk"></a>
-    <a href="inicio.html"><img id="botonNo" src="../imgs/BotonNo.png" alt="BotonNo"></a>
+    <div class="GuardadoDePartida">
+      <h1 class="tituloGuardadoDePartida">¿Querés guardar tu puntaje?</h1>
+      <input type="text" placeholder="Escribí tu nombre" id="nombreDeUsuario" />
+    </div>
+    <div class="botonesGuardadoDePartida">
+      <img
+        id="botonGuardar"
+        class="botonOk"
+        src="../imgs/BotonOk.png"
+        alt="BotonOk"
+      />
+      <a href="inicio.html"
+        ><img id="botonNo" src="../imgs/BotonNo.png" alt="BotonNo"
+      /></a>
+    </div>
+    <style>
+      body {
+        overflow: hidden;
+        margin: 0;
+        background: url(../imgs/fondosimple.png) no-repeat center fixed,
+          linear-gradient(
+            252.46deg,
+            #2596ff 0%,
+            #1156bd 38.46%,
+            #133a76 74.52%,
+            #132b4e 100%
+          );
+        background-size: cover;
+        height: 100vh;
+      }
+      .GuardadoDePartida {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 25vh;
+      }
+      .tituloGuardadoDePartida {
+        color: #fff;
+        padding: 15px;
+        background: #800000;
+        font-size: 40px;
+      }
+      .botonesGuardadoDePartida {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 15vh;
+      }
+      input {
+        border: 4px solid #800000;
+        background: #ffefef;
+        font-size: 20px;
+        text-align: center;
+      }
+      .botonOk:active {
+        content: url(../imgs/BotonOKPresionado.png);
+      }
+
+      #botonNo:active {
+        content: url(../imgs/BotonNoPresionado.png);
+      }
+    </style>
   </body>
 </html>
