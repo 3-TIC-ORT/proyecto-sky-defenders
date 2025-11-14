@@ -527,7 +527,7 @@ class BaseLevel extends Phaser.Scene {
         right_m: ["avion2", 10, 19],
         left_m: ["avion2", 0, 9],
         attack1: ["avion3", 0, 3],
-        attack2: ["avion3", 4, 9],
+        attack2: ["avion3", 4, 6],
       },
       bombarderoj: {
         idle: [0, 9, 18],
