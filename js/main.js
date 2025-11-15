@@ -235,7 +235,9 @@ musicaBoton.addEventListener("click", () => {
     musicValue.innerText = Math.round(lastMusicVolume * 100) + "%";
     musicVolume = lastMusicVolume;
     audio.volume = musicVolume;
-    audio.play().catch(() => {});
+    audio.play().catch((error) => {
+      console.log("Error al intentar reproducir el audio:", error);
+    });
   }
   musicaActiva = !musicaActiva;
 });
@@ -283,32 +285,56 @@ atrasBoton.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
+  const escenaActiva = gameInstance.scene.getScenes(true)[0];
 
-    const escenaActiva = gameInstance.scene.getScenes(true)[0];
-  
-    if (event.code === "Escape") {
-      escenePauseResume();
-    }
-  
-    if (event.key === "1") {
-      nivelActual = 1;
-      transitionToScene("Nivel: 1");
-      escenaActiva.scene.start("Level1");
-    }
-  
-    if (event.key === "2") {
-      nivelActual = 2;
-      transitionToScene("Nivel: 2");
-      escenaActiva.scene.start("Level2");
-    }
-  
-    if (event.key === "3") {
-      nivelActual = 3;
-      transitionToScene("Nivel: 3");
-      escenaActiva.scene.start("Level3");
-    }
-  });
+  if (event.code === "Escape") {
+    escenePauseResume();
+  }
 
+  if (event.key === "1") {
+    nivelActual = 1;
+    transitionToScene("Nivel: 1");
+    escenaActiva.scene.start("Level1");
+  }
+
+  if (event.key === "2") {
+    nivelActual = 2;
+    transitionToScene("Nivel: 2");
+    escenaActiva.scene.start("Level2");
+  }
+
+  if (event.key === "3") {
+    nivelActual = 3;
+    transitionToScene("Nivel: 3");
+    escenaActiva.scene.start("Level3");
+  }
+
+  if (event.key === "m") {
+    if (musicaActiva) {
+      lastMusicVolume = musicVolume;
+      audio.pause();
+      musicaBoton.src = "../imgs/Boton No Musica.png";
+      musicaBoton.classList.add("musicaBotonMuteado");
+      musicaBoton.classList.remove("musicaBoton");
+      musicSlider.value = 0;
+      musicValue.innerText = "0%";
+      musicVolume = 0;
+      audio.volume = 0;
+    } else {
+      musicaBoton.src = "../imgs/Boton Musica.png";
+      musicaBoton.classList.add("musicaBoton");
+      musicaBoton.classList.remove("musicaBotonMuteado");
+      musicSlider.value = lastMusicVolume;
+      musicValue.innerText = Math.round(lastMusicVolume * 100) + "%";
+      musicVolume = lastMusicVolume;
+      audio.volume = musicVolume;
+      audio.play().catch((error) => {
+        console.log("Error al intentar reproducir el audio:", error);
+      });
+    }
+    musicaActiva = !musicaActiva;
+  }
+});
 
 function escenePauseResume() {
   if (cfgDiv.style.display === "flex") {
