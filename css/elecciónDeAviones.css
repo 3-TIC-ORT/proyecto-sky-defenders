@@ -62,3 +62,11 @@ body {
   height: 384px;
   width: 400px;
 }
+.seleccionado {
+  content: url("../imgs/fight.gif");
+  outline-offset: -8px;
+  border-radius: 20px;
+  background: none;
+  border: none;
+  border-radius: 0;
+}
