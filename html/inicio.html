@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
     <link rel="icon" href="../imgs/icono.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/JZylber/SoqueTIC-Client@v1.4.2/soquetic-client.js"></script>
   </head>
   <body>
     <div id="DivCartelSkyDefenders">
@@ -52,6 +54,36 @@
       #jugar:active {
         content: url(../imgs/Button_Pressed_Sprite.png);
       }
+
+      #jugar.pressed {
+        content: url(../imgs/Button_Pressed_Sprite.png);
+      }
+
     </style>
+    <script>
+      connect2Server(3000);
+
+      let señal;
+
+      subscribeRealTimeEvent("nuevaSeñal", (data) => {
+          if (data) {
+            const texto = data; 
+          señal = texto.señal === "b1" ? "b1" : null;
+          
+          console.log(señal);
+          
+            if (!señal) return; 
+
+            if (señal) {
+              const a = document.getElementById("jugar");
+              a.classList.add("pressed");
+
+              setTimeout(() => {
+                a.click();
+              }, 50);
+            }
+          }
+      });
+    </script>
   </body>
 </html>

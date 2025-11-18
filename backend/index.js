@@ -44,7 +44,7 @@ subscribePOSTEvent("PuntajeyNombre", (datos) => {
 });
 
 const port = new SerialPort({
-  path: "COM3",
+  path: "COM5",
   baudRate: 9600,
 });
 

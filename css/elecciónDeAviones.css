@@ -70,3 +70,11 @@ body {
   border: none;
   border-radius: 0;
 }
+.seleccionadoAvion {
+  content: url("../imgs/ready.gif");
+  outline-offset: -8px;
+  border-radius: 20px;
+  background: none;
+  border: none;
+  border-radius: 0;
+}
