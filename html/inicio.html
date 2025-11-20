@@ -65,6 +65,16 @@
 
       let señal;
 
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const a = document.getElementById("jugar");
+          a.classList.add("pressed");
+          setTimeout(() => {
+          a.click();
+          }, 50);
+        }
+      });
+
       subscribeRealTimeEvent("nuevaSeñal", (data) => {
           if (data) {
             const texto = data; 
