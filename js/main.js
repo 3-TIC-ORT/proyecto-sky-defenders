@@ -335,6 +335,25 @@ document.addEventListener("keydown", (event) => {
     }
     musicaActiva = !musicaActiva;
   }
+  if (event.key === "e") {
+    if (esActivos) {
+      lastEffectsVolume = effectsVolume;
+      esBoton.src = "../imgs/Boton No Audio.png";
+      esBoton.classList.add("esBotonMuteado");
+      esBoton.classList.remove("esBoton");
+      effectsSlider.value = 0;
+      effectsValue.innerText = "0%";
+      effectsVolume = 0;
+    } else {
+      esBoton.src = "../imgs/Boton Audio.png";
+      esBoton.classList.add("esBoton");
+      esBoton.classList.remove("esBotonMuteado");
+      effectsSlider.value = lastEffectsVolume;
+      effectsValue.innerText = Math.round(lastEffectsVolume * 100) + "%";
+      effectsVolume = lastEffectsVolume;
+    }
+    esActivos = !esActivos;
+  }
 });
 
 function escenePauseResume() {
