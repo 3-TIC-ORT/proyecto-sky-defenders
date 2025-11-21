@@ -40,9 +40,26 @@ body {
   top: 125px;
   left: 20px;
 }
-#vidaBoss {
+
+.life-bar-container {
   display: none;
-  bottom: 0px;
+  position: absolute;
+  bottom: 10px;
+  width: 300px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-color: #000;
+  border: 2px solid;
+}
+
+.life-bar {
+  height: 100%;
+  width: 100%; /* Inicialmente llena */
+  background-color: #4f0099;
+  transition: width 0.3s ease;
 }
 
 .datos {

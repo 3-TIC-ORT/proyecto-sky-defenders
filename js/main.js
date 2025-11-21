@@ -78,7 +78,8 @@ let vidasrestantes = 3;
 let puntaje = document.getElementById("puntaje");
 let vidas = document.getElementById("vidas");
 let niveles = document.getElementById("niveles");
-let vidaBoss = document.getElementById("vidaBoss");
+let lifeBar = document.getElementById("life-bar");
+let lifeBarContainer = document.getElementById("life-bar-container");
 let nivelActual = 2;
 let gameInstance;
 let fondo;
@@ -980,7 +981,7 @@ class Level3 extends BaseLevel {
     super.create();
     niveles.innerText = "Nivel: 3";
 
-    vidaBoss.style.display = "block";
+    lifeBarContainer.style.display = "block";
 
     this.balasBossEstrella = this.physics.add.group({
       defaultKey: "Estrella-boss",
@@ -1573,7 +1574,11 @@ class Level3 extends BaseLevel {
     bala.destroy();
 
     bossHP--;
-    vidaBoss.innerText = "Vida del boss: " + bossHP;
+
+    if (bossHP > 0) {
+      bossHP -= 1;
+      lifeBar.style.width = bossHP + "%";
+    }
 
     if (bossHP <= 0) {
       this.bossGroup.getChildren().forEach((p) => p.destroy());

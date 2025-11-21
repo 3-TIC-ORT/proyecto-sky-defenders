@@ -11,10 +11,16 @@
   </head>
   <body>
     <div id="DivCartelYouWin">
-      <img src="../imgs/YouWinCartel.png" alt="Cartel de You Win" id="cartelYouWin">
+      <img
+        src="../imgs/YouWinCartel.png"
+        alt="Cartel de You Win"
+        id="cartelYouWin"
+      />
     </div>
     <div id="divExit">
-    <a href="Save.html" id="botonExit"><img src="../imgs/BotonExit.png" alt="BotónExit"/></a>
+      <a href="Save.html" id="botonExit"
+        ><img src="../imgs/BotonExit.png" alt="BotónExit"
+      /></a>
     </div>
     <style>
       body {
@@ -50,7 +56,7 @@
       #botonExit:active {
         content: url(../imgs/BotonExitPresionado.png);
       }
-      #cartelYouWin{
+      #cartelYouWin {
         width: 350px;
       }
       #botonExit.pressed {
@@ -62,25 +68,38 @@
 
       let señal;
 
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const a = document.getElementById("botonExit");
+          a.classList.add("pressed");
+
+          setTimeout(() => {
+            a.click();
+          }, 50);
+        }
+        if (e.key === "Escape") {
+          window.location.href = "../html/Save.html";
+        }
+      });
+
       subscribeRealTimeEvent("nuevaSeñal", (data) => {
-          if (data) {
-            const texto = data; 
-          señal = texto.señal === "b1"? "b1"
-              : null;
-          
+        if (data) {
+          const texto = data;
+          señal = texto.señal === "b1" ? "b1" : null;
+
           console.log(señal);
-          
-            if (!señal) return; 
 
-            if (señal) {
-              const a = document.getElementById("botonExit");
-              a.classList.add("pressed");
+          if (!señal) return;
 
-              setTimeout(() => {
-                a.click();
-              }, 50);
-            }
+          if (señal) {
+            const a = document.getElementById("botonExit");
+            a.classList.add("pressed");
+
+            setTimeout(() => {
+              a.click();
+            }, 50);
           }
+        }
       });
     </script>
   </body>
