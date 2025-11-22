@@ -286,6 +286,7 @@ atrasBoton.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (!gameInstance || !gameInstance.scene) return;
   const escenaActiva = gameInstance.scene.getScenes(true)[0];
 
   if (event.code === "Escape") {
@@ -307,7 +308,7 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "3") {
     nivelActual = 3;
     transitionToScene("Nivel: 3");
-    escenaActiva.scene.start("Level3");
+    escenaActiva.scene.start("IntroBoss");
   }
 
   if (event.key === "m") {
@@ -484,6 +485,11 @@ class BaseLevel extends Phaser.Scene {
       frameHeight: 600,
     });
 
+    this.load.spritesheet("entradaBoss", "../imgs/entradaBoss.png", {
+      frameWidth: 1366,
+      frameHeight: 768,
+    });
+
     this.load.image("fondo", "../imgs/Fondo.png");
 
     this.load.image("bala", "../imgs/bala.png");
@@ -508,6 +514,16 @@ class BaseLevel extends Phaser.Scene {
       .setScale(2);
 
     this.player.setCollideWorldBounds(true);
+
+    this.anims.create({
+      key: "entradaBoss",
+      frames: this.anims.generateFrameNumbers("entradaBoss", {
+        start: 0,
+        end: 16,
+      }),
+      frameRate: 6,
+      repeat: 0,
+    });
 
     this.anims.create({
       key: "enemigo",
@@ -948,7 +964,7 @@ class Level1 extends BaseLevel {
 class Level2 extends BaseLevel {
   constructor() {
     super("Level2");
-    this.nextLevel = "Level3";
+    this.nextLevel = "IntroBoss";
   }
 
   create() {
@@ -990,10 +1006,33 @@ class Level2 extends BaseLevel {
   }
 }
 
+class IntroBoss extends Phaser.Scene {
+  constructor() {
+    super("IntroBoss");
+  }
+
+  create() {
+    // Crear sprite ANCHO + ALTO de pantalla
+    const entrada = this.add.sprite(0, 0, "entradaBoss").setOrigin(0, 0);
+
+    // Escalar por las dudas si el frame no coincide
+    entrada.displayWidth = this.scale.width;
+    entrada.displayHeight = this.scale.height;
+
+    // Reproducir la animación
+    entrada.anims.play("entradaBoss");
+
+    // Cuando termine, pasar a Level3
+    entrada.on("animationcomplete", () => {
+      this.scene.start("Level3");
+    });
+  }
+}
+
 class Level3 extends BaseLevel {
   constructor() {
     super("Level3");
-    this.nextLevel = "YouWin";
+    this.nextLevel = "DefeatBoss";
   }
 
   create() {
@@ -1608,11 +1647,33 @@ class Level3 extends BaseLevel {
       localStorage.clear();
       localStorage.setItem("puntaje", JSON.stringify(enemigosDestruidos));
       localStorage.setItem("tiempo", JSON.stringify(tiempo));
-      window.location.href = "YouWin.html";
+      this.scene.start(this.nextLevel);
     }
   }
 
   enemyShoot() {}
+}
+class DefeatBoss extends Phaser.Scene {
+  constructor() {
+    super("DefeatBoss");
+  }
+
+  create() {
+    // Crear sprite ANCHO + ALTO de pantalla
+    const entrada = this.add.sprite(0, 0, "entradaBoss").setOrigin(0, 0);
+
+    // Escalar por las dudas si el frame no coincide
+    entrada.displayWidth = this.scale.width;
+    entrada.displayHeight = this.scale.height;
+
+    // Reproducir la animación
+    entrada.anims.play("entradaBoss");
+
+    // Cuando termine, pasar a Level3
+    entrada.on("animationcomplete", () => {
+      window.location.href = "YouWin.html";
+    });
+  }
 }
 
 const config = {
@@ -1624,7 +1685,7 @@ const config = {
     default: "arcade",
     arcade: { gravity: { y: 0 }, debug: false },
   },
-  scene: [Level1, Level2, Level3],
+  scene: [Level1, Level2, IntroBoss, Level3, DefeatBoss],
 };
 
 new Phaser.Game(config);
