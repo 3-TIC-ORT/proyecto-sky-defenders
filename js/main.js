@@ -1639,6 +1639,7 @@ class Level3 extends BaseLevel {
     }
 
     if (bossHP <= 0) {
+      lifeBar.style.display = "none";
       this.bossGroup.getChildren().forEach((p) => p.destroy());
       this.bossGroup.clear(true, true);
       enemigosDestruidos += 500;
