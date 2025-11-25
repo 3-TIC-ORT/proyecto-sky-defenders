@@ -43,8 +43,6 @@ function activarSuscripcion() {
           ? "b2"
           : null;
 
-      console.log(señal);
-
       if (!señal) return;
 
       window.señal = señal;
@@ -515,16 +513,6 @@ class BaseLevel extends Phaser.Scene {
       "fondo"
     );
     fondo.setOrigin(0, 0);
-    
-    const cam = this.cameras.main;
-    const offsetX = 20;
-    const offsetY = 20;
-
-    this.corazones = [
-        this.add.sprite(cam.x + offsetX + 0, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
-        this.add.sprite(cam.x + offsetX + 25, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
-        this.add.sprite(cam.x + offsetX + 50, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0)
-    ];
 
     this.player = this.physics.add
       .sprite(this.scale.width / 2, this.scale.height * 0.9, "avion1")
@@ -573,12 +561,33 @@ class BaseLevel extends Phaser.Scene {
       repeat: 0,
     });
     this.anims.create({
-      key: 'corazonExplota',
+      key: 'perderVidas',
       frames: this.anims.generateFrameNumbers('corazonMuerte', { start: 0, end: 13 }),
       frameRate: 10,
       repeat: 0
-  });
-  
+    });
+    this.anims.create({
+      key: 'vidaPerdida',
+      frames: this.anims.generateFrameNumbers('corazonMuerte', { start: 13, end: 13 }),
+      frameRate: 10,
+      repeat: 0
+    });
+
+    const cam = this.cameras.main;
+    const offsetX = 20;
+    const offsetY = 20;
+
+    this.corazones = [
+        this.add.sprite(cam.x + offsetX + 0, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
+        this.add.sprite(cam.x + offsetX + 25, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
+        this.add.sprite(cam.x + offsetX + 50, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0)
+    ];
+    if(vidasrestantes === 2){
+      this.corazones[2].anims.play("vidaPerdida");
+    } else if(vidasrestantes === 1){
+      this.corazones[2].anims.play("vidaPerdida");
+      this.corazones[1].anims.play("vidaPerdida");
+    }
 
     const animConfigs = {
       ataque: {
@@ -948,7 +957,7 @@ class BaseLevel extends Phaser.Scene {
     balaenem.destroy();
     vidasrestantes --;
 
-    this.corazones[vidasrestantes].play('corazonExplota');
+    this.corazones[vidasrestantes].play('perderVidas');
 
     playEffect(audioMuertePlayer);
 
@@ -1386,7 +1395,7 @@ class Level3 extends BaseLevel {
     bala.destroy();
     vidasrestantes --;
 
-    this.corazones[vidasrestantes].play('corazonExplota');
+    this.corazones[vidasrestantes].play('perderVidas');
 
     playEffect(audioMuertePlayer);
 
@@ -1406,7 +1415,7 @@ class Level3 extends BaseLevel {
     bala.destroy();
     vidasrestantes --;
 
-    this.corazones[vidasrestantes].play('corazonExplota');
+    this.corazones[vidasrestantes].play('perderVidas');
 
     playEffect(audioMuertePlayer);
 
@@ -1425,8 +1434,6 @@ class Level3 extends BaseLevel {
   hitPlayerLaser(player, bala) {
     bala.destroy();
     vidasrestantes -= 3;
-
-    this.corazones[vidasrestantes].play('corazonExplota');
 
     playEffect(audioMuertePlayer);
 
