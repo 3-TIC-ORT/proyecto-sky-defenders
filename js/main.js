@@ -76,7 +76,9 @@ let botonDisparo;
 let enemigosDestruidos = 0;
 let vidasrestantes = 3;
 let puntaje = document.getElementById("puntaje");
-let vidas = document.getElementById("vidas");
+let vida1 = document.getElementById("corazon1");
+let vida2 = document.getElementById("corazon2");
+let vida3 = document.getElementById("corazon3");
 let niveles = document.getElementById("niveles");
 let lifeBar = document.getElementById("life-bar");
 let lifeBarContainer = document.getElementById("life-bar-container");
@@ -124,7 +126,7 @@ function iniciarContador() {
     const minutos = Math.floor(tiempo / 60);
     const segundos = tiempo % 60;
     const formato = minutos + ":" + (segundos < 10 ? "0" : "") + segundos;
-    document.getElementById("tiempo").textContent = "Tiempo: " + formato;
+    document.getElementById("tiempo").textContent = formato;
   }, 1000);
 }
 
@@ -490,6 +492,11 @@ class BaseLevel extends Phaser.Scene {
       frameHeight: 768,
     });
 
+    this.load.spritesheet('corazonMuerte', '../imgs/Corazón%20muerte-Sheet.png', {
+      frameWidth: 15,
+      frameHeight: 17
+    });
+
     this.load.image("fondo", "../imgs/Fondo.png");
 
     this.load.image("bala", "../imgs/bala.png");
@@ -508,6 +515,16 @@ class BaseLevel extends Phaser.Scene {
       "fondo"
     );
     fondo.setOrigin(0, 0);
+    
+    const cam = this.cameras.main;
+    const offsetX = 20;
+    const offsetY = 20;
+
+    this.corazones = [
+        this.add.sprite(cam.x + offsetX + 0, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
+        this.add.sprite(cam.x + offsetX + 25, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
+        this.add.sprite(cam.x + offsetX + 50, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0)
+    ];
 
     this.player = this.physics.add
       .sprite(this.scale.width / 2, this.scale.height * 0.9, "avion1")
@@ -555,6 +572,13 @@ class BaseLevel extends Phaser.Scene {
       frameRate: 10,
       repeat: 0,
     });
+    this.anims.create({
+      key: 'corazonExplota',
+      frames: this.anims.generateFrameNumbers('corazonMuerte', { start: 0, end: 13 }),
+      frameRate: 10,
+      repeat: 0
+  });
+  
 
     const animConfigs = {
       ataque: {
@@ -866,7 +890,7 @@ class BaseLevel extends Phaser.Scene {
       enemigo.destroy();
 
       enemigosDestruidos += 10;
-      puntaje.innerText = "Puntaje: " + enemigosDestruidos;
+      puntaje.innerText = enemigosDestruidos;
 
       if (this.scene.key === "Level2") {
         this.enemyShootEvent.delay += 10;
@@ -922,7 +946,10 @@ class BaseLevel extends Phaser.Scene {
   }
   hitPlayer(player, balaenem) {
     balaenem.destroy();
-    vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
+    vidasrestantes --;
+
+    this.corazones[vidasrestantes].play('corazonExplota');
+
     playEffect(audioMuertePlayer);
 
     if (vidasrestantes <= 0) {
@@ -969,7 +996,7 @@ class Level2 extends BaseLevel {
 
   create() {
     super.create();
-    niveles.innerText = "Nivel: 2";
+    niveles.innerText = "2";
     nivelActual = 3;
 
     this.enemigos.getChildren().forEach((enemigo) => {
@@ -1012,17 +1039,13 @@ class IntroBoss extends Phaser.Scene {
   }
 
   create() {
-    // Crear sprite ANCHO + ALTO de pantalla
     const entrada = this.add.sprite(0, 0, "entradaBoss").setOrigin(0, 0);
 
-    // Escalar por las dudas si el frame no coincide
     entrada.displayWidth = this.scale.width;
     entrada.displayHeight = this.scale.height;
 
-    // Reproducir la animación
     entrada.anims.play("entradaBoss");
 
-    // Cuando termine, pasar a Level3
     entrada.on("animationcomplete", () => {
       this.scene.start("Level3");
     });
@@ -1037,7 +1060,7 @@ class Level3 extends BaseLevel {
 
   create() {
     super.create();
-    niveles.innerText = "Nivel: 3";
+    niveles.innerText = "3";
 
     lifeBarContainer.style.display = "block";
 
@@ -1361,8 +1384,18 @@ class Level3 extends BaseLevel {
 
   hitPlayerEstrella(player, bala) {
     bala.destroy();
-    vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
-    if (vidasrestantes <= 0) this.gameOver();
+    vidasrestantes --;
+
+    this.corazones[vidasrestantes].play('corazonExplota');
+
+    playEffect(audioMuertePlayer);
+
+    if (vidasrestantes <= 0) {
+      player.anims.play("daño");
+      setTimeout(() => {
+        this.gameOver();
+      }, 400);
+    }
     player.anims.play("daño");
     player.once("animationcomplete-daño", () => {
       player.play("idle");
@@ -1371,8 +1404,18 @@ class Level3 extends BaseLevel {
 
   hitPlayerEsfera(player, bala) {
     bala.destroy();
-    vidas.innerText = "Vidas: " + (vidasrestantes -= 1);
-    if (vidasrestantes <= 0) this.gameOver();
+    vidasrestantes --;
+
+    this.corazones[vidasrestantes].play('corazonExplota');
+
+    playEffect(audioMuertePlayer);
+
+    if (vidasrestantes <= 0) {
+      player.anims.play("daño");
+      setTimeout(() => {
+        this.gameOver();
+      }, 400);
+    }
     player.anims.play("daño");
     player.once("animationcomplete-daño", () => {
       player.play("idle");
@@ -1381,14 +1424,24 @@ class Level3 extends BaseLevel {
 
   hitPlayerLaser(player, bala) {
     bala.destroy();
-    vidas.innerText = "Vidas: " + (vidasrestantes -= 3);
-    if (vidasrestantes <= 0) this.gameOver();
+    vidasrestantes -= 3;
+
+    this.corazones[vidasrestantes].play('corazonExplota');
+
+    playEffect(audioMuertePlayer);
+
+    if (vidasrestantes <= 0) {
+      player.anims.play("daño");
+      setTimeout(() => {
+        this.gameOver();
+      }, 400);
+    }
     player.anims.play("daño");
     player.once("animationcomplete-daño", () => {
       player.play("idle");
     });
   }
-
+  
   spawnEnemies() {
     this.bossGroup = this.physics.add.group();
 
@@ -1660,17 +1713,13 @@ class DefeatBoss extends Phaser.Scene {
   }
 
   create() {
-    // Crear sprite ANCHO + ALTO de pantalla
     const entrada = this.add.sprite(0, 0, "entradaBoss").setOrigin(0, 0);
 
-    // Escalar por las dudas si el frame no coincide
     entrada.displayWidth = this.scale.width;
     entrada.displayHeight = this.scale.height;
 
-    // Reproducir la animación
     entrada.anims.play("entradaBoss");
 
-    // Cuando termine, pasar a Level3
     entrada.on("animationcomplete", () => {
       window.location.href = "YouWin.html";
     });

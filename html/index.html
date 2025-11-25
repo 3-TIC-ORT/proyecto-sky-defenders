@@ -14,11 +14,18 @@
   </head>
   <body>
     <img id="loading" src="../imgs/loading.gif" alt="Pantalla de Carga" />
-    <p id="tiempo" class="datos">Tiempo: 0:00</p>
-    <p id="puntaje" class="datos">Puntaje: 0</p>
-    <p id="vidas" class="datos">Vidas: 3</p>
-    <p id="niveles" class="datos">Nivel: 1</p>
-
+    <div class="divDatos" id="divTiempo">
+      <img id="tiempoImg" src="../imgs/Tiempo.gif" alt="">
+      <p id="tiempo" class="datos">0:00</p>
+    </div>
+    <div class="divDatos" id="divPuntaje">
+      <img src="../imgs/SCORE.png" alt="">
+      <p id="puntaje" class="datos">0</p>
+    </div>
+    <div class="divDatos" id="divNiveles">
+      <img src="../imgs/LEVEL.png" alt="">
+      <p id="niveles" class="datos">1</p>
+    </div>
     <div class="life-bar-container" id="life-bar-container">
       <div id="life-bar" class="life-bar"></div>
     </div>

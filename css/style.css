@@ -24,20 +24,16 @@ body {
   content: url(../imgs/BotonExitPresionado.png);
 }
 
-#tiempo {
+#divTiempo {
   top: 5px;
   left: 20px;
 }
-#puntaje {
+#divPuntaje {
   top: 45px;
   left: 20px;
 }
-#vidas {
+#divNiveles {
   top: 85px;
-  left: 20px;
-}
-#niveles {
-  top: 125px;
   left: 20px;
 }
 
@@ -61,12 +57,16 @@ body {
   transition: width 0.3s ease;
 }
 
-.datos {
+.divDatos {
   position: absolute;
   font-size: 20px;
   font-family: Arial;
   font-weight: bold;
   text-shadow: 2px 2px 4px black;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 h2,
