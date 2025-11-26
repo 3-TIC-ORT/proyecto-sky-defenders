@@ -1754,6 +1754,17 @@ class DefeatBoss extends Phaser.Scene {
   }
 
   create() {
+    lifeBarContainer.style.display = "none"
+
+    fondo = this.add.tileSprite(
+      0,
+      0,
+      this.scale.width,
+      this.scale.height,
+      "fondo"
+    );
+    fondo.setOrigin(0, 0);
+
     const muerteBoss = this.add.sprite(0, 0, "muerteBoss").setOrigin(0, 0);
 
     muerteBoss.displayWidth = this.scale.width;
@@ -1764,6 +1775,9 @@ class DefeatBoss extends Phaser.Scene {
     muerteBoss.on("animationcomplete", () => {
       window.location.href = "YouWin.html";
     });
+  }
+  update() {
+    fondo.tilePositionY -= velocidadFondo;
   }
 }
 

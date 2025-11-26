@@ -54,7 +54,7 @@ body {
 .life-bar {
   height: 100%;
   width: 100%;
-  background-color: #4f0099;
+  background-color: #661010;
   transition: width 0.3s ease;
 }
 
