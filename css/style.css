@@ -25,15 +25,16 @@ body {
 }
 
 #divTiempo {
+  bottom: 15px;
+  right: 20px;
+  height: 20px;
+}
+#divPuntaje {
   top: 5px;
   left: 20px;
 }
-#divPuntaje {
-  top: 45px;
-  left: 20px;
-}
 #divNiveles {
-  top: 85px;
+  top: 45px;
   left: 20px;
 }
 

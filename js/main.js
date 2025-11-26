@@ -490,10 +490,14 @@ class BaseLevel extends Phaser.Scene {
       frameHeight: 768,
     });
 
-    this.load.spritesheet('corazonMuerte', '../imgs/Corazón%20muerte-Sheet.png', {
-      frameWidth: 15,
-      frameHeight: 17
-    });
+    this.load.spritesheet(
+      "corazonMuerte",
+      "../imgs/Corazón%20muerte-Sheet.png",
+      {
+        frameWidth: 15,
+        frameHeight: 17,
+      }
+    );
 
     this.load.image("fondo", "../imgs/Fondo.png");
 
@@ -561,30 +565,45 @@ class BaseLevel extends Phaser.Scene {
       repeat: 0,
     });
     this.anims.create({
-      key: 'perderVidas',
-      frames: this.anims.generateFrameNumbers('corazonMuerte', { start: 0, end: 13 }),
+      key: "perderVidas",
+      frames: this.anims.generateFrameNumbers("corazonMuerte", {
+        start: 0,
+        end: 13,
+      }),
       frameRate: 10,
-      repeat: 0
+      repeat: 0,
     });
     this.anims.create({
-      key: 'vidaPerdida',
-      frames: this.anims.generateFrameNumbers('corazonMuerte', { start: 13, end: 13 }),
+      key: "vidaPerdida",
+      frames: this.anims.generateFrameNumbers("corazonMuerte", {
+        start: 13,
+        end: 13,
+      }),
       frameRate: 10,
-      repeat: 0
+      repeat: 0,
     });
 
     const cam = this.cameras.main;
-    const offsetX = 20;
-    const offsetY = 20;
+    const offsetX = 25;
+    const offsetY = 25;
 
     this.corazones = [
-        this.add.sprite(cam.x + offsetX + 0, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
-        this.add.sprite(cam.x + offsetX + 25, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0),
-        this.add.sprite(cam.x + offsetX + 50, cam.height - offsetY, 'corazonMuerte').setFrame(0).setScrollFactor(0)
+      this.add
+        .sprite(cam.x + offsetX + 0, cam.height - offsetY, "corazonMuerte")
+        .setFrame(0)
+        .setScrollFactor(0),
+      this.add
+        .sprite(cam.x + offsetX + 25, cam.height - offsetY, "corazonMuerte")
+        .setFrame(0)
+        .setScrollFactor(0),
+      this.add
+        .sprite(cam.x + offsetX + 50, cam.height - offsetY, "corazonMuerte")
+        .setFrame(0)
+        .setScrollFactor(0),
     ];
-    if(vidasrestantes === 2){
+    if (vidasrestantes === 2) {
       this.corazones[2].anims.play("vidaPerdida");
-    } else if(vidasrestantes === 1){
+    } else if (vidasrestantes === 1) {
       this.corazones[2].anims.play("vidaPerdida");
       this.corazones[1].anims.play("vidaPerdida");
     }
@@ -955,9 +974,9 @@ class BaseLevel extends Phaser.Scene {
   }
   hitPlayer(player, balaenem) {
     balaenem.destroy();
-    vidasrestantes --;
+    vidasrestantes--;
 
-    this.corazones[vidasrestantes].play('perderVidas');
+    this.corazones[vidasrestantes].play("perderVidas");
 
     playEffect(audioMuertePlayer);
 
@@ -1393,9 +1412,9 @@ class Level3 extends BaseLevel {
 
   hitPlayerEstrella(player, bala) {
     bala.destroy();
-    vidasrestantes --;
+    vidasrestantes--;
 
-    this.corazones[vidasrestantes].play('perderVidas');
+    this.corazones[vidasrestantes].play("perderVidas");
 
     playEffect(audioMuertePlayer);
 
@@ -1413,9 +1432,9 @@ class Level3 extends BaseLevel {
 
   hitPlayerEsfera(player, bala) {
     bala.destroy();
-    vidasrestantes --;
+    vidasrestantes--;
 
-    this.corazones[vidasrestantes].play('perderVidas');
+    this.corazones[vidasrestantes].play("perderVidas");
 
     playEffect(audioMuertePlayer);
 
@@ -1448,7 +1467,7 @@ class Level3 extends BaseLevel {
       player.play("idle");
     });
   }
-  
+
   spawnEnemies() {
     this.bossGroup = this.physics.add.group();
 
