@@ -311,6 +311,12 @@ document.addEventListener("keydown", (event) => {
     escenaActiva.scene.start("IntroBoss");
   }
 
+  if (event.key === "0") {
+    vidasrestantes = 3;
+    escenaActiva.corazones[2].setFrame(0);
+    escenaActiva.corazones[1].setFrame(0);
+  }
+
   if (event.key === "m") {
     if (musicaActiva) {
       lastMusicVolume = musicVolume;
@@ -606,15 +612,18 @@ class BaseLevel extends Phaser.Scene {
       this.add
         .sprite(cam.x + offsetX + 0, cam.height - offsetY, "corazonMuerte")
         .setFrame(0)
-        .setScrollFactor(0),
+        .setScrollFactor(0)
+        .setScale(1.75),
       this.add
-        .sprite(cam.x + offsetX + 25, cam.height - offsetY, "corazonMuerte")
+        .sprite(cam.x + offsetX + 30, cam.height - offsetY, "corazonMuerte")
         .setFrame(0)
-        .setScrollFactor(0),
+        .setScrollFactor(0)
+        .setScale(1.75),
       this.add
-        .sprite(cam.x + offsetX + 50, cam.height - offsetY, "corazonMuerte")
+        .sprite(cam.x + offsetX + 60, cam.height - offsetY, "corazonMuerte")
         .setFrame(0)
-        .setScrollFactor(0),
+        .setScrollFactor(0)
+        .setScale(1.75),
     ];
     if (vidasrestantes === 2) {
       this.corazones[2].anims.play("vidaPerdida");
@@ -1084,6 +1093,9 @@ class IntroBoss extends Phaser.Scene {
   create() {
     const entrada = this.add.sprite(0, 0, "entradaBoss").setOrigin(0, 0);
 
+    bossHP = 100;
+    lifeBar.style.width = bossHP + "%";
+
     entrada.displayWidth = this.scale.width;
     entrada.displayHeight = this.scale.height;
 
@@ -1105,7 +1117,7 @@ class Level3 extends BaseLevel {
     super.create();
     niveles.innerText = "3";
 
-    lifeBarContainer.style.display = "block";
+    lifeBarContainer.style.display = "flex";
 
     this.balasBossEstrella = this.physics.add.group({
       defaultKey: "Estrella-boss",
@@ -1728,7 +1740,6 @@ class Level3 extends BaseLevel {
     bossHP--;
 
     if (bossHP > 0) {
-      bossHP -= 1;
       lifeBar.style.width = bossHP + "%";
     }
 
@@ -1754,7 +1765,7 @@ class DefeatBoss extends Phaser.Scene {
   }
 
   create() {
-    lifeBarContainer.style.display = "none"
+    lifeBarContainer.style.display = "none";
 
     fondo = this.add.tileSprite(
       0,

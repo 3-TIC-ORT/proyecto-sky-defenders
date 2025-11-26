@@ -38,12 +38,19 @@ body {
   left: 20px;
 }
 
-.life-bar-container {
-  /* display: none; */
+#tiempoImg {
+  height: 20px;
+}
+
+#life-bar-container {
   position: absolute;
   bottom: 10px;
-  width: 300px;
+  width: 324px;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
 }
 
 .life-bar {
@@ -51,25 +58,20 @@ body {
   width: 100%;
   background-color: #661010;
   transition: width 0.3s ease;
-  clip-path: polygon(
-    0% 50%, 15% 0%, 85% 0%, 100% 50%, 85% 100%,
-    15% 100%
-  );
+  clip-path: polygon(0% 44%, 15% 0%, 85% 0%, 100% 44%, 85% 100%, 15% 100%);
+  z-index: 0;
 }
 
 .divLife-bar {
   height: 100%;
   width: 100%;
   background-color: #968a8a;
-  transition: width 0.3s ease;
-  clip-path: polygon(
-    0% 50%, 15% 0%, 85% 0%, 100% 50%, 85% 100%,
-    15% 100%
-  );
+  clip-path: polygon(0% 44%, 15% 0%, 85% 0%, 100% 44%, 85% 100%, 15% 100%);
 }
 
 #marcoVidaBoss {
   position: absolute;
+  z-index: 1;
 }
 
 .divDatos {
@@ -133,6 +135,7 @@ h2 {
     rgba(80, 19, 92, 0.9) 72.6%,
     rgba(153, 36, 177, 0.9) 100%
   );
+  z-index: 3;
 }
 
 .menu-div {
@@ -149,6 +152,7 @@ h2 {
   );
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .menu-content {
