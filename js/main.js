@@ -490,6 +490,11 @@ class BaseLevel extends Phaser.Scene {
       frameHeight: 768,
     });
 
+    this.load.spritesheet("muerteBoss", "../imgs/muerteBoss.png", {
+      frameWidth: 1366,
+      frameHeight: 768,
+    });
+
     this.load.spritesheet(
       "corazonMuerte",
       "../imgs/Corazón%20muerte-Sheet.png",
@@ -529,6 +534,16 @@ class BaseLevel extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("entradaBoss", {
         start: 0,
         end: 16,
+      }),
+      frameRate: 4,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "muerteBoss",
+      frames: this.anims.generateFrameNumbers("muerteBoss", {
+        start: 0,
+        end: 55,
       }),
       frameRate: 6,
       repeat: 0,
@@ -1739,14 +1754,14 @@ class DefeatBoss extends Phaser.Scene {
   }
 
   create() {
-    const entrada = this.add.sprite(0, 0, "entradaBoss").setOrigin(0, 0);
+    const muerteBoss = this.add.sprite(0, 0, "muerteBoss").setOrigin(0, 0);
 
-    entrada.displayWidth = this.scale.width;
-    entrada.displayHeight = this.scale.height;
+    muerteBoss.displayWidth = this.scale.width;
+    muerteBoss.displayHeight = this.scale.height;
 
-    entrada.anims.play("entradaBoss");
+    muerteBoss.anims.play("muerteBoss");
 
-    entrada.on("animationcomplete", () => {
+    muerteBoss.on("animationcomplete", () => {
       window.location.href = "YouWin.html";
     });
   }
