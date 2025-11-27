@@ -49,3 +49,34 @@ function agregarFilas() {
 
 window.onload = agregarFilas;
 verMas.addEventListener("click", agregarFilas);
+
+connect2Server();
+
+let señal;
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    botonExit.classList.add("pressed");
+  
+    setTimeout(() => {
+      botonExit.click();
+    }, 50);
+  }
+});
+
+subscribeRealTimeEvent("nuevaSeñal", (data) => {
+  if (data) {
+    const texto = data;
+    señal = texto.señal === "b2" ? "b2" : null;
+  
+    if (!señal) return;
+
+    if (señal) {
+      botonExit.classList.add("pressed");
+    
+      setTimeout(() => {
+        botonExit.click();
+      }, 50);
+    }
+  }
+});

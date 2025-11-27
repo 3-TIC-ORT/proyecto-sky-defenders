@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
     <link rel="icon" href="../imgs/icono.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/JZylber/SoqueTIC-Client@v1.4.2/soquetic-client.js"></script>
+    <script defer src="../js/TablaDeclasificación.js"></script>
     <style>
       body {
         margin: 0;
@@ -72,6 +75,9 @@
       #botonExit:active {
         content: url("../imgs/BotonExitPresionado.png");
       }
+      #botonExit.pressed {
+        content: url("../imgs/BotonExitPresionado.png");
+      }
       #divBotonExit {
         position: fixed;
         bottom: 20px;
@@ -102,8 +108,5 @@
     <div id="divBotonExit">
       <img src="../imgs/BotonExit.png" alt="Boton de exit" id="botonExit">
     </div>
-  
-    <script src="../js/TablaDeclasificación.js"></script>
   </body>
-  
 </html>

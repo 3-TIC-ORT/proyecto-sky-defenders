@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sky Defenders</title>
     <link rel="icon" href="../imgs/icono.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/JZylber/SoqueTIC-Client@v1.4.2/soquetic-client.js"></script>
   </head>
   <body>
     <style>
@@ -42,7 +44,13 @@
       #botonRetry:active {
         content: url(../imgs/BotonRetryPresionado.png);
       }
+      #botonRetry.pressed {
+        content: url(../imgs/BotonRetryPresionado.png);
+      }
       #botonExit:active {
+        content: url(../imgs/BotonExitPresionado.png);
+      }
+      #botonExit.pressed {
         content: url(../imgs/BotonExitPresionado.png);
       }
     </style>
@@ -64,6 +72,51 @@
       let botoExit = document.getElementById("botonRetry");
 
       botoExit.href = "index.html?pais=" + this.pais + "&tipo=" + this.tipo;
+
+      connect2Server(3000);
+
+      let señal;
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const a = document.getElementById("botonExit");
+          a.classList.add("pressed");
+        
+          setTimeout(() => {
+            a.click();
+          }, 50);
+        }
+        if (e.key === "Escape") {
+          window.location.href = "../html/Save.html";
+        }
+      });
+
+      subscribeRealTimeEvent("nuevaSeñal", (data) => {
+        if (data) {
+          const texto = data;
+          señal = texto.señal === "b1" ? "b1" : texto.señal === "b2" ? "b2" : null;
+        
+          if (!señal) return;
+        
+          if (señal === "b1") {
+            const a = document.getElementById("botonRetry");
+            a.classList.add("pressed");
+          
+            setTimeout(() => {
+              a.click();
+            }, 50);
+          }
+
+          if (señal === "b2") {
+            const b = document.getElementById("botonExit");
+            b.classList.add("pressed");
+          
+            setTimeout(() => {
+              b.click();
+            }, 50);
+          }
+        }
+      });
     </script>
   </body>
 </html>

@@ -10,7 +10,7 @@ botonGuardar.addEventListener("click", function () {
 
   if (nombre) {
     localStorage.setItem("nombreDeUsuario", JSON.stringify(nombre));
-    //acá está el postEvent
+
     postEvent(
       "PuntajeyNombre",
       { PyN: { usuario: nombre, puntaje: puntaje, tiempo: tiempo } },
@@ -21,5 +21,50 @@ botonGuardar.addEventListener("click", function () {
     );
   } else {
     alert("Por favor ingresá tu nombre de usuario.");
+    botonGuardar.classList.remove("pressed");
+  }
+});
+
+let señal;
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    botonGuardar.classList.add("pressed");
+  
+    setTimeout(() => {
+      botonGuardar.click();
+    }, 50);
+  }
+  if (e.key === "Escape") {
+    const botonNo = document.getElementById("botonNo");
+    botonNo.classList.add("pressed");
+    setTimeout(() => {
+      botonNo.click();
+    }, 50);
+  }
+});
+
+subscribeRealTimeEvent("nuevaSeñal", (data) => {
+  if (data) {
+    const texto = data;
+    señal = texto.señal === "b1" ? "b1" : texto.señal === "b2" ? "b2" : null;
+  
+    if (!señal) return;
+  
+    if (señal === "b1") {
+      botonGuardar.classList.add("pressed");
+    
+      setTimeout(() => {
+        botonGuardar.click();
+      }, 50);
+    }
+
+    if (señal === "b2") {
+      const botonNo = document.getElementById("botonNo");
+      botonNo.classList.add("pressed");
+      setTimeout(() => {
+        botonNo.click();
+      }, 50);
+    }
   }
 });
