@@ -313,8 +313,8 @@ document.addEventListener("keydown", (event) => {
 
   if (event.key === "0") {
     vidasrestantes = 3;
-    escenaActiva.corazones[2].setFrame(0);
-    escenaActiva.corazones[1].setFrame(0);
+    escenaActiva.corazones[2].anims.play("vidaIdle");
+    escenaActiva.corazones[1].anims.play("vidaIdle");
   }
 
   if (event.key === "m") {
@@ -510,6 +510,15 @@ class BaseLevel extends Phaser.Scene {
       }
     );
 
+    this.load.spritesheet(
+      "corazonIdle",
+      "../imgs/Corazón-Sheet.png",
+      {
+        frameWidth: 15,
+        frameHeight: 17,
+      }
+    );
+
     this.load.image("fondo", "../imgs/Fondo.png");
 
     this.load.image("bala", "../imgs/bala.png");
@@ -603,6 +612,15 @@ class BaseLevel extends Phaser.Scene {
       frameRate: 10,
       repeat: 0,
     });
+    this.anims.create({
+      key: "vidaIdle",
+      frames: this.anims.generateFrameNumbers("corazonIdle", {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
 
     const cam = this.cameras.main;
     const offsetX = 25;
@@ -630,6 +648,10 @@ class BaseLevel extends Phaser.Scene {
     } else if (vidasrestantes === 1) {
       this.corazones[2].anims.play("vidaPerdida");
       this.corazones[1].anims.play("vidaPerdida");
+    } else {
+      this.corazones.forEach(corazon => {
+        corazon.anims.play("vidaIdle");
+      });
     }
 
     const animConfigs = {
