@@ -510,14 +510,10 @@ class BaseLevel extends Phaser.Scene {
       }
     );
 
-    this.load.spritesheet(
-      "corazonIdle",
-      "../imgs/Corazón-Sheet.png",
-      {
-        frameWidth: 15,
-        frameHeight: 17,
-      }
-    );
+    this.load.spritesheet("corazonIdle", "../imgs/Corazón-Sheet.png", {
+      frameWidth: 15,
+      frameHeight: 17,
+    });
 
     this.load.image("fondo", "../imgs/Fondo.png");
 
@@ -649,7 +645,7 @@ class BaseLevel extends Phaser.Scene {
       this.corazones[2].anims.play("vidaPerdida");
       this.corazones[1].anims.play("vidaPerdida");
     } else {
-      this.corazones.forEach(corazon => {
+      this.corazones.forEach((corazon) => {
         corazon.anims.play("vidaIdle");
       });
     }
@@ -1727,6 +1723,7 @@ class Level3 extends BaseLevel {
       this.bossCabeza.play("bossCabeza-Aviso2");
       this.bossCabeza.once("animationcomplete-bossCabeza-Aviso2", () => {
         const laser = this.balasBossLaser.get(x, y, "Laser-boss");
+        laser.body.enable = false;
 
         laser.body.allowGravity = false;
         laser.body.immovable = true;
@@ -1736,8 +1733,10 @@ class Level3 extends BaseLevel {
 
         laser.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (anim) => {
           if (anim.key === "laser_apareciendo") {
+            laser.body.enable = true;
             laser.play("laser_encendido");
             this.time.delayedCall(5000, () => {
+              laser.body.enable = false;
               laser.play("laser_apagado");
               laser.once(
                 Phaser.Animations.Events.ANIMATION_COMPLETE,
