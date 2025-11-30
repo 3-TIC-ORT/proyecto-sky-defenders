@@ -5,7 +5,7 @@ const verMas = document.getElementById("verMas");
 const botonExit = document.getElementById("botonExit");
 
 botonExit.addEventListener("click", () => {
- window.location.href = "inicio.html";
+  window.location.href = "inicio.html";
 });
 
 let i = 0;
@@ -55,9 +55,9 @@ connect2Server();
 let señal;
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
+  if (e.key === "Enter" || e.key === "escape") {
     botonExit.classList.add("pressed");
-  
+
     setTimeout(() => {
       botonExit.click();
     }, 50);
@@ -68,12 +68,12 @@ subscribeRealTimeEvent("nuevaSeñal", (data) => {
   if (data) {
     const texto = data;
     señal = texto.señal === "b2" ? "b2" : null;
-  
+
     if (!señal) return;
 
     if (señal) {
       botonExit.classList.add("pressed");
-    
+
       setTimeout(() => {
         botonExit.click();
       }, 50);

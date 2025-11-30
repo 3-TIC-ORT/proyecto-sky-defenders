@@ -11,6 +11,11 @@ botonGuardar.addEventListener("click", function () {
   if (nombre) {
     localStorage.setItem("nombreDeUsuario", JSON.stringify(nombre));
 
+    setTimeout(() => {
+      alert("No se ha podido conectar al backend. Inténtalo más tarde.");
+      window.location.href = "../html/inicio.html";
+    }, 1500);
+
     postEvent(
       "PuntajeyNombre",
       { PyN: { usuario: nombre, puntaje: puntaje, tiempo: tiempo } },
@@ -30,7 +35,7 @@ let señal;
 document.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     botonGuardar.classList.add("pressed");
-  
+
     setTimeout(() => {
       botonGuardar.click();
     }, 50);
@@ -48,12 +53,12 @@ subscribeRealTimeEvent("nuevaSeñal", (data) => {
   if (data) {
     const texto = data;
     señal = texto.señal === "b1" ? "b1" : texto.señal === "b2" ? "b2" : null;
-  
+
     if (!señal) return;
-  
+
     if (señal === "b1") {
       botonGuardar.classList.add("pressed");
-    
+
       setTimeout(() => {
         botonGuardar.click();
       }, 50);

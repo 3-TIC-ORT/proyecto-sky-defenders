@@ -55,13 +55,16 @@
       }
     </style>
 
-    
     <div id="DivCartelGameOver">
-      <img src="../imgs/GameOver.png" alt="">
+      <img src="../imgs/GameOver.png" alt="" />
     </div>
     <div id="divRetryyExit">
-    <a href="" id="botonRetry"><img src="../imgs/BotonRetry.png" alt="BotónRetry"/></a>
-    <a href="Save.html"><img id="botonExit" src="../imgs/BotonExit.png" alt="BotónExit" /></a>
+      <a href="" id="botonRetry"
+        ><img src="../imgs/BotonRetry.png" alt="BotónRetry"
+      /></a>
+      <a href="Save.html"
+        ><img id="botonExit" src="../imgs/BotonExit.png" alt="BotónExit"
+      /></a>
     </div>
 
     <script>
@@ -79,29 +82,35 @@
 
       document.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
-          const a = document.getElementById("botonExit");
-          a.classList.add("pressed");
-        
+          const b = document.getElementById("botonRetry");
+          b.classList.add("pressed");
+
           setTimeout(() => {
-            a.click();
+            b.click();
           }, 50);
         }
         if (e.key === "Escape") {
-          window.location.href = "../html/Save.html";
+          const a = document.getElementById("botonExit");
+          a.classList.add("pressed");
+
+          setTimeout(() => {
+            a.click();
+          }, 50);
         }
       });
 
       subscribeRealTimeEvent("nuevaSeñal", (data) => {
         if (data) {
           const texto = data;
-          señal = texto.señal === "b1" ? "b1" : texto.señal === "b2" ? "b2" : null;
-        
+          señal =
+            texto.señal === "b1" ? "b1" : texto.señal === "b2" ? "b2" : null;
+
           if (!señal) return;
-        
+
           if (señal === "b1") {
             const a = document.getElementById("botonRetry");
             a.classList.add("pressed");
-          
+
             setTimeout(() => {
               a.click();
             }, 50);
@@ -110,7 +119,7 @@
           if (señal === "b2") {
             const b = document.getElementById("botonExit");
             b.classList.add("pressed");
-          
+
             setTimeout(() => {
               b.click();
             }, 50);
@@ -120,4 +129,3 @@
     </script>
   </body>
 </html>
-
